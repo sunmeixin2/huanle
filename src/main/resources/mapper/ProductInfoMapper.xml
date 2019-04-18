@@ -1,0 +1,223 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.huanle.dao.ProductInfoMapper" >
+  <resultMap id="BaseResultMap" type="com.huanle.entity.ProductInfo" >
+    <id column="pid" property="pid" jdbcType="INTEGER" />
+    <result column="title" property="title" jdbcType="VARCHAR" />
+    <result column="my_type" property="myType" jdbcType="VARCHAR" />
+    <result column="inventory" property="inventory" jdbcType="INTEGER" />
+    <result column="is_new" property="isNew" jdbcType="INTEGER" />
+    <result column="price" property="price" jdbcType="DOUBLE" />
+    <result column="detail" property="detail" jdbcType="VARCHAR" />
+    <result column="product_date" property="productDate" jdbcType="DATE" />
+    <result column="product_expire" property="productExpire" jdbcType="DATE" />
+    <result column="exchange_type" property="exchangeType" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="picture" property="picture" jdbcType="VARCHAR" />
+    <result column="create_at" property="createAt" jdbcType="INTEGER" />
+    <result column="update_at" property="updateAt" jdbcType="INTEGER" />
+    <result column="advice" property="advice" jdbcType="INTEGER" />
+    <result column="p_uid" property="pUid" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    pid, title, my_type, inventory, is_new, price, detail, product_date, product_expire, 
+    exchange_type, status, picture, create_at, update_at, advice, p_uid
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from productInfo
+    where pid = #{pid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from productInfo
+    where pid = #{pid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.huanle.entity.ProductInfo" >
+    insert into productInfo (pid, title, my_type,
+      inventory, is_new, price, 
+      detail, product_date, product_expire, 
+      exchange_type, status, picture, 
+      create_at, update_at, advice, 
+      p_uid)
+    values (#{pid,jdbcType=INTEGER}, #{title,jdbcType=VARCHAR}, #{myType,jdbcType=VARCHAR}, 
+      #{inventory,jdbcType=INTEGER}, #{isNew,jdbcType=INTEGER}, #{price,jdbcType=DOUBLE}, 
+      #{detail,jdbcType=VARCHAR}, #{productDate,jdbcType=DATE}, #{productExpire,jdbcType=DATE}, 
+      #{exchangeType,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER}, #{picture,jdbcType=VARCHAR}, 
+      #{createAt,jdbcType=INTEGER}, #{updateAt,jdbcType=INTEGER}, #{advice,jdbcType=INTEGER}, 
+      #{pUid,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.huanle.entity.ProductInfo" >
+    insert into productInfo
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="pid != null" >
+        pid,
+      </if>
+      <if test="title != null" >
+        title,
+      </if>
+      <if test="myType != null" >
+        my_type,
+      </if>
+      <if test="inventory != null" >
+        inventory,
+      </if>
+      <if test="isNew != null" >
+        is_new,
+      </if>
+      <if test="price != null" >
+        price,
+      </if>
+      <if test="detail != null" >
+        detail,
+      </if>
+      <if test="productDate != null" >
+        product_date,
+      </if>
+      <if test="productExpire != null" >
+        product_expire,
+      </if>
+      <if test="exchangeType != null" >
+        exchange_type,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="picture != null" >
+        picture,
+      </if>
+      <if test="createAt != null" >
+        create_at,
+      </if>
+      <if test="updateAt != null" >
+        update_at,
+      </if>
+      <if test="advice != null" >
+        advice,
+      </if>
+      <if test="pUid != null" >
+        p_uid,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="pid != null" >
+        #{pid,jdbcType=INTEGER},
+      </if>
+      <if test="title != null" >
+        #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="myType != null" >
+        #{myType,jdbcType=VARCHAR},
+      </if>
+      <if test="inventory != null" >
+        #{inventory,jdbcType=INTEGER},
+      </if>
+      <if test="isNew != null" >
+        #{isNew,jdbcType=INTEGER},
+      </if>
+      <if test="price != null" >
+        #{price,jdbcType=DOUBLE},
+      </if>
+      <if test="detail != null" >
+        #{detail,jdbcType=VARCHAR},
+      </if>
+      <if test="productDate != null" >
+        #{productDate,jdbcType=DATE},
+      </if>
+      <if test="productExpire != null" >
+        #{productExpire,jdbcType=DATE},
+      </if>
+      <if test="exchangeType != null" >
+        #{exchangeType,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="picture != null" >
+        #{picture,jdbcType=VARCHAR},
+      </if>
+      <if test="createAt != null" >
+        #{createAt,jdbcType=INTEGER},
+      </if>
+      <if test="updateAt != null" >
+        #{updateAt,jdbcType=INTEGER},
+      </if>
+      <if test="advice != null" >
+        #{advice,jdbcType=INTEGER},
+      </if>
+      <if test="pUid != null" >
+        #{pUid,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.huanle.entity.ProductInfo" >
+    update productInfo
+    <set >
+      <if test="title != null" >
+        title = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="myType != null" >
+        my_type = #{myType,jdbcType=VARCHAR},
+      </if>
+      <if test="inventory != null" >
+        inventory = #{inventory,jdbcType=INTEGER},
+      </if>
+      <if test="isNew != null" >
+        is_new = #{isNew,jdbcType=INTEGER},
+      </if>
+      <if test="price != null" >
+        price = #{price,jdbcType=DOUBLE},
+      </if>
+      <if test="detail != null" >
+        detail = #{detail,jdbcType=VARCHAR},
+      </if>
+      <if test="productDate != null" >
+        product_date = #{productDate,jdbcType=DATE},
+      </if>
+      <if test="productExpire != null" >
+        product_expire = #{productExpire,jdbcType=DATE},
+      </if>
+      <if test="exchangeType != null" >
+        exchange_type = #{exchangeType,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="picture != null" >
+        picture = #{picture,jdbcType=VARCHAR},
+      </if>
+      <if test="createAt != null" >
+        create_at = #{createAt,jdbcType=INTEGER},
+      </if>
+      <if test="updateAt != null" >
+        update_at = #{updateAt,jdbcType=INTEGER},
+      </if>
+      <if test="advice != null" >
+        advice = #{advice,jdbcType=INTEGER},
+      </if>
+      <if test="pUid != null" >
+        p_uid = #{pUid,jdbcType=INTEGER},
+      </if>
+    </set>
+    where pid = #{pid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.huanle.entity.ProductInfo" >
+    update productInfo
+    set title = #{title,jdbcType=VARCHAR},
+      my_type = #{myType,jdbcType=VARCHAR},
+      inventory = #{inventory,jdbcType=INTEGER},
+      is_new = #{isNew,jdbcType=INTEGER},
+      price = #{price,jdbcType=DOUBLE},
+      detail = #{detail,jdbcType=VARCHAR},
+      product_date = #{productDate,jdbcType=DATE},
+      product_expire = #{productExpire,jdbcType=DATE},
+      exchange_type = #{exchangeType,jdbcType=VARCHAR},
+      status = #{status,jdbcType=INTEGER},
+      picture = #{picture,jdbcType=VARCHAR},
+      create_at = #{createAt,jdbcType=INTEGER},
+      update_at = #{updateAt,jdbcType=INTEGER},
+      advice = #{advice,jdbcType=INTEGER},
+      p_uid = #{pUid,jdbcType=INTEGER}
+    where pid = #{pid,jdbcType=INTEGER}
+  </update>
+</mapper>

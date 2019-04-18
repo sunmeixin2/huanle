@@ -1,0 +1,95 @@
+.index{
+    width: 1200px;
+    height: 40px;
+    background: #F2F2F2;
+    text-align: center;
+    line-height: 40px;
+    margin: 20px auto;
+}
+.message{
+    width: 1200px;
+    height: 1000px;
+    background: #F2F2F2;
+    margin: 20px auto;
+    text-align: center;
+    padding: 1px;
+    border-radius: 10px;
+}
+.files{
+     width: 150px;
+     height: 150px;
+     border: 1px solid rgb(44, 177, 221);
+     margin: 20px 10px ;
+     overflow: hidden;
+     background: url(../img/icon_添加.png) 50% no-repeat;
+     background-size: 30%;
+     float: left;
+
+}
+.files input{
+    margin: 50px auto;
+    font-size: 30px;
+    opacity: 0;
+}
+#filesHead{
+    overflow: hidden;
+    width: 1100px;
+   margin: 10px auto;
+}
+.formContent{
+    clear: both;
+    border: 2px solid #ffffff;
+    width: 1000px;
+    margin: 10px auto;
+    text-align: left;
+    padding: 20px;
+}
+.formContent label{
+    display: inline-block;
+    width: 150px;
+    height: 32px;
+    line-height: 32px;
+    color: #666;
+    text-align: right;
+    margin-right: 10px;
+}
+.formContent p{
+    margin-top: 10px
+}
+.formContent select{
+    height: 30px;
+}
+.formContent span{
+    font-size: 13px;
+    color: rgb(172, 161, 161);
+}
+.formContent input,textarea{
+    border: 1px solid;
+    border-color: #ccc;
+    outline: none;
+    resize: none
+}
+.formContent input:hover,
+.formContent textarea:hover{
+          border: 1px solid rgb(9, 182, 240)
+}
+.formContent input[type=text]{
+    height: 35px;
+}
+#submit{
+    width: 90px;
+    height: 50px;
+    border: none;
+    border-radius: 10px;
+    color: white;
+    background: rgb(80, 160, 218)
+}
+.delete{
+    width: 20px;
+    height: 20px;
+    font-size: 20px;
+    font-weight: bolder;
+    display: inline;
+    margin: 0 0 5px -15px;
+    cursor: pointer;
+}

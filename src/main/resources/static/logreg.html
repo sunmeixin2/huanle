@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Login & Register</title>
+
+    <!-- CSS样式链接 -->
+    <link href="css/loginIn.css" rel="stylesheet">
+    <link rel=stylesheet href="plugin/examples.css">
+    <link rel="stylesheet" type="text/css" href="plugin/jquery.fullPage.css" />
+
+    <!-- JavaScript脚本链接 -->
+    <!--[if IE]>
+        <script type="text/javascript">
+             var console = { log: function() {} };
+        </script>
+    <![endif]-->
+    
+</head>
+
+<body>
+    <!-- 页面头尾盒子 -->
+    <div id="header">Header</div>
+    <div id="footer">Footer</div>
+
+    <!-- 页面选项列表 -->
+    <ul id="menu">
+        <li data-menuanchor="firstPage"><a href="#firstPage">登录</a></li>
+        <li data-menuanchor="secondPage"><a href="#secondPage">注册</a></li>
+    </ul>
+
+    <!-- 页面主体内容，包含两个滑动页面 -->
+    <div id="fullpage">
+        <div class="section " id="section0">
+            <div class="loginCont">
+                <form method="post" class="loginForm" action="identifying_login.php">
+                    <!-- 页面功能 -->
+                    <div class="title">
+                        登录
+                    </div>
+                    <!-- 用户名user部分 -->
+                    <input type="email" id="user1" class="input user formOneUser" name="email" placeholder="邮箱"
+                        required>
+
+                    <!-- 用户密码password部分 -->
+                    <input type="password" id='q1' class="input password formOnePassword" name="password"
+                        placeholder="密码" maxlength="16" autocomplete="off">
+                    <input type="text" id="Verification" class="input vert formOneVert" name="vert" placeholder="验证码">
+                    <div id="verty"><img src="/huanle/user/getVerify" alt="" width="120px"
+                            height="40px" id="vert-img"
+                            onclick="this.src='/huanle/user/getVerify?'+Math.random()"></div>
+                           <div class="ident input"> <label for="nomral">用户：</label><label for="normal">普通用户</label> <input type="radio" name="iden" id="normal" value="2">
+                         <label for="manage">管理员</label>   <input type="radio" name="iden" id="manage" value="1"></div>
+                    <!-- 提交按钮 -->
+                    <input type="button" id="submit1" name="submit" class="submit1" value="立即提交">
+
+                    <!-- 表单基本信息验证 -->
+                    <script type="text/javascript">
+                        var user1 = document.getElementById('user1');
+                        var password1 = document.getElementById('q1');
+                        var submit1 = document.getElementById('submit1');
+                        var img = document.getElementById('vert-img');
+                        var vertyText = document.getElementById('Verification');
+
+
+
+                        submit1.onclick = function () {
+                            if (user1.value == '') {
+                                confirm('对不起，用户名不能为空，请重新输入');
+                                user1.focus();
+                                return false;
+                            }
+                            if (password1.value == '') {
+                                confirm('对不起，密码不能为空，请重新输入');
+                                password1.focus();
+                                return false;
+                            }
+                            if (password1.value.length < 6) {
+                                confirm('对不起，密码长度不能小于6');
+                                password1.value = '';
+                                password1.focus();
+                                return false;
+                            } else {
+                                var formOneUser = $(".formOneUser").val();
+                                var formOnePassword = $(".formOnePassword").val();
+                                var iden = document.getElementsByName('iden')
+                                var item
+                               for(let i=0;i<iden.length;i++){
+                                if (iden[i].checked) {
+                              item = iden[i].value;                   
+                               }
+                               }
+                                $.ajax({
+                                    url: "/huanle/user/login",
+                                    type: "post",
+                                    data: {
+                                        "email": formOneUser,
+                                        "passwd": formOnePassword,
+                                        "verify": vertyText.value,
+                                        "groupId":item
+                                    },
+
+                                    success: function (data) {
+                                        console.log(vertyText.value)
+                                        if (data.code === 0) {
+                                        console.log(data)
+                                            window.location.href = "homepage.html";
+                                        } else if (data.code != 0) {
+                                            alert(data.data)
+                                        }
+                                    },
+                                    error: function (e) {
+                                        alert("网络错误，请重试");
+                                    }
+                                });
+                            }
+                        }
+                    </script>
+                </form>
+            </div>
+        </div>
+        <div class="section" id="section1">
+            <div class="registerCont">
+                <form method="post" class="registerForm" action="identifying_register.php">
+                    <!-- 页面功能 -->
+                    <div class="title">
+                        注册
+                    </div>
+                    <!-- 用户名user部分 -->
+
+                    <input type="text" id="nickname" class="input user formTwoName" name="user" placeholder="用户名">
+                    <input type="email" id="user2" class="input user formTwoUser" name="email" placeholder="邮箱">
+                    <input type="text" id="phone" class="input user formTwophone" name="user" placeholder="联系方式"
+                        maxlength="11">
+
+                    <!-- 用户密码password部分 -->
+                    <input type="password" id="p1" class="input password formTwoPassword" name="password"
+                        placeholder="密码" maxlength="16" autocomplete="off">
+
+                    <!-- 用户重复密码repassword部分 -->
+                    <input type="password" id="p2" class="input repassword formTwoRepassword" name="repassword"
+                        placeholder="确认密码" maxlength="16" autocomplete="off">
+
+
+                    <!-- 提交按钮 -->
+                    <input type="button" name="submit" id="submit2" class="submit2" value="立即提交">
+
+                    <!-- 表单基本信息验证 -->
+                    <script type="text/javascript">
+                        var user2 = document.getElementById('user2');
+                        var password2 = document.getElementById('p1');
+                        var repassword2 = document.getElementById('p2');
+                        var submit2 = document.getElementById('submit2');
+                        var formTwoName = document.querySelector('.formTwoName');
+                        var formTwonumber = document.querySelector('.formTwophone');
+
+                        repassword2.onblur = function () {
+                            if (password2.value != repassword2.value) {
+                                confirm('对不起，您两次输入的密码不一致，请重新输入');
+                                password2.value = '';
+                                repassword2.value = '';
+                                password2.focus();
+                            }
+                        }
+
+                        submit2.onclick = function () {
+                            if (user2.value == '') {
+                                confirm('对不起，用户名不能为空，请重新输入');
+                                user2.focus();
+                                return false;
+                            }
+                            if (password2.value == '') {
+                                confirm('对不起，密码不能为空，请重新输入');
+                                password2.focus();
+                                return false;
+                            }
+                            if (password2.value.length < 6) {
+                                confirm('对不起，密码长度不能小于6');
+                                password2.value = '';
+                                repassword2.value = '';
+                                password2.focus();
+                                return false;
+                            } else {
+                                var formTwoUser = $(".formTwoUser").val();
+                                var formTwoPsaaword = $(".formTwoPassword").val();
+                                var formTwoRepassword = $(".formTwoRepassword").val();
+                                $.ajax({
+                                    url: "/huanle/user/register",
+                                    type: "post",
+                                    data: {
+                                        "email": formTwoUser,
+                                        "passwd": formTwoPsaaword,
+                                        "nickName": formTwoName.value,
+                                        "contact": formTwonumber.value,
+                                    },
+                                    success: function (data) {
+                                        // console.log(data)
+                                        if (data.code !=0) {
+                                            alert(data.message);
+                                        } else if (data.code == 0) {
+                                            alert('注册成功！')
+                                            window.location.href = "homepage.html";
+                                            
+                                        } 
+                                    },
+                                    error: function (e) {
+                                        alert("网络错误，请重试");
+                                    }
+                                });
+                            }
+                        }
+                    </script>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+<script src="plugin/jquery.min.js"></script>
+<script src="plugin/jquery-ui.min.js"></script>
+<script type="text/javascript" src="plugin/jquery.slimscroll.min.js"></script>
+<script type="text/javascript" src="plugin/jquery.fullPage.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#fullpage').fullpage({
+            anchors: ['firstPage', 'secondPage'],
+            sectionsColor: ['#1BBC9B', '#C63D0F1BBC9B'],
+            menu: '#menu',
+            css3: true,
+            loopTop: true,
+            loopBottom: true,
+            scrollingSpeed: 600,
+        });
+    });
+    window.onload=function(){
+        location.hash='/firstPage'
+    }
+</script>
+
+</html>

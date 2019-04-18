@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.huanle.dao.OrdersMapper" >
+  <resultMap id="BaseResultMap" type="com.huanle.entity.Orders" >
+    <id column="oid" property="oid" jdbcType="INTEGER" />
+    <result column="nums" property="nums" jdbcType="CHAR" />
+    <result column="A_uid" property="aUid" jdbcType="INTEGER" />
+    <result column="B_uid" property="bUid" jdbcType="INTEGER" />
+    <result column="A_pid" property="aPid" jdbcType="INTEGER" />
+    <result column="B_pid" property="bPid" jdbcType="INTEGER" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="create_at" property="createAt" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    oid, nums, A_uid, B_uid, A_pid, B_pid, status, create_at
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from orders
+    where oid = #{oid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from orders
+    where oid = #{oid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.huanle.entity.Orders" >
+    insert into orders (oid, nums, A_uid,
+      B_uid, A_pid, B_pid, status, 
+      create_at)
+    values (#{oid,jdbcType=INTEGER}, #{nums,jdbcType=CHAR}, #{aUid,jdbcType=INTEGER}, 
+      #{bUid,jdbcType=INTEGER}, #{aPid,jdbcType=INTEGER}, #{bPid,jdbcType=INTEGER}, #{status,jdbcType=INTEGER}, 
+      #{createAt,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.huanle.entity.Orders" >
+    insert into orders
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="oid != null" >
+        oid,
+      </if>
+      <if test="nums != null" >
+        nums,
+      </if>
+      <if test="aUid != null" >
+        A_uid,
+      </if>
+      <if test="bUid != null" >
+        B_uid,
+      </if>
+      <if test="aPid != null" >
+        A_pid,
+      </if>
+      <if test="bPid != null" >
+        B_pid,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="createAt != null" >
+        create_at,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="oid != null" >
+        #{oid,jdbcType=INTEGER},
+      </if>
+      <if test="nums != null" >
+        #{nums,jdbcType=CHAR},
+      </if>
+      <if test="aUid != null" >
+        #{aUid,jdbcType=INTEGER},
+      </if>
+      <if test="bUid != null" >
+        #{bUid,jdbcType=INTEGER},
+      </if>
+      <if test="aPid != null" >
+        #{aPid,jdbcType=INTEGER},
+      </if>
+      <if test="bPid != null" >
+        #{bPid,jdbcType=INTEGER},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="createAt != null" >
+        #{createAt,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.huanle.entity.Orders" >
+    update orders
+    <set >
+      <if test="nums != null" >
+        nums = #{nums,jdbcType=CHAR},
+      </if>
+      <if test="aUid != null" >
+        A_uid = #{aUid,jdbcType=INTEGER},
+      </if>
+      <if test="bUid != null" >
+        B_uid = #{bUid,jdbcType=INTEGER},
+      </if>
+      <if test="aPid != null" >
+        A_pid = #{aPid,jdbcType=INTEGER},
+      </if>
+      <if test="bPid != null" >
+        B_pid = #{bPid,jdbcType=INTEGER},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="createAt != null" >
+        create_at = #{createAt,jdbcType=INTEGER},
+      </if>
+    </set>
+    where oid = #{oid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.huanle.entity.Orders" >
+    update orders
+    set nums = #{nums,jdbcType=CHAR},
+      A_uid = #{aUid,jdbcType=INTEGER},
+      B_uid = #{bUid,jdbcType=INTEGER},
+      A_pid = #{aPid,jdbcType=INTEGER},
+      B_pid = #{bPid,jdbcType=INTEGER},
+      status = #{status,jdbcType=INTEGER},
+      create_at = #{createAt,jdbcType=INTEGER}
+    where oid = #{oid,jdbcType=INTEGER}
+  </update>
+</mapper>

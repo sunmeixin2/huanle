@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>用户登录</title>
+</head>
+<body>
+<form action="/huanle/user/login" method="post">
+    邮箱：<input type="text" name="email" /><br>
+    密码：<input type="password" name="passwd" /><br>
+    <div class="ident input"> 用户：</label><label for="normal">普通用户</label> <input type="radio" name="groupId" id="normal" value="2">
+        <label for="manage">管理员</label>   <input type="radio" name="groupId" id="manage" value="1"></div>
+    <input type="text" name = "verify" id = "imgVerify" placeholder="please input verify">
+    <a href="javascript:void(0);" title="click change image">
+    <img src="/huanle/user/getVerify" onclick="this.src='/huanle/user/getVerify?'+Math.random()"></a>
+    <br>
+    <input type="submit" value="登录" />
+</form>
+</body>

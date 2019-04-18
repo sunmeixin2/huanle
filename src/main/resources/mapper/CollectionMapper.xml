@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.huanle.dao.CollectionMapper" >
+  <resultMap id="BaseResultMap" type="com.huanle.entity.CollectionEntity" >
+    <id column="product_id" property="productId" jdbcType="INTEGER" />
+    <id column="user_id" property="userId" jdbcType="INTEGER" />
+    <result column="cc_id" property="ccId" jdbcType="INTEGER" />
+    <result column="pro_title" property="proTitle" jdbcType="VARCHAR" />
+    <result column="create_at" property="createAt" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    product_id, user_id, cc_id, pro_title, create_at
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="map" >
+    select 
+    <include refid="Base_Column_List" />
+    from collection
+    where product_id = #{productId,jdbcType=INTEGER}
+      and user_id = #{userId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="map" >
+    delete from collection
+    where product_id = #{productId,jdbcType=INTEGER}
+      and user_id = #{userId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.huanle.entity.CollectionEntity" >
+    insert into collection (product_id, user_id, cc_id,
+      pro_title, create_at)
+    values (#{productId,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, #{ccId,jdbcType=INTEGER}, 
+      #{proTitle,jdbcType=VARCHAR}, #{createAt,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.huanle.entity.CollectionEntity" >
+    insert into collection
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="productId != null" >
+        product_id,
+      </if>
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="ccId != null" >
+        cc_id,
+      </if>
+      <if test="proTitle != null" >
+        pro_title,
+      </if>
+      <if test="createAt != null" >
+        create_at,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="productId != null" >
+        #{productId,jdbcType=INTEGER},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="ccId != null" >
+        #{ccId,jdbcType=INTEGER},
+      </if>
+      <if test="proTitle != null" >
+        #{proTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="createAt != null" >
+        #{createAt,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.huanle.entity.CollectionEntity" >
+    update collection
+    <set >
+      <if test="ccId != null" >
+        cc_id = #{ccId,jdbcType=INTEGER},
+      </if>
+      <if test="proTitle != null" >
+        pro_title = #{proTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="createAt != null" >
+        create_at = #{createAt,jdbcType=INTEGER},
+      </if>
+    </set>
+    where product_id = #{productId,jdbcType=INTEGER}
+      and user_id = #{userId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.huanle.entity.CollectionEntity" >
+    update collection
+    set cc_id = #{ccId,jdbcType=INTEGER},
+      pro_title = #{proTitle,jdbcType=VARCHAR},
+      create_at = #{createAt,jdbcType=INTEGER}
+    where product_id = #{productId,jdbcType=INTEGER}
+      and user_id = #{userId,jdbcType=INTEGER}
+  </update>
+</mapper>

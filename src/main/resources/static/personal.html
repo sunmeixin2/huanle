@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta name="description" content="">
+	<meta name="keywords" content="">
+	<title></title>
+
+	<!-- CSS链接样式 -->
+	<link rel="stylesheet" href="css/common.css">
+	<link rel="stylesheet" href="css/z-common.css"><!-- 基础样式 -->
+	<link rel=stylesheet href="css/personal.css"><!-- 个人管理页面单独样式 -->
+	<link rel=stylesheet href="css/ssi-uploader.css"><!-- 上传控件 -->
+	<style>
+		#boxfive label {
+			color: black;
+			font-size: 20px;
+			font-weight: bold;
+		}
+
+		#boxfive form p {
+			margin-top: 20px;
+		}
+
+		#boxfive input[type='button'] {
+			color: rgb(30, 133, 10);
+			margin-top: 50px;
+			width: 80px;
+			height: 50px;
+			border-radius: 10px;
+			background: none;
+			border: 1px rgb(9, 224, 20) solid;
+			outline: none
+		}
+	</style>
+	<script src="js/personal.js"></script>
+</head>
+
+<body>
+	<div class="header">
+		<span class="tag"><img src="images/互联交换清算系统.png" width="100px" alt=""> <a href="homepage.html">换乐</a></span>
+		<div class="user">
+			<p id="center">个人信息<img src="img/users.png" width="30px"></p>
+		</div>
+		<div class="sanjiao"></div>
+		<div class="tips">
+			<div class="tipsHeader">
+				<img src="img/back.jpeg" alt="" width="60px" height="60px" id="touxiang">
+				<p id="hello">你好！<span id="userNick">Yufengxxx</span></p>
+			</div>
+			<p>
+				<a href="personal.html">个人主页</a>
+			</p>
+			<p>
+				<a href="" id="out">退出</a>
+			</p>
+		</div>
+	</div>
+
+	<!-- 主体内容—— -->
+	<article>
+		<!-- 主体头部——头像、昵称与收藏发布统计 -->
+		<div class="personal-top">
+			<div class="personal-photoWr"><img class="personal-photo" src="" alt=""></div>
+			<div class="waves"></div>
+			<div class="personal-name"><a href=""></a></div>
+			<div class="personal-sta">
+				<p class="personal-collect"></p>
+				<p class="personal-release"></p>
+			</div>
+			<div class="personal-staName">
+				<p>我的收藏</p>
+				<p>我的发布</p>
+			</div>
+		</div>
+
+		<!-- 主体中间部分——导航、四个选项卡盒子（个人资料、发布页面、收藏信息、发布历史） -->
+		<div class="personal-mid" id="tab">
+			<!-- 导航 -->
+			<div class="nav">
+				<ul>
+					<li class="active"><a href="#active">个人资料</a></li>
+					<li><a href="#active">我的收藏</a></li>
+					<li><a href="#active">发布历史</a></li>
+					<li><a href="#active">订单历史</a></li>
+					<li><a href="#active">安全管理</a></li>
+				</ul>
+			</div>
+
+
+			<!-- 个人资料 -->
+			<div class="box" id="boxOne">
+				<div class="accountInfo">
+					<span class="infoH1">账户信息</span>
+					<div class="infoWr">
+						<span class="infoH2">Email</span>
+						<span class="infoMain infoNumber"></span>
+					</div>
+				</div>
+				<div class="basicInfo">
+					<span class="infoH1">基本信息</span>
+					<div class="infoWr">
+						<span class="infoH2">昵称</span>
+						<span class="infoMain infoName"></span>
+					</div>
+					<div class="infoWr">
+						<span class="infoH2">联系方式</span>
+						<span class="infoMain infoPhone"></span>
+					</div>
+					<div class="infoWr">
+						<span class="infoH2">性别</span>
+						<span class="infoMain infoQQ"></span>
+					</div>
+				</div>
+				<div class="editBtn"><span>编辑信息</span></div>
+				<div class="editInfoBg"></div>
+				<div class="editInfoWr">
+					<div class="editInfo-title">
+						<br>
+						<span>个人信息编辑</span>
+					</div>
+					<div class="editInfo-cont">
+						<form action=".php" method="get">
+							<span class="editSpan">头像</span>
+							<div class="headImg"><input type="file" class="img" onchange="add()"></div>
+							<div class="editInfo-contWr">
+								<span class="editSpan">昵称</span>
+								<input type="text" name="editName" class="editInput editName" maxlength="12">
+							</div>
+							<div class="editInfo-contWr">
+								<span class="editSpan">联系方式</span>
+								<input type="text" name="editPhone" class="editInput editPhone" maxlength="11"
+									onkeyup="this.value=this.value.replace(/\D/g,'')"
+									onafterpaste="this.value=this.value.replace(/\D/g,'')">
+							</div>
+							<div class="editInfo-contWr">
+								<span class="editSpan">email</span>
+								<input type="email" name="editEmail" class="editInput editEmail" maxlength="">
+							</div>
+							<div class="editInfo-contWr">
+								<span class="editSpan">性别</span>
+								<label for="man">男：</label> <input type="radio" id="man" value="man" name="sex">
+								<label for="woman">女：</label> <input type="radio" id="woman" value="woman" name="sex">
+							</div>
+							<div class="editInfo-contWr">
+								<input type="button" name="submit" class="editSubmit" value="确认修改">
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+			<!-- 收藏信息 -->
+			<div class="box" id="boxThree">
+				<ul class="boxThreeUl"></ul>
+			</div>
+
+			<!-- 发布历史 -->
+			<div class="box" id="boxFour">
+				<ul class="boxFourUl"></ul>
+			</div>
+			<div class="box" id="boxSix">
+                 <ul>
+					
+				 </ul>
+			</div>
+			<div class="box" id="boxfive">
+				<p class="corrent">修改密码:</p>
+				<form action="/huanle/personal/updatePasswd" id="correntPass">
+					<p><label for="">原密码:</label><input type="password" name="oldPasswd" class="beforeWord" required></p>
+					<p><label for="">新密码:</label><input type="password" name="newPasswd" class="afterWord" placeholder="新密码应为6~12位"
+							minlength="6" maxlength="12" required></p>
+					<p><label for="">确认密码:</label><input type="password" placeholder="新密码应为6~12位" class="requireWord"
+							minlength="6" maxlength="12" required></p>
+					<input type="button" value="确认修改" id="corrent">
+				</form>
+			</div>
+
+		</div>
+	</article>
+
+
+
+	<!-- 引入JS文件 -->
+	<script src="js/jquery-2.1.1.min.js"></script><!-- Jquery库 -->
+	<script src="js/ssi-uploader.js"></script><!-- 上传控件 -->
+	<script src="js/jquery.Pages.js"></script><!-- 分页 -->
+	<script src="js/tab.js"></script><!-- 选项卡 -->
+	<script src="js/personal.js"></script><!-- 个人页面基础JS -->
+</body>
+<script>
+	let users = document.querySelector('.user');
+	let tips = document.querySelector('.tips');
+	let triangle = document.querySelector('.sanjiao');
+	let timer = null;
+	users.onmouseover = tips.onmouseover = show;
+	users.onmouseout = tips.onmouseout = unshow;
+
+	function show() {
+		tips.style.display = 'block';
+		triangle.style.display = 'block';
+		clearTimeout(timer)
+	}
+
+	function unshow() {
+
+		timer = setTimeout(function () {
+			tips.style.display = 'none';
+			triangle.style.display = 'none';
+		}, 600)
+	}
+	let headImg = document.querySelector('.headImg');
+	let img = document.querySelector('.img');
+
+	function add() {
+		headImg.innerHTML = '';
+		let goodsImg = document.createElement('img');
+		goodsImg.style.width = `60px`
+		goodsImg.style.height = 60 + 'px'
+		goodsImg.src = window.URL.createObjectURL(img.files[0]);
+		headImg.appendChild(goodsImg)
+	}
+	let beforeWord = document.querySelector('.beforeWord')
+	let afterWord = document.querySelector('.afterWord')
+	let requireWord = document.querySelector('.requireWord')
+	let corrent = document.getElementById('corrent')
+	let correntPass = document.getElementById('correntPass')
+	corrent.onclick = function () {
+		if (afterWord.value != requireWord.value) {
+			return alert('新密码不一致')
+		}
+		if (afterWord.value.length < 6) {
+			return alert('密码不应小于6位')
+		}
+		if (afterWord.value == '' || beforeWord.value == '') {
+			return alert('密码不能为空')
+		}
+		let xhr = new XMLHttpRequest;
+		let fn = new FormData(correntPass)
+		xhr.onreadystatechange = function () {
+			if (xhr.status == 200 && xhr.readyState == 4) {
+                
+			}
+		}
+		xhr.open('POST', 'http://192.168.2.54:8080/huanle/personal/updatePasswd', true)
+		xhr.send(fn)
+	}
+</script>
+
+</html>

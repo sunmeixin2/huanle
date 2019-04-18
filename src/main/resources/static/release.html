@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta http-equiv="Content-Type" content="multipart/form-data;charset=UTF-8">
+    <title>发布物品</title>
+    <link rel="stylesheet" href="css/common.css">
+    <link rel="stylesheet" href="css/release.css">
+    <style>
+        #sanjiao{
+            margin-left: 310px;
+        }
+        #tips{
+            margin-left: 300px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="header">
+        <span class="tag"><img src="images/互联交换清算系统.png" width="100px" alt=""> <a href="homepage.html">换乐</a></span> </span>
+        <div class="user">
+            <p id="center">个人信息<img src="img/users.png" width="30px"></p>
+        </div>
+        <div class="sanjiao" id="sanjiao"></div>
+        <div class="tips" id="tips">
+				<div class="tipsHeader">
+					<img src="img/back.jpeg" alt="" width="60px" height="60px" id="touxiang">
+					<p id="hello">你好！<span id="userNick">Yufengxxx</span></p>
+				</div>
+				<p>
+					<a href="personal.html">个人主页</a>
+				</p>
+				<p>
+					<a href="javascript:;" id="out">退出</a>
+				</p>
+				</div>
+    </div>
+    <div>
+        <div class="index">发布物品</div>
+        <div class="message" id="mes">
+       <!-- <form action="" id="imgMes" method="POST"  enctype="multipart/form-data">
+           <div id="filesHead">
+           <div class="files">
+               <span>最多上传5张图</span>
+                <input type="file" id="sendImg" onchange="add()" multiple="multiple">
+           </div>
+        </div>
+        </form> -->
+        <form  id="textMes" enctype="multipart/form-data" method="post">
+            <div id="filesHead">
+                <div class="files">
+                    <span>最多上传5张图</span>
+                    <input type="file" name="files" id="sendImg" onchange="add()" multiple="multiple">
+                </div>
+            </div>
+          <div class="formContent">
+           <p> <label for="">商品名称: </label><input type="text" name="title" placeholder="请输入商品名称" maxlength="14" required><span> &nbsp;14个字以内</span></p>
+           <p>  <label for="descript">商品详情: </label><textarea name="detail" id="" cols="100" rows="12" required></textarea></p>
+           <p> <label for="class">分类:</label><select name="myType" id="">
+                <option value="手机">校园代步</option>
+                <option value="电脑">手机</option>
+                <option value="书籍">电脑</option>
+                <option value="生活用品">数码配件</option>
+                <option value="运动">数码</option>
+                <option value="代步">运动健身</option>
+                <option value="代步">衣物伞帽</option>
+                <option value="代步">图书教材</option>
+                <option value="代步">其他</option>
+            </select></p> 
+            <p><label for="">交换数量:</label><input type="number" name="inventory" style="height: 30px;width: 60px" required></p>
+            <p><label for="">新旧程度:</label><select name="isNew" id="isNew">
+                <option value="0">全新</option>
+                <option value="5">5成新</option>
+                <option value="6">6成新</option>
+                <option value="7">7成新</option>
+                <option value="8">8成新</option>
+                <option value="9">9成新</option>
+            </select></p>
+            <p><label for="">价格:</label><input type="text" name="price" required></p>
+            <p><label for="">生产日期:</label><input type="date" name="productDate" required></p>
+            <p><label for="">过期日期:</label><input type="date" name="productExpire" required></p>
+            <p><label for="">想要交换的类型:</label><select name="exchangeType" id="">
+                <option value="手机">校园代步</option>
+                <option value="电脑">手机</option>
+                <option value="书籍">电脑</option>
+                <option value="生活用品">数码配件</option>
+                <option value="运动">数码</option>
+                <option value="代步">运动健身</option>
+                <option value="代步">衣物伞帽</option>
+                <option value="代步">图书教材</option>
+                <option value="代步">其他</option>
+            </select></p>
+          </div>
+          <input type="button" id="submit" value="发布">
+       </form>
+        </div>
+    </div>
+</body>
+<script>
+    let users = document.querySelector('.user');
+    let tips = document.querySelector('.tips');
+    let triangle = document.querySelector('.sanjiao');
+    let timer = null;
+    users.onmouseover = tips.onmouseover = show;
+    users.onmouseout = tips.onmouseout = unshow;
+
+    function show() {
+        tips.style.display = 'block';
+        triangle.style.display = 'block';
+        clearTimeout(timer)
+    }
+    function unshow() {
+
+        timer = setTimeout(function () {
+            tips.style.display = 'none';
+            triangle.style.display = 'none';
+        }, 600)
+    }
+    let img=document.getElementById('sendImg');
+    let mes=document.getElementById('filesHead');
+   function add(){
+       if(mes.children.length>5){
+          return alert('兄dei不能再多了')
+       }
+            let newDiv=document.createElement('div');
+            let twoDiv=document.createElement('div');
+            twoDiv.innerText='X';
+            twoDiv.className='delete'
+
+        newDiv.className="files";
+        let goodsImg=document.createElement('img');
+        goodsImg.style.width=`150px`
+        goodsImg.style.height=150+'px'
+        goodsImg.src=window.URL.createObjectURL(img.files[0]);
+        newDiv.appendChild(goodsImg)
+        newDiv.appendChild(twoDiv)
+        mes.appendChild(newDiv);
+         twoDiv.onclick=function(){
+             mes.removeChild(this.parentNode)
+         }
+    }
+    let imgMes=document.getElementById('textMes');
+    let submit=document.getElementById('submit');
+      submit.onclick=function(){
+          var imgData=new FormData(imgMes)
+          console.log(imgData.get('files'))
+            var xhr=new XMLHttpRequest;
+            xhr.onreadystatechange=function(){
+                if(xhr.readyState==4&&xhr.status==200){
+                    let datas=JSON.parse(xhr.responseText);
+                    console.log(datas)
+                    if(datas.code===0){
+                        alert('success')
+                        window.location.href='homepage.html'
+                    }else
+                    {
+                        alert(datas.message)
+                    }
+                }
+            }
+            xhr.open('POST','/huanle/product/publish' ,true)
+            xhr.send(imgData)
+      }
+      function state() {
+	var userNick = document.getElementById('userNick');
+	var headImg = document.getElementById('touxiang');
+
+	var mes = new XMLHttpRequest
+	mes.onreadystatechange = function () {
+		if (mes.status == 200 && mes.readyState == 4) {
+			var peo = JSON.parse(mes.responseText);
+			console.log(peo)
+			if (peo.code != 0) {
+				alert('网络错误')
+			} else if (peo.code == 0) {
+
+				userNick.innerHTML = peo.data.nickName;
+				headImg.src = ''
+
+			}
+		}
+	}
+	mes.open('GET', '/huanle/index/upInfo', true)
+	mes.send(null)
+	var out = document.getElementById('out')
+	out.onclick = function () {
+		window.localStorage.clear()
+		location.reload([true]);
+	}
+
+}
+window.onload=function(){
+    state()
+}
+
+</script>
+
+</html>

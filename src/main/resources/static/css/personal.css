@@ -1,0 +1,658 @@
+/*article样式*/
+article {
+	/*中间主体内容*/
+	width: 100%;
+	min-height: 1050px;
+	margin: 0 auto;
+	overflow: hidden;
+	padding-bottom: 20px;
+}
+
+
+.personal-top {
+	/*头部总盒子*/
+	width: 100%;
+	height: 350px;
+	background: #37B15E;
+	margin: 0 auto;
+	overflow: hidden;
+}
+
+
+.personal-photoWr {
+	/*头像包裹盒子*/
+	z-index: 20;
+	width: 120px;
+	height: 120px;
+	margin: 0 auto;
+	margin-top: 30px;
+	border-radius: 120px;
+}
+
+.personal-photoWr img {
+	width: 120px;
+	height: 120px;
+	border-radius: 120px;
+}
+
+
+.waves {
+	/*水波效果盒子*/
+	z-index: 1;
+	width: 120px;
+	height: 120px;
+	margin: 0 auto;
+	margin-top: -120px;
+	border-radius: 120px;
+	border: 1px solid white;
+
+	-webkit-animation: waves 2s ease-out;
+	-moz-animation: waves 2s ease-out;
+	animation: waves 2s ease-out;
+	-webkit-animation-iteration-count: infinite;
+	-moz-animation-iteration-count: infinite;
+	animation-iteration-count: infinite;
+}
+
+
+.personal-name {
+	/*基础统计信息*/
+	width: 180px;
+	height: 40px;
+	margin: 0 auto;
+	margin-top: 30px;
+	text-align: center;
+	line-height: 40px;
+}
+
+.personal-name a {
+	color: #FFB200;
+	font-size: 22px;
+	font-weight: 600;
+	text-decoration: none;
+}
+
+.personal-top p {
+	float: left;
+	width: 180px;
+	height: 40px;
+	color: white;
+	font-size: 18px;
+	line-height: 40px;
+	text-align: center;
+}
+
+.personal-sta {
+	width: 402px;
+	height: 40px;
+	margin: 0 auto;
+	margin-top: 20px;
+
+}
+
+.personal-sta p {
+	float: left;
+	width: 200px;
+	height: 40px;
+	text-align: center;
+}
+
+.personal-staName {
+	width: 402px;
+	height: 30px;
+	margin: 0 auto;
+	margin-top: 5px;
+
+}
+
+.personal-staName p {
+	float: left;
+	width: 200px;
+	height: 30px;
+	text-align: center;
+	line-height: 30px;
+}
+
+.personal-staName p:first-child {
+	border-right: 1px solid white;
+	height: 20px;
+}
+
+
+.personal-mid {
+	/*中部总盒子*/
+	width: 1100px;
+	min-height: 675px;
+	margin: 0 auto;
+	margin-top: 15px;
+	overflow: hidden;
+	border-top: 8px solid #00AC90;
+}
+
+
+.personal-mid .nav {
+	/*中部导航*/
+	width: 1400px;
+	height: 60px;
+	overflow: hidden;
+}
+
+.personal-mid .nav li {
+	display: block;
+	width: 180px;
+	height: 50px;
+	float: left;
+	margin-left: 26px;
+	margin-top: 10px;
+	list-style: none;
+	text-align: center;
+	background: #00AC90;
+	border-radius: 5px;
+	cursor: pointer;
+	outline: none;
+}
+
+.personal-mid .nav li a {
+	text-decoration: none;
+	font-size: 20px;
+	line-height: 50px;
+	font-family: "楷体";
+	color: white;
+}
+
+.personal-mid .nav .active a {
+	font-weight: bolder;
+}
+
+.personal-mid .nav .active {
+	background: #FFB200;
+}
+
+
+.personal-mid .box {
+	/*四个信息盒子*/
+	display: none;
+	width: 1100px;
+	margin-top: 15px;
+	overflow: hidden;
+	background: white;
+	position: relative;
+}
+
+.personal-mid #boxOne {
+	height: 750px;
+}
+
+.personal-mid #boxTwo {
+	height: 1250px;
+}
+
+.personal-mid #boxThree,
+#boxFour {
+	min-height: 200px;
+	padding-bottom: 30px;
+}
+
+.personal-mid .box .accountInfo {
+	width: 700px;
+	height: 160px;
+	margin-top: 40px;
+	margin-left: 80px;
+}
+
+
+.personal-mid .box .basicInfo {
+	/*第一个盒子*/
+	width: 700px;
+	height: 400px;
+	margin-top: 20px;
+	margin-left: 80px;
+}
+
+.personal-mid .box .infoH1 {
+	display: block;
+	width: 700px;
+	height: 50px;
+	margin-top: 20px;
+	line-height: 50px;
+
+	color: #00AC90;
+	font-size: 22px;
+	border-bottom: 2px solid #00AC90;
+}
+
+.personal-mid .box .infoWr {
+	width: 700px;
+	height: 50px;
+	margin-top: 30px;
+}
+
+.personal-mid .box .infoH2 {
+	display: block;
+	float: left;
+	width: 120px;
+	height: 50px;
+	text-align: center;
+	line-height: 50px;
+
+	color: black;
+	font-size: 20px;
+	font-weight: 600;
+}
+
+.personal-mid .box .infoMain {
+	display: block;
+	float: left;
+	width: 200px;
+	height: 50px;
+	margin-left: 40px;
+	line-height: 50px;
+
+	color: black;
+	font-size: 20px;
+}
+
+/*编辑信息弹出盒子*/
+.personal-mid .box .editBtn {
+	clear: both;
+	width: 240px;
+	height: 50px;
+	outline: none;
+	color: #37B15E;
+	text-align: center;
+	line-height: 50px;
+	font-size: 20px;
+	border-radius: 30px;
+	border: 1px solid #37B15E;
+	background: white;
+	margin-top: 20px;
+	margin-left: 80px;
+	cursor: pointer;
+}
+
+.personal-mid .box .editBtn:hover {
+	color: white;
+	background: #37B15E;
+}
+
+.editInfoWr {
+	width: 450px;
+	height: 600px;
+	position: fixed;
+	left: 50%;
+	top: 50%;
+	margin-top: -300px;
+	margin-left: -225px;
+	background: #4BC0A5;
+	display: none;
+	z-index: 200;
+}
+
+.editInfoBg {
+	position: fixed;
+	background: rgba(0, 0, 0, .45);
+	height: 100%;
+	width: 100%;
+	top: 0;
+	left: 0;
+	display: none;
+	z-index: 1;
+}
+
+.editInfo-title {
+	text-align: center;
+	width: 450px;
+	height: 80px;
+	background: #3F495B;
+	overflow: hidden;
+}
+
+.editInfo-title img {
+	width: 70px;
+	height: 70px;
+	margin-top: 25px;
+}
+
+.editInfo-title span {
+	display: block;
+	margin-top: 15px;
+	color: white;
+	font-family: "楷体";
+	font-size: 20px;
+}
+
+.editInfo-cont {
+	width: 450px;
+	height: 450px;
+}
+
+.editInfo-contWr {
+	width: 400px;
+	height: 50px;
+	margin-top: 35px;
+}
+
+.editInfo-cont .editSpan {
+	display: block;
+	float: left;
+	width: 150px;
+	height: 40px;
+	text-align: center;
+	line-height: 40px;
+	color: white;
+	font-size: 22px;
+}
+
+.editInfo-cont .editInput {
+	display: block;
+	float: left;
+	width: 220px;
+	height: 30px;
+	font-size: 20px;
+	padding: 5px 10px;
+	outline: none;
+	border: 1px solid #37B15E;
+	border-radius: 10px;
+}
+
+.editInfo-cont .editSubmit {
+	width: 240px;
+	height: 50px;
+	outline: none;
+	color: #3F495B;
+	text-align: center;
+	line-height: 50px;
+	font-size: 22px;
+	border-radius: 30px;
+	border: 1px solid #3F495B;
+	background: white;
+	margin-left: 105px;
+	cursor: pointer;
+}
+
+.editInfo-cont .editSubmit:hover {
+	color: white;
+	background: #3F495B;
+}
+
+
+.personal-mid .box .releaseInfo {
+	/*第二个盒子*/
+	width: 930px;
+	height: 1600px;
+	margin-top: 40px;
+	margin-left: 80px;
+	overflow: hidden;
+}
+.headImg{
+	margin-top: 5px;
+	background: url(../img/icon_添加.png) 50% no-repeat;
+     background-size: 30%;
+	width: 60px;
+	height: 60px;
+	display: inline-block;
+	border: 1px solid;
+	overflow: hidden;
+}
+.headImg input{
+	margin: 20px;opacity: 0;
+}
+.personal-mid .box .releaseInfo input {
+	width: 290px;
+	height: 30px;
+	margin-top: 10px;
+	padding-left: 10px;
+	font-size: 17px;
+	outline: none;
+	border: 1px solid #44C1A5;
+	border-radius: 5px;
+}
+
+.personal-mid .box .releaseInfo select {
+	width: 153px;
+	height: 30px;
+	margin-top: 10px;
+	padding-left: 10px;
+	font-size: 17px;
+	outline: none;
+	border: 1px solid #44C1A5;
+	border-radius: 5px;
+}
+
+.personal-mid .box .releaseInfo .goodsPrice {
+	width: 140px;
+}
+
+.personal-mid .box .releaseInfo .textareaWr {
+	height: 180px;
+}
+
+.personal-mid .box .releaseInfo textarea {
+	width: 550px;
+	height: 120px;
+	padding: 10px;
+	margin-top: 10px;
+	text-indent: 2em;
+	font-size: 17px;
+	resize: none;
+	outline: none;
+	border: 1px solid #44C1A5;
+	border-radius: 5px;
+}
+
+.personal-mid .box .releaseInfo label {
+	font-size: 17px;
+	margin-left: 30px;
+	margin-right: 10px;
+}
+
+.personal-mid .box .releaseInfo .goodsBargain {
+	width: 20px;
+	height: 20px;
+	margin-top: 10px;
+}
+
+.personal-mid .box .releaseInfo .goodsPhotoWr {
+	width: 1100px;
+	height: 300px;
+}
+
+.personal-mid .box .releaseInfo .goodsphoto {
+	width: 900px;
+	height: 300px;
+}
+
+.personal-mid .box .releaseInfo .releaseBot {
+	width: 1100px;
+	height: 150px;
+	margin-top: 90px;
+}
+
+.personal-mid .box .releaseInfo .releaseBot .agreeRules {
+	width: 20px;
+	height: 20px;
+	margin-left: 10px;
+}
+
+.personal-mid .box .releaseInfo .releaseBot span {
+	font-size: 20px;
+}
+
+.personal-mid .box .releaseInfo .releaseBot a {
+	color: #3CC2A5;
+	text-decoration: none;
+}
+
+.personal-mid .box .releaseInfo .releaseBot .submitRelease {
+	width: 240px;
+	height: 50px;
+	outline: none;
+	color: #37B15E;
+	font-size: 20px;
+	border-radius: 30px;
+	border: 1px solid #37B15E;
+	background: white;
+	cursor: pointer;
+}
+
+.personal-mid .box .releaseInfo .releaseBot .submitRelease:hover {
+	color: white;
+	background: #37B15E;
+}
+
+.personal-mid .box .NoColHis {
+	width: 400px;
+	height: 100px;
+	line-height: 100px;
+	text-align: center;
+	position: absolute;
+	left: 0;
+	right: 0;
+	top: 0;
+	bottom: 0;
+	margin: auto;
+	font-size: 22px;
+}
+
+.personal-mid .box .collect,
+.history {
+	/*第三四个盒子*/
+	width: 1200px;
+	height: 180px;
+	margin: 0 auto;
+	margin-top: 20px;
+	border-bottom: 1px dashed #37B15E;
+}
+
+.personal-mid .box .clctImg,
+.histImg {
+	float: left;
+	width: 180px;
+	height: 180px;
+	text-align: center;
+	vertical-align: middle;
+	position: relative;
+}
+
+.personal-mid .box .clctImg img,
+.histImg img {
+	width: 160px;
+	height: 160px;
+	position: absolute;
+	left: 0;
+	right: 0;
+	top: 0;
+	bottom: 0;
+	margin: auto;
+}
+
+.personal-mid .box .clctInfo,
+.histInfo {
+	float: left;
+	width: 650px;
+	height: 140px;
+	padding-top: 40px;
+}
+.pressStatus{
+	display: block;
+	float: left;
+	width: 100px;
+	height: 30px;
+	color: #37B15E;
+	font-size: 24px;
+	font-family: "楷体";
+	text-align: center;
+	line-height: 30px;
+	margin-top: 13px;
+}
+.personal-mid .box .clctInfo-name,
+.histInfo-name {
+	display: block;
+	float: left;
+	width: 150px;
+	height: 30px;
+	color: #37B15E;
+	font-size: 24px;
+	font-family: "楷体";
+	text-align: center;
+	line-height: 30px;
+	margin-top: 13px;
+}
+
+.personal-mid .box .clctInfo-cont,
+.histInfo-cont {
+	display: block;
+	float: left;
+	width: 400px;
+	height: 30px;
+	font-size: 18px;
+	text-align: left;
+	line-height: 30px;
+	text-overflow: hidden;
+	margin-top: 13px;
+	padding-left: 30px;
+}
+
+.personal-mid .box .clctInfo-cont a {
+	text-decoration: none;
+	color: #FFB200;
+}
+
+.personal-mid .box .clctCancle,
+.histCancle {
+	float: left;
+	width: 130px;
+	height: 160px;
+	margin-top: 13px;
+}
+
+.personal-mid .box .clctCancle span,
+.histCancle span {
+	display: block;
+	width: 130px;
+	height: 30px;
+	font-size: 18px;
+	text-align: center;
+	line-height: 30px;
+	text-overflow: hidden;
+	margin-top: 120px;
+	border: 1px solid #37B15E;
+	border-radius: 10px;
+	cursor: pointer;
+}
+
+.personal-mid .box .clctCancle span:hover,
+.histCancle span:hover {
+	background: #37B15E;
+	color: white;
+}
+
+
+/*CSS3/头部的水波效果动画*/
+@keyframes waves {
+	0% {
+		transform: scale(1);
+		opacity: 0.3;
+	}
+
+	100% {
+		transform: scale(1.5);
+		opacity: 0.0;
+	}
+}
+
+.Pagination {
+	float: left;
+	height: 55px;
+	_height: 45px;
+	line-height: 20px;
+	margin-left: 280px;
+	margin-top: 40px;
+	color: #565656;
+	clear: both;
+}
+.corrent{
+	color: #00AC90;
+	font-size: 22px;
+	border-bottom: 2px solid #00AC90;
+}
