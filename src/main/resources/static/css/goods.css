@@ -218,63 +218,8 @@ article .art-hot-evaluation{
 	height:760px;
 	margin: 0 auto;
 }
-article .hot{/*热门推荐*/
-	float: left;
-	width: 300px;
-	height: 700px;
-}
-article .hot .hot-title{/*热门推荐标题*/
-	width: 300px;
-	height: 50px;
-	text-align: center;
-	line-height: 50px;
-	font-family: "楷体";
-	font-size: 30px;
-	border-radius: 50px;
-	border: 1px solid #1C826C;
-}
-article .hot .hot-contWr{/*热门推荐总包裹*/
-	width: 300px;
-	height: 648px;
-	overflow: hidden;
-}
-article .hot .hot-cont{/*热门推荐每一个图片的统一样式*/
-	position: relative;
-	width: 300px;
-	height: 190px;
-	margin-top: 26px;
-	border:1px solid #CDCDCD;
-	overflow: hidden;
-	background: white;
-	position: relative;
-}
-article .hot .hot-cont .cont-A{/*图片链接及居中*/
-	display: table-cell;
-	text-align: center;
-	vertical-align: middle;
-}
-article .hot .hot-cont .cont-imgAcont{
-	width: 300px;
-	height: 190px;
-}
-article .hot .hot-cont .cont-titleA{/*推荐标题链接*/
-	text-decoration: none;
-	color: #EE6600;
-	text-align: center;
-	vertical-align: middle;
-	font-weight: 18px;
-}
-article .hot .hot-cont .img-title{/*推荐标题，半透明*/
-	position: absolute;
-	bottom: 0;left: 0;
-	width: 300px;
-	height:35px;
-	line-height: 35px;
-	background:rgba(230,230,230,0.7);
-}
 article .evaluation{/*热门评价*/
-	float: right;
-	width: 750px;
+	width: 1050px;
 	min-height: 760px;
 	margin-left: 48px;
 	border-left: 1px dashed #1C826C;
@@ -293,7 +238,7 @@ article .evaluation .evalu-title{/*热门评价标题*/
 	background: #1C826C;
 }
 article .evaluation .evalutInfo{/*热评总包裹*/
-	width: 680px;
+	width: 980px;
 	min-height: 80px;
 	margin: 0 auto;
 	margin-top: 22px;

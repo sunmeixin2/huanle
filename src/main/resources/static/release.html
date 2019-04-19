@@ -123,9 +123,12 @@
     let img=document.getElementById('sendImg');
     let mes=document.getElementById('filesHead');
    function add(){
-       if(mes.children.length>5){
-          return alert('兄dei不能再多了')
+       if(img.files.length>5)
+      {
+          alert('兄dei最多五张，不能再多了')
+          location.reload([true])
        }
+       for(let i=0;i<img.files.length;i++){
             let newDiv=document.createElement('div');
             let twoDiv=document.createElement('div');
             twoDiv.innerText='X';
@@ -135,13 +138,15 @@
         let goodsImg=document.createElement('img');
         goodsImg.style.width=`150px`
         goodsImg.style.height=150+'px'
-        goodsImg.src=window.URL.createObjectURL(img.files[0]);
+        goodsImg.src=window.URL.createObjectURL(img.files[i]);
         newDiv.appendChild(goodsImg)
         newDiv.appendChild(twoDiv)
         mes.appendChild(newDiv);
          twoDiv.onclick=function(){
              mes.removeChild(this.parentNode)
          }
+       }
+           
     }
     let imgMes=document.getElementById('textMes');
     let submit=document.getElementById('submit');

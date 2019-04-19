@@ -32,6 +32,17 @@ function state() {
 	}
 
 }
+function sendPid(id) {
+				
+	var xhr = new XMLHttpRequest;
+	xhr.onreadystatechange = function () {
+		if (xhr.status == 200 && xhr.readyState == 4) {
+			window.location.href = `goods.html?pid=${id}`
+		}
+	}
+	xhr.open('POST', '/huanle/product/showProduct')
+	xhr.send(id)
+}
 function ajax() {
 	$.ajax({
 		url:  `huanle/personal/getUserInfo${window.location.search}`,
@@ -68,7 +79,7 @@ function ajax() {
 						$('.boxThreeUl').prepend('<li><div class="collect"><div class="clctImg"><a href="" class="clctImgA"><img src="images/01_mid.jpg" alt="" class="clctImgCont"></a></div><div class="clctInfo"><span class="clctInfo-name">卖家</span><span class="clctInfo-cont"><a href="#" class="clctInfoSell"></a></span><span class="clctInfo-name">名称</span><span class="clctInfo-cont clctInfoGoods"></span><span class="clctInfo-name">价格</span><span class="clctInfo-cont clctInfoPrice"></span></div><div class="clctCancle"><span>取消收藏</span></div></div></li>');
 					}
 					var aclctCancle = document.getElementsByClassName('clctCancle');
-					for (var i = 0; i < arr.collection.length; i++) {
+					for (var i = 0; i < data.collection.length; i++) {
 						(function (j) {
 							aclctCancle[j].onclick = function () {
 								$.ajax({
@@ -76,7 +87,7 @@ function ajax() {
 									type: "post",
 									data: {
 										"choice": 1,
-										"order_id": arr.collection[j].order_id
+										"order_id": data.collection[j].order_id
 									},
 									success: function (data) {
 										var as = eval("(" + data + ")");
@@ -96,25 +107,25 @@ function ajax() {
 					var aclctInfoSell = document.getElementsByClassName('clctInfoSell');
 					var aclctInfoGoods = document.getElementsByClassName('clctInfoGoods');
 					var aclctInfoPrice = document.getElementsByClassName('clctInfoPrice');
-					for (var i = 0; i < arr.collection.length; i++) {
-						aclctImgA[i].href = "goods.html?order_id=" + arr.collection[i].order_id;
-						aclctImgCont[i].src = "img/" + arr.collection[i].picture;
-						// aclctInfoSell[i].href="people.html?"+arr.collection.user_name;
-						aclctInfoSell[i].innerHTML = arr.collection[i].user_name;
-						aclctInfoGoods[i].innerHTML = arr.collection[i].order_name;
-						aclctInfoPrice[i].innerHTML = arr.collection[i].price;
+					for (var i = 0; i < data.collection.length; i++) {
+						aclctImgA[i].href = "goods.html?order_id=" + data.collection[i].order_id;
+						aclctImgCont[i].src = "img/" + data.collection[i].picture;
+						// aclctInfoSell[i].href="people.html?"+data.collection.user_name;
+						aclctInfoSell[i].innerHTML = data.collection[i].user_name;
+						aclctInfoGoods[i].innerHTML = data.collection[i].order_name;
+						aclctInfoPrice[i].innerHTML = data.collection[i].price;
 					}
 				}
 
 				//设置历史发布信息
-				if (arr.history.length == 0) {
+				if (data.history.length == 0) {
 					$('.boxFourUl').prepend('<p class="NoColHis">赶快去发布自己的物品吧！</p>');
 				} else {
-					for (var i = 0; i < arr.history.length; i++) {
+					for (var i = 0; i < data.history.length; i++) {
 						$('.boxFourUl').prepend('<li><div class="history"><div class="histImg"><a href="" class="histImgA"><img src="images/01_mid.jpg" alt="" class="histImgCont"></a></div><div class="histInfo"><span class="histInfo-name">名称</span><span class="histInfo-cont histInfoCont"></span><span class="histInfo-name">价格</span><span class="histInfo-cont histInfoPrice"></span><span class="histInfo-name">日期</span><span class="histInfo-cont histInfoTime"></span></div><span class="pressStatus"></span><div class="histCancle"><span>删除记录</span></div></div></li>');
 					}
 					var ahistCancle = document.getElementsByClassName('histCancle');
-					for (var i = 0; i < arr.history.length; i++) {
+					for (var i = 0; i < data.history.length; i++) {
 						(function (j) {
 							ahistCancle[i].onclick = function () {
 								$.ajax({
@@ -122,13 +133,13 @@ function ajax() {
 									type: "post",
 									data: {
 										"choice": 2,
-										"order_id": arr.history[j].order_id
+										"order_id": data.history[j].order_id
 									},
 									success: function (data) {
-										var arr = eval("(" + data + ")");
-										if (arr.ok == 0) {
+										var data = eval("(" + data + ")");
+										if (data.ok == 0) {
 											alert('很抱歉，删除失败!');
-										} else if (arr.ok == 1) {
+										} else if (data.ok == 1) {
 											alert('删除成功！');
 											location.reload([true]);
 										}
@@ -143,21 +154,107 @@ function ajax() {
 					var ahistInfoPrice = document.getElementsByClassName('histInfoPrice');
 					var ahistInfoTime = document.getElementsByClassName('histInfoTime');
 					var pressStatus = document.getElementsByClassName('pressStatus');
-					for (var i = 0; i < arr.history.length; i++) {
-						ahistImgA[i].href = "goods.html?order_id=" + arr.history[i].order_id;
-						ahistImgCont[i].src = "images/" + arr.history[i].picture;
-						ahistInfoCont[i].innerHTML = arr.history[i].order_name;
-						ahistInfoPrice[i].innerHTML = arr.history[i].price;
-						ahistInfoTime[i].innerHTML = arr.history[i].time;
+					for (var i = 0; i < data.history.length; i++) {
+						ahistImgA[i].href = "goods.html?order_id=" + data.history[i].order_id;
+						ahistImgCont[i].src = "images/" + data.history[i].picture;
+						ahistInfoCont[i].innerHTML = data.history[i].order_name;
+						ahistInfoPrice[i].innerHTML = data.history[i].price;
+						ahistInfoTime[i].innerHTML = data.history[i].time;
 						pressStatus[i].innerHTML= '审核';
 					}
 				}
-
 				//执行收藏与历史分页分页函数
 				evlau();
-			} else if (arr.err == 1) {
+			} else if (data.err == 1) {
 				self.location = 'error.html';
 			}
+
+			//订单历史
+			var woqingqiu=document.querySelector('.woqingqiu')
+			var qingqiuwo=document.querySelector('.qingqiuwo')
+			for (var i = 0; i < data.qingqiu.length; i++) {
+			woqingqiu.innerHTML=`<li><img src="${1}" width="90px" height="90px" alt=""><span>${1}</span><a class="orderDetail" href="javascript:;">订单详情</a><button class="cancelOrder">取消订单</button></li>`
+			qingqiuwo.innerHTML=`<li><img src="${1}" width="90px" height="90px" alt=""><span>${1}</span><a class="orderDetail specialDetail" href="javascript:;">订单详情</a><button class="cancelOrder">取消订单</button></li>`	
+		}
+			
+			
+			var orderContent=document.getElementById('orderContent')
+			var cancelOrder=document.querySelectorAll('.cancelOrder')
+			var orderDetail=document.querySelectorAll('.orderDetail')
+			var specialDetail=document.querySelectorAll('.specialDetail')
+		
+			for(let j=0;j<orderDetail.length;j++){
+				orderDetail[j].onclick=function(){
+					orderContent.style.display='block';
+					$.ajax({
+						url: "huanle/",
+						type: "get",
+						success: function (data) {
+							if (data.code == 0) {
+								orderContent.innerHTML=` <h2>订单详情</h2> <span class="deleteX">X</span>
+								<p class="orderTitle">订单编号：<span>${2}</span></p> <p class="orderTitle">创建时间：<span>${2}</span></p>
+					<div class="contrast">
+						<h3>你的物品</h3>
+					   <a href="javascript:;" onclick='sendPid(${goods.data.productList[j].product.pid})><img src="${1}" alt="" width="150px" height="150px"></a>
+						<p>名称：<span>${1}</span></p>
+						<p>类型：<span>${1}</span></p>
+						<p>数量：<span>${1}</span></p>
+						<p>价格：<span>${1}</span></p>
+						<p>新旧程度：<span>${1}</span></p>
+						<p>联系方式：<span>${1}</span></p>
+					</div>
+					<div class="contrast">
+						<h3>对方物品</h3>
+					   <a href="javascript:;" onclick='sendPid(${goods.data.productList[j].product.pid})><img src="${1}" alt=""  width="150px" height="150px"></a>
+						<p>名称：<span>${1}</span></p>
+						<p>类型：<span>${1}</span></p>
+						<p>数量：<span>${1}</span></p>
+						<p>价格：<span>${1}</span></p>
+						<p>新旧程度：<span>${1}</span></p>
+						<p>联系方式：<span>${1}</span></p>
+					</div>
+					<button class="agreeOrder orderdoWell">同意订单</button><button class="orderdoWell">删除订单</button>
+					`
+					
+							} else{
+								alert('网络错误');
+							}
+						}
+					})	
+					var agreeOrder=document.querySelector('.agreeOrder')
+					for(let k=0;k<specialDetail.length;k++){
+				specialDetail[k].onclick=function(){
+					agreeOrder.style.display='block'
+				}
+			}
+                    
+				}
+			}
+			var deleteX=document.querySelector('.deleteX')
+			deleteX.onclick=function(){
+				orderContent.style.display='none'
+			}
+			for (let i = 0; i < cancelOrder.length; i++) {
+				cancelOrder[i].onclick = function () {
+						$.ajax({
+							url: "delete.php",
+							type: "post",
+							data: {
+								"choice": 2,
+								"order_id": data.history[j].order_id
+							},
+							success: function (data) {
+								var data = eval("(" + data + ")");
+								if (data.ok == 0) {
+									alert('很抱歉，删除失败!');
+								} else if (data.ok == 1) {
+									alert('删除成功！');
+									location.reload([true]);
+								}
+							}
+						})
+					}
+				}
 		}
 	})
 }
@@ -196,8 +293,8 @@ function submitEdit() {
 				"sex": selectvalue
 			},
 			success: function (data) {
-				var arr = eval(data);
-				if (arr.ok == 1) {
+				var data = eval(data);
+				if (data.ok == 1) {
 					alert('恭喜您，修改成功！');
 					var storage=newwindow.localStorage;
 					storage.userName=aeditName[0].value;
@@ -210,7 +307,7 @@ function submitEdit() {
 					event.stopPropagation();
 					
 					ajax();
-				} else if (arr.ok == 0) {
+				} else if (data.ok == 0) {
 					alert('很抱歉，修改出错！');
 				}
 			}
@@ -252,10 +349,10 @@ function loginOut() {
 			url: "",
 			type: "post",
 			success: function (data) {
-				var arr = eval(data);
-				if (arr.status == 0) {
+				var data = eval(data);
+				if (data.status == 0) {
 
-				} else if (arr.status == 1) {
+				} else if (data.status == 1) {
 
 				}
 			},

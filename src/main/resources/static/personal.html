@@ -161,25 +161,59 @@
 				<ul class="boxFourUl"></ul>
 			</div>
 			<div class="box" id="boxSix">
-                 <ul>
-					
-				 </ul>
+				<div class="dingdan">
+					<h2>我请求的：</h2>
+					<ul class="woqingqiu">
+						<li><img src="img/demo.jpg" width="90px" height="90px" alt=""><span>1111</span><a class="orderDetail" href="javascript:;">订单详情</a><button>取消订单</button></li>
+						<li><img src="img/demo.jpg" width="90px" height="90px" alt=""><span>1111</span><a href="javascript:;">订单详情</a><button>取消订单</button></li>
+					</ul>
+				</div>
+				<div class="dingdan">
+					<h2>请求我的：</h2>
+					<ul class="qingqiuwo">	<li><img src="img/demo.jpg" width="90px" height="90px" alt=""><span>1111</span><a href="">订单详情</a><button>取消订单</button></li>
+						<li><img src="img/demo.jpg" width="90px" height="90px" alt=""><span>1111</span><a href="">订单详情</a><button>取消订单</button></li>
+				</div>
+
 			</div>
 			<div class="box" id="boxfive">
 				<p class="corrent">修改密码:</p>
 				<form action="/huanle/personal/updatePasswd" id="correntPass">
-					<p><label for="">原密码:</label><input type="password" name="oldPasswd" class="beforeWord" required></p>
-					<p><label for="">新密码:</label><input type="password" name="newPasswd" class="afterWord" placeholder="新密码应为6~12位"
-							minlength="6" maxlength="12" required></p>
+					<p><label for="">原密码:</label><input type="password" name="oldPasswd" class="beforeWord" required>
+					</p>
+					<p><label for="">新密码:</label><input type="password" name="newPasswd" class="afterWord"
+							placeholder="新密码应为6~12位" minlength="6" maxlength="12" required></p>
 					<p><label for="">确认密码:</label><input type="password" placeholder="新密码应为6~12位" class="requireWord"
 							minlength="6" maxlength="12" required></p>
 					<input type="button" value="确认修改" id="corrent">
 				</form>
 			</div>
-
 		</div>
 	</article>
-
+       <div id="orderContent">
+		   <h2>订单详情</h2> <span class="deleteX">X</span>
+		   <p class="orderTitle">订单编号：<span>22</span></p> <p class="orderTitle">创建时间：<span>xxx</span></p>
+		   <div class="contrast">
+			   <h3>你的物品</h3>
+			  <a href=""><img src="img/demo.jpg" alt="" width="150px" height="150px"></a>
+			   <p>名称：<span>222</span></p>
+			   <p>类型：<span>222</span></p>
+			   <p>数量：<span>22</span></p>
+			   <p>价格：<span></span></p>
+			   <p>新旧程度：<span></span></p>
+			   <p>联系方式：<span></span></p>
+		   </div>
+		   <div class="contrast">
+			   <h3>对方物品</h3>
+			  <a href=""><img src="img/demo.jpg" alt=""  width="150px" height="150px"></a>
+			   <p>名称：<span></span></p>
+			   <p>类型：<span>222</span></p>
+			   <p>数量：<span></span></p>
+			   <p>价格：<span></span></p>
+			   <p>新旧程度：<span></span></p>
+			   <p>联系方式：<span></span></p>
+		   </div>
+		   <button class="agreeOrder orderdoWell">同意订单</button><button class="orderdoWell">删除订单</button>
+	   </div>
 
 
 	<!-- 引入JS文件 -->
@@ -240,7 +274,7 @@
 		let fn = new FormData(correntPass)
 		xhr.onreadystatechange = function () {
 			if (xhr.status == 200 && xhr.readyState == 4) {
-                
+
 			}
 		}
 		xhr.open('POST', 'http://192.168.2.54:8080/huanle/personal/updatePasswd', true)
