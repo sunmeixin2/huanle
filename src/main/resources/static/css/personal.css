@@ -643,13 +643,23 @@ article {
 
 .Pagination {
 	float: left;
-	height: 55px;
-	_height: 45px;
+	width: auto;
+	height: 65px;
+	_height: 65px;
 	line-height: 20px;
 	margin-left: 280px;
 	margin-top: 40px;
 	color: #565656;
 	clear: both;
+	font-size: 20px;
+	text-align: left;
+}
+
+.Pagination a,
+.Pagination input,
+.Pagination span{
+	margin-left: 15px !important;
+	margin-top: 5px !important;
 }
 .corrent{
 	color: #00AC90;

@@ -57,6 +57,7 @@ public class PersonalController {
      * @param request
      * @return
      */
+    @RequestMapping("collectionList")
     public ResponseVO collectionList(HttpServletRequest request){
         UserInfo up = (UserInfo) request.getSession().getAttribute("userInfo");
         if(up == null){
