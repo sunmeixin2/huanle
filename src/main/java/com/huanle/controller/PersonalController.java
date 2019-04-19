@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.List;
 import java.util.Map;
 
 @RequestMapping("huanle/personal")
@@ -58,12 +57,15 @@ public class PersonalController {
      * @return
      */
     @RequestMapping("collectionList")
-    public ResponseVO collectionList(HttpServletRequest request){
+    public ResponseVO collectionList(Integer uid,HttpServletRequest request){
         UserInfo up = (UserInfo) request.getSession().getAttribute("userInfo");
         if(up == null){
             return new ResponseVO(ErrorCode.UNKNOW_ERROR,"请登录后,再操作！");
         }
-        Integer uid = up.getUid();
+        if(uid == null || uid <= 0){
+            return new ResponseVO(ErrorCode.UNKNOW_ERROR,"非法参数:uid!");
+        }
+
         Map data = personalService.getCollectList(uid);
         if(data != null){
             return new ResponseVO(ErrorCode.RESPONSE_SUCCESS,data);
