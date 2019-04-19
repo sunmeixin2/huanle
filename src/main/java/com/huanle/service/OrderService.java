@@ -61,12 +61,99 @@ public class OrderService {
         }
         return result;
     }
+    //订单历史
+    public Map getOrderList(Integer uid){
+        Map<String,Object> result = new HashMap<>();
+        List<Map> orders = ordersMapper.getListByUid(uid);
+        if(orders != null) {
+            result.put("total", orders.size());
+            result.put("orders", commonDealPicture(orders));
+        }
+        return result;
+    }
 
-//    public Map getListByaUid(Integer upId){
-//        Map<String,Object> result = new HashMap<>();
-//
-//
-//
-//
-//    }
+    //我请求的订单
+    public Map getExchangeOtherList(Integer uid){
+        Map<String,Object> result = new HashMap<>();
+        List<Map> orders = ordersMapper.getListByAuid(uid);
+        if(orders != null) {
+            result.put("total", orders.size());
+            result.put("orders", commonDealPicture(orders));
+        }
+        return result;
+    }
+
+    //请求我的订单
+    public Map getExchangeMeList(Integer uid){
+        Map<String,Object> result = new HashMap<>();
+        List<Map> orders = ordersMapper.getListByBuid(uid);
+        if(orders != null) {
+            result.put("total", orders.size());
+            result.put("orders", commonDealPicture(orders));
+        }
+        return result;
+    }
+
+    public List<Map> commonDealPicture(List<Map> orders){
+        for(Map order : orders){
+            String[] picture = CommonUtil.pictureToArr((String)order.get("picture"));
+            order.put("picture",picture[0]);
+        }
+        return orders;
+    }
+
+    public Boolean orderDeal(Integer oid,Integer type){
+        int flag;
+        if(type == 1){      //乙方同意
+            flag = ordersMapper.updateStatusByOid(oid);
+
+        }else if(type == 2){        //取消订单
+           flag = ordersMapper.deleteByPrimaryKey(oid);
+        }else {
+            return false;
+        }
+
+        if(flag == 1){
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+    //订单详情
+    public Map detail(Integer oid,Integer upId){
+        Map<String,Object> result = new HashMap<>();
+        Orders orders = ordersMapper.selectByPrimaryKey(oid);
+        if(orders != null){
+            result.put("nums",orders.getNums());
+            result.put("oid",oid);
+            result.put("createAt",orders.getCreateAt());
+
+            Map dataOfMy = ordersMapper.myself(oid);
+            if(dataOfMy != null){
+                Integer uid = (Integer)dataOfMy.get("uid");
+                if(uid.equals(upId)){
+                    dataOfMy.put("status","同意");
+                }else{
+                    dataOfMy.put("status","等待同意");
+                }
+                result.put("myself",dataOfMy);
+            }
+
+            Map dataOfOther = ordersMapper.other(oid);
+            if(dataOfOther != null){
+                Integer uid = (Integer)dataOfOther.get("uid");
+                if(uid.equals(upId)){
+                    dataOfOther.put("status","同意");
+                }else{
+                    dataOfOther.put("status","等待同意");
+                }
+                result.put("other",dataOfOther);
+            }
+
+        }
+
+        return result;
+    }
+
 }

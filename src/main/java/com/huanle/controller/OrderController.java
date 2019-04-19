@@ -78,6 +78,25 @@ public class OrderController {
     }
 
     /**
+     * 全部订单
+     */
+    @RequestMapping("orderList")
+    public ResponseVO orderList(HttpServletRequest request){
+        UserInfo up = (UserInfo) request.getSession().getAttribute("userInfo");
+        if(up == null){
+            return new ResponseVO(ErrorCode.UNKNOW_ERROR,"未登录!");
+        }
+        Integer upId = up.getUid();
+        Map data = orderService.getOrderList(upId);
+        if(data != null){
+            return new ResponseVO(ErrorCode.RESPONSE_SUCCESS,data);
+        }else {
+            return new ResponseVO(ErrorCode.UNKNOW_ERROR,"订单列表为空！");
+        }
+
+    }
+
+    /**
      * 我请求交换的订单列表
      * @param request
      * @return
@@ -92,8 +111,14 @@ public class OrderController {
         if(upId == null){
             return new ResponseVO(ErrorCode.UNKNOW_ERROR,"请先登录！");
         }
+        Map data = orderService.getExchangeOtherList(upId);
 
-        return new ResponseVO(ErrorCode.RESPONSE_SUCCESS,"");
+        if(data != null){
+            return new ResponseVO(ErrorCode.RESPONSE_SUCCESS,data);
+        }else {
+            return new ResponseVO(ErrorCode.UNKNOW_ERROR,"订单列表为空！");
+        }
+
     }
 
 
@@ -104,26 +129,73 @@ public class OrderController {
      */
     @RequestMapping("exchangeMe")
     public ResponseVO exchangeMe(HttpServletRequest request){
-        return new ResponseVO(ErrorCode.RESPONSE_SUCCESS,"");
+        UserInfo up = (UserInfo)request.getSession().getAttribute("userInfo");
+        Integer upId =  (up == null)? null:up.getUid();
+        if(upId == null){
+            return new ResponseVO(ErrorCode.UNKNOW_ERROR,"请先登录！");
+        }
+
+        Map data = orderService.getExchangeMeList (upId);
+        if(data != null){
+            return new ResponseVO(ErrorCode.RESPONSE_SUCCESS,data);
+        }else {
+            return new ResponseVO(ErrorCode.UNKNOW_ERROR,"订单列表为空！");
+        }
+
     }
 
 
     /**
-     * 同意请求
-     * @param pid
+     * 同意和取消请求
+     * @param oid
+     * @param type
      * @param request
      * @return
      */
     @RequestMapping("agreeRequest")
-    public ResponseVO agreeRequest(Integer pid, HttpServletRequest request){
-        return new ResponseVO(ErrorCode.RESPONSE_SUCCESS,"");
+    public ResponseVO agreeAndCancle(Integer oid,Integer type, HttpServletRequest request){
+        UserInfo up = (UserInfo) request.getSession().getAttribute("userInfo");
+        if(up == null){
+            return new ResponseVO(ErrorCode.UNKNOW_ERROR,"请登录后再确认！");
+        }
+        if(oid == null || oid <= 0){
+            return new ResponseVO(ErrorCode.UNKNOW_ERROR,"非法参数:oid");
+        }
+        if(type == null || type <= 0){
+            return new ResponseVO(ErrorCode.UNKNOW_ERROR,"非法参数:type");
+        }
+        if(orderService.orderDeal(oid,type)){
+            return new ResponseVO(ErrorCode.RESPONSE_SUCCESS,"确认成功！");
+        }else{
+            return new ResponseVO(ErrorCode.RESPONSE_SUCCESS,"确认失败失败！");
+        }
+
+
+
     }
 
-    /**
-     * 取消订单
-     */
 
     /**
      * 订单详情
      */
+    @RequestMapping("orderDetail")
+    public ResponseVO orderDetail(Integer oid,HttpServletRequest request){
+
+        UserInfo up = (UserInfo) request.getSession().getAttribute("userInfo");
+        if(up == null){
+            return new ResponseVO(ErrorCode.UNKNOW_ERROR,"请先登录！");
+        }
+        if(oid == null || oid <= 0){
+            return new ResponseVO(ErrorCode.UNKNOW_ERROR,"非法参数:oid");
+        }
+        Integer upId = up.getUid();
+        Map data = orderService.detail(oid,upId);
+        if (data != null){
+            return new ResponseVO(ErrorCode.RESPONSE_SUCCESS,data);
+        }else {
+            return new ResponseVO(ErrorCode.UNKNOW_ERROR,"查询订单失败！");
+        }
+
+
+    }
 }

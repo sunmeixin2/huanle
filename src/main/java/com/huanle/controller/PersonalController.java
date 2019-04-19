@@ -157,9 +157,6 @@ public class PersonalController {
      */
     @RequestMapping("updatePasswd")
     public ResponseVO updatePasswd(String newPasswd,String oldPasswd,HttpServletRequest request){
-//        if(uid == null || uid <= 0){
-//            return new ResponseVO(ErrorCode.UNKNOW_ERROR,"非法参数：uid");
-//        }
         if(newPasswd == null || newPasswd.equals("")){
             return new ResponseVO(ErrorCode.UNKNOW_ERROR,"非法参数：newPasswd");
         }
