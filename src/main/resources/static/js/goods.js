@@ -26,13 +26,20 @@ function state() {
 	mes.open('GET', '/huanle/index/upInfo', true)
 	mes.send(null)
 	var out = document.getElementById('out')
+	var entry = document.getElementById('gerenzhuye')
 	out.onclick = function () {
 		window.localStorage.clear()
 		location.reload([true]);
 	}
+	entry.onclick=function () {
+		window.location.href=`personal.html?uid=${uid}`
+	}
 
 }
-
+var sendData={
+	uidd:'',
+	pidd:[]
+}
 function ajaxContent() {
 	var infoTitle = document.querySelector('.info-title');
 	$.ajax({
@@ -42,6 +49,7 @@ function ajaxContent() {
 		success: function (data) {
 			//收藏按钮设置
 			console.log(data)
+			sendData.uidd=data.data.uid;
 		var arrs=	window.location.search.split('=')
 		 var pidValue=arrs[1];
 			var collBtn = document.getElementsByClassName('info-coll');
@@ -69,20 +77,19 @@ function ajaxContent() {
 							}
 						}
 					})
-				} else if (arr.ifcoll == 1) {
+				} else if (data.data.collection!=0) {
 					$.ajax({
-						url: "delete.php",
+						url: "/huanle/personal/deleteCollection",
 						type: "post",
 						data: {
-							"choice": 1,
-							"order_id": order_idNum
+							title:data.data.productInfo.title,
+							pid:  pidValue
 						},
 						success: function (data) {
-							var returnData = eval("(" + data + ")");
-							if (returnData.ok == 1) {
+							if (data.code==0) {
 								alert('取消收藏成功');
 								location.reload([true]);
-							} else if (returnData.ok == 0) {
+							} else if (data.code!= 0) {
 								alert("取消收藏失败！");
 							}
 						}
@@ -268,6 +275,65 @@ function evalu() {
 		PagesNavMth: 5 //导航显示个数
 	});
 }
+
+let doWell=document.getElementById('doWell')
+let changeList=document.getElementById('changeList')
+let tochange=document.getElementById('tochange')
+let detailList=document.querySelector('.detailList')
+
+	doWell.onclick=function(){
+	changeList.style.display='block';
+	let xhr=new XMLHttpRequest;
+	xhr.onreadystatechange=function(){
+		if(xhr.status==200&&xhr.readyState==4){
+			let goodsList=JSON.parse(xhr.responseText)
+			console.log(goodsList)
+			for(let i=0;i<goodsList.data.productList.length;i++)
+			{    sendData.pidd[i]=goodsList.data.productList[i].pid;
+				detailList.innerHTML+=`<p><label for="${goodsList.data.productList[i].pid}">
+					 <img src="${goodsList.data.productList[i].picture}" height="100px" width="100px" alt=""><span>${goodsList.data.productList[i].title}</span><span>${goodsList.data.productList[i].myType}</span><span>${goodsList.data.productList[i].price}</span>
+				 </label><input type="radio" id="${goodsList.data.productList[i].pid}" class="listlist" name="product" value="${goodsList.data.productList[i].pid}"></p>`
+			}
+		tochange.onclick=function(){
+				var listlist=document.querySelectorAll('.listlist')
+				var flag=0;
+				for(let j=0;j<listlist.length;j++){
+					if(listlist[j].checked==true){
+						uidA =	sendData.pidd[j];
+						flag=1;
+					}
+				}
+				if(flag==0){
+				return	alert('meixuanzhongzhi')
+				}
+
+					$.ajax({
+						url: "huanle/orders/exchange",
+						type: "post",
+						data: {
+							pid:sendData.uidd,
+							upPid:uidA
+						},
+						success: function (data) {
+                               if(data.code==0){
+                               	alert(data.data)
+								   location.reload([true])
+							   }
+						}
+					})
+			}
+
+		}
+
+	}
+	xhr.open('GET','huanle/orders/getUpProductList',true)
+	xhr.send(null);
+}
+let close=document.getElementById('close')
+close.onclick=function(){
+	changeList.style.display='none';
+}
+
 window.onload = function () {
 	state()
 	ajaxContent(); //ajax动态填充内容

@@ -58,16 +58,17 @@
 			width: 500px;
 			box-sizing: border-box;
 			padding: 10px;
-			height: 500px;
+			height: 600px;
 			border-radius: 10px;	
 			background: rgb(212, 227, 230);
 			display: none;
 			z-index: 1000;
 		}
-		#changeList p{
-			font-weight: bold;
-			width: 100px;
-			float: left;
+		#changeList .classList p{
+			margin: 10px auto;
+			width: 460px;
+			height: 130px;
+			border-bottom: 1px solid #ccc
 		}
 		#changeList a{
 			width: 100px;
@@ -75,36 +76,32 @@
 			text-align: right;
 			text-decoration: none
 		}
+		#changeList button{
+			width: 70px;
+			height: 50px;
+			border-radius: 10px;
+			border: none;
+			background: white;
+			margin: 5px 400px;
+
+		}
 		.classList{
 			clear: both;
 			width: 480px;
-			height: 460px;
+			height: 490px;
 			overflow: auto;
 			background: rgb(255, 255, 255)
 		}
-		.classList li{
-			margin: 10px auto;
-			width: 460px;
-			height: 130px;
-			border-bottom: 1px solid #ccc
+		.classList label{
+			width: 230px;
 		}
-		.classList li span {
+		.classList p span {
 			font-size: 16px;
-			margin-left: 50px;
+			margin-left: 65px;
 			vertical-align: middle;
 
 		}
-		.classList li button{
-			width: 60px;
-			height: 30px;
-			border-radius: 15px;
-			border: none;
-			vertical-align: middle;
-			background: rgb(182, 227, 245);
-			display: inline-block;
-			margin:-50px 0 0 350px;
-			outline: none;
-		}
+
 		#haveLogin{
 
 			height: 80px;
@@ -126,10 +123,10 @@
 			margin-top: 10px
 		}
 		#sanjiao{
-			margin-left: 310px;
+			margin-left: 10px;
 		}
 		#tips{
-			margin-left: 300px;
+			margin-left: 0px;
 		}
 	</style>
 </head>
@@ -156,7 +153,7 @@
 			</div>
 			<div id="xiabanjie">
 				<p class="inttt">
-				<a href="personal.html">个人主页</a>
+				<a href="personal.html" id="gerenzhuye">个人主页</a>
 			</p>
 			<p class="inttt">
 				<a href="javascript:;" id="out">退出</a>
@@ -240,11 +237,12 @@
 		<div id="changeList">
 			<p>你的物品：</p> <a href="javascript:;" id="close">X</a>
 			<div class="classList">
-				<ul class="detailList">
-				
-				</ul>
-			</div>
+			 <form class="detailList">
 
+			 </form>
+
+			</div>
+			<button id="tochange">want</button>
 		</div>
 	</article>
 
@@ -268,42 +266,6 @@
 				tips.style.display = 'none';
 				triangle.style.display = 'none';
 			}, 600)
-		}
-		function toChange(){
-			let xhr=new XMLHttpRequest;
-			   xhr.onreadystatechange=function(){
-				   if(xhr.status==200&&xhr.readyState==4){
-					   
-				   }
-			   }
-			   xhr.open('POST',d,true)
-			   xhr.send();
-		}
-		let doWell=document.getElementById('doWell')
-		let changeList=document.getElementById('changeList')
-		let detailList=document.querySelector('.detailList')
-		doWell.onclick=function(){
-			   changeList.style.display='block';
-			   let xhr=new XMLHttpRequest;
-			   xhr.onreadystatechange=function(){
-				   if(xhr.status==200&&xhr.readyState==4){
-					   let goodsList=JSON.parse(xhr.responseText)
-					   var mes=''
-					   for(let i=0;i<goodsList.length;i++){
-						   mes+=`
-					<li><img src="" height="100px" width="100px" alt=""><span>${1}</span><button onclick="toChange()">拿它换</button></li>
-						   `
-					
-					   }	
-					   detailList.innerHTML=mes;
-				   }
-			   }
-			   xhr.open('GET',d,true)
-			   xhr.send(null);
-		}
-		let close=document.getElementById('close')
-		close.onclick=function(){
-			changeList.style.display='none';
 		}
 
 	</script>

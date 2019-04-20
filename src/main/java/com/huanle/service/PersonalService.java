@@ -103,7 +103,7 @@ public class PersonalService {
             map.put("advice", ProductConstant.ADVICE.get(productInfo.getAdvice()));
             map.put("exchangeType",productInfo.getExchangeType());
             String[] picture = CommonUtil.pictureToArr(productInfo.getPicture());
-            map.put("picture",picture[0]);
+            map.put("picture",picture);
 
             data.add(map);
         }

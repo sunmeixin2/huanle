@@ -671,7 +671,7 @@ article {
 	height: 1000px;
 }
 .dingdan{
-	width: 800px;
+	width: 850px;
 	height: 800px;
 	margin: 0 auto;
 	overflow: hidden;
@@ -684,14 +684,14 @@ article {
 }
 
 .dingdan ul{
-	width: 700px;	
+	width: 800px;
 	height: 650px;
 	margin: 10px auto;
 	overflow: auto
 
 }
 .dingdan li{
-	width: 700px;
+	width: 800px;
 	height: 100px;
 	line-height: 100px;
 	border-bottom: 1px solid #ccc
@@ -715,7 +715,7 @@ article {
 }
 #orderContent{
 	width: 800px;
-	height: 700px;
+	height: 800px;
 	background: rgb(241, 250, 240);
 	border-radius: 10px;
 	border: 1px solid #ccc;
@@ -750,10 +750,15 @@ article {
 	margin:20px 0 0 10px;
 	width:300px;
 }
+.orderTitleBox{
+	width: 700px;
+	margin:5px auto;
+	overflow: hidden;
+}
 .orderTitle{
-	width: 200px;
+	width: 320px;
 	float: left;
-	margin-left: 100px;
+	margin-left: 0px;
 	color: #565656;
 	font-size: 15px;
 }

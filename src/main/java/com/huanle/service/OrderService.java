@@ -46,6 +46,7 @@ public class OrderService {
             for(ProductInfo productInfo : productInfos){
                 Map<String,Object> tmp = new HashMap();
 
+                tmp.put("pid",productInfo.getPid());
                 tmp.put("title",productInfo.getTitle());
                 String picture[] = CommonUtil.pictureToArr(productInfo.getPicture());
                 tmp.put("picture",picture[0]);
@@ -132,6 +133,8 @@ public class OrderService {
             Map dataOfMy = ordersMapper.myself(oid);
             if(dataOfMy != null){
                 Integer uid = (Integer)dataOfMy.get("uid");
+                String[] picture = CommonUtil.pictureToArr((String) dataOfMy.get("picture"));
+                dataOfMy.put("picture",picture);
                 if(uid.equals(upId)){
                     dataOfMy.put("status","同意");
                 }else{
@@ -143,6 +146,8 @@ public class OrderService {
             Map dataOfOther = ordersMapper.other(oid);
             if(dataOfOther != null){
                 Integer uid = (Integer)dataOfOther.get("uid");
+                String[] picture = CommonUtil.pictureToArr((String) dataOfOther.get("picture"));
+                dataOfOther.put("picture",picture);
                 if(uid.equals(upId)){
                     dataOfOther.put("status","同意");
                 }else{
