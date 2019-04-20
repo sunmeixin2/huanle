@@ -161,6 +161,15 @@
 				<ul class="boxFourUl"></ul>
 			</div>
 			<div class="box" id="boxSix">
+				<input type="button" value="全部订单" class="btns btnsActive">
+				<input type="button" value="我请求的" class="btns">
+				<input type="button" value="请求我的" class="btns">
+				<div class="dingdan" style="display:block">
+						<h2>全部订单：</h2>
+						<ul class="allOrder">
+	            
+						</ul>
+					</div>
 				<div class="dingdan">
 					<h2>我请求的：</h2>
 					<ul class="woqingqiu">
@@ -277,6 +286,20 @@
 		}
 		xhr.open('POST', 'http://192.168.2.54:8080/huanle/personal/updatePasswd', true)
 		xhr.send(fn)
+	}
+	let btns=document.querySelectorAll('.btns')
+	let dingdan=document.querySelectorAll('.dingdan')
+
+	for(let i=0;i<btns.length;i++){
+		btns[i].onclick=function(){
+			for(let j=0;j<btns.length;j++){
+			btns[j].className='btns';
+			dingdan[j].style.display='none'
+		}
+		btns[i].className='btns btnsActive';
+		dingdan[i].style.display='block'
+		}
+		
 	}
 </script>
 

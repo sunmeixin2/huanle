@@ -666,15 +666,26 @@ article {
 	font-size: 22px;
 	border-bottom: 2px solid #00AC90;
 }
+#boxSix{
+	position: relative;
+	height: 1000px;
+}
 .dingdan{
 	width: 800px;
-	height: 600px;
-	margin: 20px auto;
-overflow: hidden;
+	height: 800px;
+	margin: 0 auto;
+	overflow: hidden;
+	position: absolute;
+	left: 200px;
+	top: 0px;
+	top: 100px;
+	left: 100px;
+	display: none
 }
+
 .dingdan ul{
 	width: 700px;	
-	height: 550px;
+	height: 650px;
 	margin: 10px auto;
 	overflow: auto
 
@@ -691,7 +702,7 @@ overflow: hidden;
 .dingdan li span,
 .dingdan li a{
 	width: 100px;
-	margin-left: 200px;
+	margin-left: 250px;
 	text-decoration: none
 }
 .dingdan li button{
@@ -756,4 +767,21 @@ overflow: hidden;
 }
 .agreeOrder{
 	display: none
+}
+.btns{
+	width: 80px;
+	height: 40px;
+	background: rgb(43, 153, 129);
+	border: none;
+	border-radius: 10px;
+	color: white;
+	margin:20px 10px;
+	cursor: pointer;
+	outline: none
+}
+.btns:nth-of-type(1){
+	margin-left: 100px;
+}
+.btnsActive{
+	background: #FFB200
 }
