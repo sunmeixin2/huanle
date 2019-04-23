@@ -29,7 +29,9 @@ public class OrderController {
      * @return
      */
     @RequestMapping("exchange")
-    public ResponseVO exchangeProd(Integer upPid, Integer pid, HttpServletRequest request){
+    public ResponseVO exchangeProd( Integer pid, Integer upPid,HttpServletRequest request){
+        System.out.println("pid == "+ pid);
+        System.out.println("upPid == "+upPid);
 
         UserInfo up = (UserInfo) request.getSession().getAttribute("userInfo");
         Integer upId = up.getUid();
@@ -154,6 +156,8 @@ public class OrderController {
      */
     @RequestMapping("agreeRequest")
     public ResponseVO agreeAndCancle(Integer oid,Integer type, HttpServletRequest request){
+        System.out.println("oid === "+oid);
+        System.out.println("type ==="+type);
         UserInfo up = (UserInfo) request.getSession().getAttribute("userInfo");
         if(up == null){
             return new ResponseVO(ErrorCode.UNKNOW_ERROR,"请登录后再确认！");
@@ -195,7 +199,5 @@ public class OrderController {
         }else {
             return new ResponseVO(ErrorCode.UNKNOW_ERROR,"查询订单失败！");
         }
-
-
     }
 }

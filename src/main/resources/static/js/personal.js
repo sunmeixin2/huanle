@@ -9,7 +9,6 @@ function state() {
         if (mes.status == 200 && mes.readyState == 4) {
             var peo = JSON.parse(mes.responseText);
 
-
             if (peo.code != 0) {
                 haveLogin.style.display = 'none'
             } else if (peo.code === 0) {
@@ -55,20 +54,49 @@ function ajax() {
                 var aRelease = document.getElementsByClassName('personal-release');
                 var loginOut = document.getElementsByClassName('hdr-log-reg');
 
-                aPersPhoto[0].src = "";
-                aCollect[0].innerHTML = "";
-                aRelease[0].innerHTML = "";
+                if(data.data.profileImg!=null){
+                    aPersPhoto[0].src = data.data.profileImg;
+                }else{
+                    aPersPhoto[0].src = "/img/users.png"
+                }
+
+
+
 
                 //设置个人信息
                 var aInfoNumber = document.getElementsByClassName('infoNumber');
                 var aInfoName = document.getElementsByClassName('infoName');
                 var aInfoPhone = document.getElementsByClassName('infoPhone');
                 var aInfoSex = document.getElementsByClassName('infoQQ');
+                var aInfoRT = document.getElementsByClassName('infoRegTime');
+                var aInfoLL = document.getElementsByClassName('infoLastLog');
+                var userHistory = document.getElementsByClassName('userHistory');
                 console.log(data)
+                var regTimes
                 aInfoNumber[0].innerHTML = data.data.email;
                 aInfoName[0].innerHTML = data.data.nickName;
                 aInfoPhone[0].innerHTML = data.data.contact;
                 aInfoSex[0].innerHTML = data.data.gender;
+                if(data.data.regTime){
+                   regTimes=data.data.regTime.split('T')
+                    aInfoRT[0].innerHTML = regTimes[0].replace(/-/g,'/');
+                }else{
+                    aInfoRT.style.display='none'
+                    aInfoLL.style.display='none'
+                    for(let i=0;i<userHistory.length;i++){
+                        userHistory[i].style.display='none'
+                    }
+                }
+                if(data.data.lastLoginTime){
+                    var LastTime=new Date(parseInt(data.data.lastLoginTime)*1000 )
+                    var lasttimesData = LastTime.toLocaleString().split(' ')
+                    Date.prototype.toLocaleString = function () {
+                        return this.getFullYear() + "年" + (this.getMonth() + 1) + "月" + this.getDate() + "日 ";
+                    };
+                    aInfoLL[0].innerHTML = lasttimesData[0];
+                }
+
+
 
                 $.ajax({
                     url: `huanle/personal/collectionList${window.location.search}`,
@@ -80,6 +108,7 @@ console.log(data)
                             if (data.data.collectList.length == 0) {
                                 $('.boxThreeUl').prepend('<p class="NoColHis">客官，您还没有收藏任何东西呦！</p>');
                             } else {
+                                aCollect[0].innerHTML = data.data.collectList.length;
                                 for (var i = 0; i < data.data.collectList.length; i++) {
                                     $('.boxThreeUl').prepend('<li><div class="collect"><div class="clctImg"><a href="" class="clctImgA"><img src="images/01_mid.jpg" alt="" class="clctImgCont"></a></div><div class="clctInfo"><span class="clctInfo-name">goods</span><span class="clctInfo-cont"><a href="#" class="clctInfoSell"></a></span><span class="clctInfo-name">time</span><span class="clctInfo-cont clctInfoGoods"></span></div><div class="clctCancle"><span>取消收藏</span></div></div></li>');
                                 }
@@ -140,6 +169,7 @@ console.log(data)
                             if (data.data.productList.length == 0) {
                                 $('.boxFourUl').prepend('<p class="NoColHis">赶快去发布自己的物品吧！</p>');
                             } else {
+                                aRelease[0].innerHTML = data.data.productList.length;
                                 for (var i = 0; i < data.data.productList.length; i++) {
                                     $('.boxFourUl').prepend('<li><div class="history"><div class="histImg"><a href="" class="histImgA"><img src="images/01_mid.jpg" alt="" class="histImgCont"></a></div><div class="histInfo"><span class="histInfo-name">名称</span><span class="histInfo-cont histInfoCont"></span><span class="histInfo-name">价格</span><span class="histInfo-cont histInfoPrice"></span><span class="histInfo-name">发布时间</span><span class="histInfo-cont histInfoTime"></span></div><span class="pressStatus"></span><div class="histCancle"><span>删除记录</span></div></div></li>');
                                 }
@@ -197,67 +227,20 @@ console.log(data)
                     }
                 })
                 var oids = [];
-                $.ajax({
-                    url: "huanle/orders/orderList",
-                    type: "get",
-                    success: function (data) {
-                        console.log(data)
-                        if (data.code == 0) {
-                            //订单历史
-
-                            var allOrder = document.querySelector('.allOrder')
-
-                            for (var i = 0; i < data.data.orders.length; i++) {
-                                oids.push(data.data.orders[i].oid)
-                                allOrder.innerHTML += `<li><img src="${data.data.orders[i].picture}" width="90px" height="90px" alt=""><span>${data.data.orders[i].title}</span><a class="orderDetail" href="javascript:;">订单详情</a><button class="cancelOrder">取消订单</button></li>`
-                            }
-
-                            $.ajax({
-                                url: "huanle/orders/exchangeOthers",
-                                type: "get",
-                                success: function (data) {
-                                    if (data.code == 0) {
-                                        var woqingqiu = document.querySelector('.woqingqiu')
-                                        for (var i = 0; i < data.data.orders.length; i++) {
-                                            woqingqiu.innerHTML += `<li><img src="${data.data.orders[i].picture}" width="90px" height="90px" alt=""><span>${data.data.orders[i].title}</span><a class="orderDetail" href="javascript:;">订单详情</a><button class="cancelOrder">取消订单</button></li>`
-                                        }
-                                    }
-                                }
-                            })
-                            $.ajax({
-                                url: "huanle/orders/exchangeMe",
-                                type: "get",
-                                success: function (data) {
-                                    if (data.code == 0) {
-                                        var qingqiuwo = document.querySelector('.qingqiuwo')
-                                        for (var i = 0; i < data.data.orders.length; i++) {
-                                            qingqiuwo.innerHTML += `<li><img src="${data.data.orders[i].picture}" width="90px" height="90px" alt=""><span>${data.data.orders[i].title}</span><a class="orderDetail specialDetail" href="javascript:;">订单详情</a><button class="cancelOrder">取消订单</button></li>`
-                                        }
-                                    }
-                                }
-                            })
-
-
-                            var orderContent = document.getElementById('orderContent')
-                            var cancelOrder = document.querySelectorAll('.cancelOrder')
-                            var orderDetail = document.querySelectorAll('.orderDetail')
-                            var specialDetail = document.querySelectorAll('.specialDetail')
-
-                            for (let j = 0; j < orderDetail.length; j++) {
-                                orderDetail[j].onclick = function () {
-                                    orderContent.style.display = 'block';
-                                    $.ajax({
-                                        url: `huanle/orders/orderDetail?oid=${oids[j]}`,
-                                        type: "get",
-                                        success: function (data) {
-                                            console.log(data)
-                                            if (data.code == 0) {
-                                                var times = new Date(parseInt(data.data.createAt) * 1000)
-                                                var timesData = times.toLocaleString().split(' ')
-                                                Date.prototype.toLocaleString = function () {
-                                                    return this.getFullYear() + "年" + (this.getMonth() + 1) + "月" + this.getDate() + "日 ";
-                                                };
-                                                orderContent.innerHTML = `<h2>订单详情</h2><span class="deleteX">X</span>
+                function dianji(j,k){
+                    orderContent.style.display = 'block';
+                    $.ajax({
+                        url: `huanle/orders/orderDetail?oid=${oids[j]}`,
+                        type: "get",
+                        success: function (data) {
+                            console.log(data)
+                            if (data.code == 0) {
+                                var times = new Date(parseInt(data.data.createAt) * 1000)
+                                var timesData = times.toLocaleString().split(' ')
+                                Date.prototype.toLocaleString = function () {
+                                    return this.getFullYear() + "年" + (this.getMonth() + 1) + "月" + this.getDate() + "日 ";
+                                };
+                                orderContent.innerHTML = `<h2>订单详情</h2><span class="deleteX">X</span>
 <div class="orderTitleBox"> <p class="orderTitle">订单编号：<span>${data.data.nums}</span></p> <p class="orderTitle">创建时间：<span>${timesData[0]}</span></p></div>
 		   <div class="contrast">
 			   <h3>你的物品</h3>
@@ -281,46 +264,136 @@ console.log(data)
 			   <p>新旧程度：<span>${data.data.other.is_new}</span></p>
 			   <p>联系方式：<span>${data.data.other.contact}</span></p>
 		   </div>
-		   <button class="agreeOrder orderdoWell">同意订单</button><button class="orderdoWell">删除订单</button>`
-                                                var deleteX = document.querySelector('.deleteX')
-                                                deleteX.onclick = function () {
-                                                    orderContent.style.display = 'none'
+		   <button class="agreeOrder orderdoWell">agree</button><button class="cancelOrder orderdoWell">cancel</button>`
+                                var deleteX = document.querySelector('.deleteX')
+                                deleteX.onclick = function () {
+                                    orderContent.style.display = 'none'
+                                }
+                                var cancelOrder = document.querySelector('.cancelOrder')
+
+                                    cancelOrder.onclick = function () {
+                                        $.ajax({
+                                            url: "huanle/orders/agreeRequest",
+                                            type: "post",
+                                            data: {
+                                                "oid": data.data.oid,
+                                                "type": 2
+                                            },
+                                            success: function (data) {
+
+                                                if (data.code != 0) {
+                                                    alert('很抱歉，删除失败!');
+                                                } else if (data.code == 1) {
+                                                    alert('删除成功！');
+                                                    location.reload([true]);
                                                 }
-                                                for (let i = 0; i < cancelOrder.length; i++) {
-                                                    cancelOrder[i].onclick = function () {
-                                                        $.ajax({
-                                                            url: "delete.php",
-                                                            type: "post",
-                                                            data: {
-                                                                "choice": 2,
-                                                                "order_id": data.history[j].order_id
-                                                            },
-                                                            success: function (data) {
-                                                                var data = eval("(" + data + ")");
-                                                                if (data.ok == 0) {
-                                                                    alert('很抱歉，删除失败!');
-                                                                } else if (data.ok == 1) {
-                                                                    alert('删除成功！');
-                                                                    location.reload([true]);
-                                                                }
-                                                            }
-                                                        })
-                                                    }
-                                                }
-                                                var agreeOrder = document.querySelector('.agreeOrder')
-                                                for (let k = 0; k < specialDetail.length; k++) {
-                                                    specialDetail[k].onclick = function () {
-                                                        agreeOrder.style.display = 'block'
-                                                    }
-                                                }
-                                            } else {
-                                                alert('网络错误');
+                                            }
+                                        })
+                                    }
+
+                                var agreeOrder = document.querySelector('.agreeOrder')
+
+                               if(k==0)
+                                   agreeOrder.style.display = 'inline-block'
+                                agreeOrder.onclick = function () {
+                                    $.ajax({
+                                        url: "huanle/orders/agreeRequest",
+                                        type: "post",
+                                        data: {
+                                            "oid": data.data.oid,
+                                            "type": 1
+                                        },
+                                        success: function (data) {
+
+                                            if (data.code != 0) {
+                                                alert('很抱歉，agree失败!');
+                                            } else if (data.code == 1) {
+                                                alert('删除成功！');
+                                                location.reload([true]);
                                             }
                                         }
                                     })
-
-
                                 }
+
+                            } else {
+                                alert('网络错误');
+                            }
+                        }
+                    })
+
+
+                }
+
+                $.ajax({
+                    url: "huanle/orders/orderList",
+                    type: "get",
+                    success: function (data) {
+                        console.log(data)
+                        if (data.code == 0) {
+                            //订单历史
+
+                            var allOrder = document.querySelector('.allOrder')
+
+                            for (var i = 0; i < data.data.orders.length; i++) {
+                                oids.push(data.data.orders[i].oid)
+                                allOrder.innerHTML += `<li><img src="${data.data.orders[i].picture}" width="90px" height="90px" alt=""><span>${data.data.orders[i].title}</span><a class="orderDetail" href="javascript:;">订单详情</a><button class="cancelOrder">取消订单</button></li>`
+                            }
+
+                            $.ajax({
+                                url: "huanle/orders/exchangeOthers",
+                                type: "get",
+                                success: function (data) {
+                                    if (data.code == 0) {
+                                        var woqingqiu = document.querySelector('.woqingqiu')
+                                        for (var i = 0; i < data.data.orders.length; i++) {
+                                            woqingqiu.innerHTML += `<li><img src="${data.data.orders[i].picture}" width="90px" height="90px" alt=""><span>${data.data.orders[i].title}</span><a class="orderDetail2" href="javascript:;">订单详情</a><button class="cancelOrder">取消订单</button></li>`
+                                        }
+                                        var orderContent = document.getElementById('orderContent')
+
+                                        var orderDetail2 = document.querySelectorAll('.orderDetail2')
+
+
+                                        for (let j = 0; j < orderDetail2.length; j++) {
+
+                                            orderDetail2[j].addEventListener('click',function (){dianji(j)})
+
+                                        }
+                                    }
+                                }
+                            })
+                            $.ajax({
+                                url: "huanle/orders/exchangeMe",
+                                type: "get",
+                                success: function (data) {
+                                    if (data.code == 0) {
+                                        var qingqiuwo = document.querySelector('.qingqiuwo')
+                                        for (var i = 0; i < data.data.orders.length; i++) {
+                                            qingqiuwo.innerHTML += `<li><img src="${data.data.orders[i].picture}" width="90px" height="90px" alt=""><span>${data.data.orders[i].title}</span><a class="orderDetail3 specialDetail" href="javascript:;">订单详情</a><button class="cancelOrder">取消订单</button></li>`
+                                        }
+                                        var orderContent = document.getElementById('orderContent')
+                                        var cancelOrder = document.querySelectorAll('.cancelOrder')
+                                        var orderDetail3 = document.querySelectorAll('.orderDetail3')
+                                        var specialDetail = document.querySelectorAll('.specialDetail')
+
+                                        for (let j = 0; j < orderDetail3.length; j++) {
+
+                                            orderDetail3[j].addEventListener('click',function (){dianji(j,0)})
+
+                                        }
+                                    }
+                                }
+                            })
+
+
+                            var orderContent = document.getElementById('orderContent')
+                            var cancelOrder = document.querySelectorAll('.cancelOrder')
+                            var orderDetail = document.querySelectorAll('.orderDetail')
+                            var specialDetail = document.querySelectorAll('.specialDetail')
+
+                            for (let j = 0; j < orderDetail.length; j++) {
+
+                                orderDetail[j].addEventListener('click',function (){dianji(j)})
+
                             }
 
                         }

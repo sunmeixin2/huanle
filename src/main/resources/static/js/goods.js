@@ -4,26 +4,27 @@ function state() {
 	var headImg = document.getElementById('touxiang');
 	var haveLogin = document.getElementById('haveLogin');
 	var noneLogin = document.getElementById('noneLogin');
+	var uid;
 	var mes = new XMLHttpRequest
 	mes.onreadystatechange = function () {
 		if (mes.status == 200 && mes.readyState == 4) {
 			var peo = JSON.parse(mes.responseText);
-			console.log(peo)
+			console.log(peo.code)
+
 			if (peo.code != 0) {
-				noneLogin.style.display ='block';
+				noneLogin.style.display = 'block';
 				haveLogin.style.display = 'none'
-			} else if (peo.code == 0) {
+			} else if (peo.code === 0) {
 				haveLogin.style.display = 'block';
 				noneLogin.style.display = 'none';
 				userNick.innerHTML = peo.data.nickName;
-				headImg.src = '';
-				$(".hdr-search").after('<div class="hdr-personal"><a href="" class="hdr-persHref"><img src="" title="个人空间" alt="个人空间" class="hdr-persImg"></a></div><div class="signOut">退出</div>');
+				headImg.src = ''
 				$(".evalutIam").prepend('<span>客官，为这个给力的宝贝留下你的真心话呗！</span><form class="evalutForm" action="" method="get"><textarea class="evalutArea" id="evalutArea" name="evalutArea" maxlength="56" placeholder="请填写56字以内的评价！"></textarea><input type="button" name="evalutSubmit" id="evalutSubmit" class="evalutSubmit" value="提交"></form>');
-
+				uid=peo.data.uid
 			}
 		}
 	}
-	mes.open('GET', '/huanle/index/upInfo', true)
+	mes.open('GET', 'huanle/index/upInfo', true)
 	mes.send(null)
 	var out = document.getElementById('out')
 	var entry = document.getElementById('gerenzhuye')
@@ -49,7 +50,7 @@ function ajaxContent() {
 		success: function (data) {
 			//收藏按钮设置
 			console.log(data)
-			sendData.uidd=data.data.uid;
+			sendData.uidd=data.data.productInfo.pid;
 		var arrs=	window.location.search.split('=')
 		 var pidValue=arrs[1];
 			var collBtn = document.getElementsByClassName('info-coll');

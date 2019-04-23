@@ -36,7 +36,7 @@ public interface OrdersMapper {
     List<Map> getListByBuid(Integer uid);
 
     @Select("update orders set status = 2 where oid = #{oid}")
-    int updateStatusByOid(Integer oid);
+    void updateStatusByOid(Integer oid);
 
     /**
      * 我请求的订单详情

@@ -51,8 +51,12 @@ public class UserInfoService {
             map.put("nickName",userInfo.getNickName());
             map.put("gender",userInfo.getGender());
             map.put("contact",userInfo.getContact());
-            String profileImg = FileUtil.PATH + "/" + userInfo.getProfileImg();
-            map.put("profileImg",profileImg);
+            if(userInfo.getProfileImg() != null) {
+                String profileImg = FileUtil.PATH + "/" + userInfo.getProfileImg();
+                map.put("profileImg", profileImg);
+            }else{
+                map.put("profileImg", null);
+            }
             if(up != null && up.equals(uid)){
                 map.put("lastLoginTime",userInfo.getLastLoginTime());
                 map.put("regTime",userInfo.getRegTime());

@@ -97,7 +97,7 @@ public class ProductInfoService {
                 //获取此商品收藏信息
                 Integer ccId = 0;
                 if(upId != null) {
-                    CollectionEntity collectionEntity = collectionMapper.getCollectionByPidAndUid(pid,uid);
+                    CollectionEntity collectionEntity = collectionMapper.getCollectionByPidAndUid(pid,upId);
                     if(collectionEntity != null){
                         ccId = 1;
                     }
@@ -157,6 +157,57 @@ public class ProductInfoService {
             }
         }
         return false;
+
+    }
+
+    /**
+     * 根据商品名称搜索
+     * @param inputStr
+     * @return
+     */
+    public Map getProductListByTitle(String inputStr){
+        Map<String,Object> result = new HashMap();
+
+        Set<String> inputs = new HashSet<>();
+        inputStr = "%"+inputStr+"%";
+        List<ProductInfo> productInfos = productInfoMapper.queryByTitle(inputStr);
+
+        List<Map> data = new ArrayList<>();
+        if(productInfos != null){
+            for (ProductInfo productInfo:productInfos){
+                Map<String,Object> map = new HashMap<>();
+                //input框
+                inputs.add(productInfo.getTitle());
+
+                String[] picture = CommonUtil.pictureToArr(productInfo.getPicture());
+                map.put("product",productInfo);
+                map.put("picture",picture);
+                data.add(map);
+
+            }
+            result.put("inputs",inputs);
+            result.put("productList",data);
+        }
+
+        return result;
+    }
+
+    public Map getProductListType(String type){
+        Map<String,Object> result = new HashMap();
+        List<ProductInfo> productInfos = productInfoMapper.queryByType(type);
+        List<Map> data = new ArrayList<>();
+        if(productInfos != null) {
+            for (ProductInfo productInfo : productInfos) {
+                Map<String, Object> map = new HashMap<>();
+
+                String[] picture = CommonUtil.pictureToArr(productInfo.getPicture());
+                map.put("picture", picture);
+                map.put("product", productInfo);
+                data.add(map);
+
+            }
+        }
+        return result;
 
     }
 

@@ -44,16 +44,13 @@ public class UserController {
             return new ResponseVO(ErrorCode.UNKNOW_ERROR,"验证码错误！");
         }
         if(groupId == null || groupId < 0){
-            return new ResponseVO(ErrorCode.UNKNOW_ERROR,"非法参数:gender");
+            return new ResponseVO(ErrorCode.UNKNOW_ERROR,"非法参数:groupId");
         }
         UserInfo userInfo = userInfoService.getUserInfo(email,passwd,groupId);
         if(userInfo == null){
             return new ResponseVO(ErrorCode.UNKNOW_ERROR,"error");
         }else {
             request.getSession().setAttribute("userInfo",userInfo);
-//            UserInfo up = (UserInfo) request.getSession().getAttribute("userInfo");
-//
-//            System.out.println(up.getEmail());
             return new ResponseVO(ErrorCode.RESPONSE_SUCCESS,userInfo);
         }
     }
@@ -103,11 +100,23 @@ public class UserController {
         }
     }
 
+    /**
+     * 编辑用户信息
+     * @param files
+     * @param nickName
+     * @param email
+     * @param gender
+     * @param contact
+     * @param request
+     * @return
+     */
     @RequestMapping("/editUserInfo")
-    public ResponseVO editUserInfo(@RequestParam("files")MultipartFile[] files,Integer uid,String nickName,String email,String gender,String contact,HttpServletRequest request){
-        if(uid == null || uid < 0){
-            return new ResponseVO(ErrorCode.UNKNOW_ERROR,"非法参数:uid");
+    public ResponseVO editUserInfo(@RequestParam("files")MultipartFile[] files,String nickName,String email,String gender,String contact,HttpServletRequest request){
+        UserInfo up = (UserInfo)request.getSession().getAttribute("userInfo");
+        if(up == null){
+            return new ResponseVO(ErrorCode.UNKNOW_ERROR,"未登录");
         }
+
         if(email == null || email.equals("")){
             return new ResponseVO(ErrorCode.UNKNOW_ERROR,"非法参数:email");
         }
@@ -120,7 +129,8 @@ public class UserController {
         if(contact == null || contact.equals("")){
             return new ResponseVO(ErrorCode.UNKNOW_ERROR,"非法参数:contact");
         }
-        UserInfo userInfo = userInfoService.getUserByUid(uid);
+        Integer upId = up.getUid();
+        UserInfo userInfo = userInfoService.getUserByUid(upId);
         if(userInfo == null){
             return new ResponseVO(ErrorCode.UNKNOW_ERROR,"该用户不存在！");
         }

@@ -106,7 +106,9 @@ public class OrderService {
     public Boolean orderDeal(Integer oid,Integer type){
         int flag;
         if(type == 1){      //乙方同意
-            flag = ordersMapper.updateStatusByOid(oid);
+             ordersMapper.updateStatusByOid(oid);
+             Orders orders = ordersMapper.selectByPrimaryKey(oid);
+             flag = orders.getStatus().equals(2) ? 1:2;
 
         }else if(type == 2){        //取消订单
            flag = ordersMapper.deleteByPrimaryKey(oid);

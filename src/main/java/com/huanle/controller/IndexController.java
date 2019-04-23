@@ -2,7 +2,6 @@ package com.huanle.controller;
 
 import com.huanle.Config.ErrorCode;
 import com.huanle.entity.Category;
-import com.huanle.entity.ProductInfo;
 import com.huanle.entity.UserInfo;
 import com.huanle.service.CategoryService;
 import com.huanle.service.ProductInfoService;
@@ -13,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -57,5 +56,38 @@ public class IndexController {
             return new ResponseVO(ErrorCode.UNKNOW_ERROR,"类型列表为空！");
         }
         return new ResponseVO(ErrorCode.RESPONSE_SUCCESS,categories);
+    }
+
+    /**
+     * 搜索
+     * @param inputStr
+     * @return
+     */
+    @RequestMapping("search")
+    public ResponseVO search(String inputStr){
+        inputStr = inputStr.trim();
+        if(inputStr == null || inputStr.equals("")){
+            return new ResponseVO(ErrorCode.RESPONSE_SUCCESS,"");
+        }
+        Map data = productInfoService.getProductListByTitle(inputStr);
+
+        return new ResponseVO(ErrorCode.RESPONSE_SUCCESS,data);
+    }
+
+
+    /**
+     * 通过类型搜索
+     * @param type
+     * @return
+     */
+    @RequestMapping("searchByType")
+    public ResponseVO searchByType(String type){
+        type = type.trim();
+        if(type == null || type.equals("")){
+            return new ResponseVO(ErrorCode.UNKNOW_ERROR,"非法参数:type");
+        }
+        Map data = productInfoService.getProductListType(type);
+        return new ResponseVO(ErrorCode.RESPONSE_SUCCESS,data);
+
     }
 }

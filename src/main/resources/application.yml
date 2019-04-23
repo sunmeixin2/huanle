@@ -1,7 +1,7 @@
 server:
   port: 8080
 
-
+debug: true
 spring:
   datasource:
     url: jdbc:mysql://127.0.0.1:3306/huanle?useUnicode=true&characterEncoding=UTF-8&serverTimezone=UTC&nullCatalogMeansCurrent=true
@@ -9,8 +9,12 @@ spring:
     password: 123456
     driver-class-name: com.mysql.jdbc.Driver
 
-
-
+#热部署
+  devtools:
+    restart:
+      enabled: true  #设置开启热部署
+  freemarker:
+    cache: false    #页面不加载缓存，修改即时生效
 
 mybatis:
   mapper-locations: classpath:mapper/*.xml  #注意：一定要对应mapper映射xml文件的所在路径

@@ -33,4 +33,10 @@ public interface ProductInfoMapper {
     @Select("select * from productInfo where p_uid = #{uid} and status = 1 and advice = 2 order by create_at desc")
     List<ProductInfo> getListBypUid(Integer uid);
 
+    @Select("select * from productInfo where advice = 2 and status = 1 and title like  #{str} ")
+    List<ProductInfo> queryByTitle(String str);
+
+    @Select("select * from productInfo where advice = 2 and status = 1 and  my_type = #{type}")
+    List<ProductInfo> queryByType(String type);
+
 }
