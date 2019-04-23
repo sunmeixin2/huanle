@@ -39,4 +39,8 @@ public interface ProductInfoMapper {
     @Select("select * from productInfo where advice = 2 and status = 1 and  my_type = #{type}")
     List<ProductInfo> queryByType(String type);
 
+    //交换成功修改商品信息状态为 "已交换"
+    @Select("update productInfo set status = 2 where pid = #{aPid} or pid = #{bPid}")
+    void updateStatus(Integer aPid,Integer bPid);
+
 }

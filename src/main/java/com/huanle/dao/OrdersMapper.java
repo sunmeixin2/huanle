@@ -22,17 +22,17 @@ public interface OrdersMapper {
 
     @Select("select o.oid,o.status,p.title,p.picture " +
             "from orders o left join productInfo p on p.pid = o.B_pid " +
-            "where o.A_uid = #{uid} or o.B_uid = #{uid}")
+            "where o.status = 2 and  o.A_uid = #{uid} or o.B_uid = #{uid} ")
     List<Map> getListByUid(Integer uid);
 
     @Select("select o.oid,o.status,p.title,p.picture " +
             "from orders o left join productInfo p on p.pid = o.B_pid " +
-            "where o.A_uid = #{uid}")
+            "where o.A_uid = #{uid} and o.status = 1")
     List<Map> getListByAuid(Integer uid);
 
     @Select("select o.oid,o.status,p.title,p.picture  " +
             "from orders o left join productInfo p on p.pid = o.B_pid  " +
-            "where o.B_uid = #{uid}")
+            "where o.B_uid = #{uid} and o.status = 1")
     List<Map> getListByBuid(Integer uid);
 
     @Select("update orders set status = 2 where oid = #{oid}")

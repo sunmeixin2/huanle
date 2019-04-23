@@ -184,7 +184,7 @@ public class OrderController {
      */
     @RequestMapping("orderDetail")
     public ResponseVO orderDetail(Integer oid,HttpServletRequest request){
-
+        System.out.println("oid ==="+oid);
         UserInfo up = (UserInfo) request.getSession().getAttribute("userInfo");
         if(up == null){
             return new ResponseVO(ErrorCode.UNKNOW_ERROR,"请先登录！");
