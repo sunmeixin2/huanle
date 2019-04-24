@@ -41,7 +41,7 @@ font-family: '黑体';
     display: none;
     background: transparent;
     position: absolute;
-  left: 1550px;
+  left: 90%;
   top: 40px;
   width:0px;
   height:0px;
@@ -54,7 +54,7 @@ font-family: '黑体';
 
 .tips{
     position: absolute;
-    left: 1400px;
+    left: 80%;
     top: 80px;
     background: white;
     border-radius: 10px;

@@ -271,25 +271,25 @@ console.log(data)
                                 }
                                 var cancelOrder = document.querySelector('.cancelOrder')
 
-                                    cancelOrder.onclick = function () {
-                                        $.ajax({
-                                            url: "huanle/orders/agreeRequest",
-                                            type: "post",
-                                            data: {
-                                                "oid": data.data.oid,
-                                                "type": 2
-                                            },
-                                            success: function (data) {
-
-                                                if (data.code != 0) {
-                                                    alert('很抱歉，删除失败!');
-                                                } else if (data.code == 1) {
-                                                    alert('删除成功！');
-                                                    location.reload([true]);
-                                                }
-                                            }
-                                        })
-                                    }
+                                cancelOrder.onclick = function () {
+                                     $.ajax({
+                                         url: "huanle/orders/agreeRequest",
+                                         type: "post",
+                                         data: {
+                                             "oid": data.data.oid,
+                                             "type": 2
+                                         },
+                                         success: function (data) {
+ 
+                                             if (data.code != 0) {
+                                                 alert('很抱歉，agree失败!');
+                                             } else if (data.code == 1) {
+                                                 alert('删除成功！');
+                                                 location.reload([true]);
+                                             }
+                                         }
+                                     })
+                                 }
 
                                 var agreeOrder = document.querySelector('.agreeOrder')
 
@@ -370,11 +370,9 @@ console.log(data)
                                         for (var i = 0; i < data.data.orders.length; i++) {
                                             qingqiuwo.innerHTML += `<li><img src="${data.data.orders[i].picture}" width="90px" height="90px" alt=""><span>${data.data.orders[i].title}</span><a class="orderDetail3 specialDetail" href="javascript:;">订单详情</a><button class="cancelOrder">取消订单</button></li>`
                                         }
-                                        var orderContent = document.getElementById('orderContent')
-                                        var cancelOrder = document.querySelectorAll('.cancelOrder')
+                                      
                                         var orderDetail3 = document.querySelectorAll('.orderDetail3')
-                                        var specialDetail = document.querySelectorAll('.specialDetail')
-
+                                   
                                         for (let j = 0; j < orderDetail3.length; j++) {
 
                                             orderDetail3[j].addEventListener('click',function (){dianji(j,0)})
@@ -385,10 +383,9 @@ console.log(data)
                             })
 
 
-                            var orderContent = document.getElementById('orderContent')
-                            var cancelOrder = document.querySelectorAll('.cancelOrder')
+                      
                             var orderDetail = document.querySelectorAll('.orderDetail')
-                            var specialDetail = document.querySelectorAll('.specialDetail')
+                          
 
                             for (let j = 0; j < orderDetail.length; j++) {
 

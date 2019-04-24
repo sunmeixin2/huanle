@@ -774,9 +774,10 @@ article {
 	display: none
 }
 .btns{
-	width: 80px;
+	padding: 5px;
+	width: auto;
 	height: 40px;
-	background: rgb(43, 153, 129);
+	background: rgb(50, 178, 252);
 	border: none;
 	border-radius: 10px;
 	color: white;
@@ -788,5 +789,5 @@ article {
 	margin-left: 100px;
 }
 .btnsActive{
-	background: #FFB200
+	background: rgb(72, 75, 69)
 }
