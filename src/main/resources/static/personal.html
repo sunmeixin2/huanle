@@ -84,8 +84,8 @@
 					<li class="active"><a href="#active">个人资料</a></li>
 					<li><a href="#active">我的收藏</a></li>
 					<li><a href="#active">发布历史</a></li>
-					<li><a href="#active" class="userHistory">订单历史</a></li>
-					<li><a href="#active"  class="userHistory">安全管理</a></li>
+					<li class="userHistory"><a href="#active" >订单历史</a></li>
+					<li  class="userHistory"><a href="#active" >安全管理</a></li>
 				</ul>
 			</div>
 
@@ -169,9 +169,9 @@
 				<ul class="boxFourUl"></ul>
 			</div>
 			<div class="box" id="boxSix">
-				<input type="button" value="已完成订单（已交换的）" class="btns btnsActive">
-				<input type="button" value="我请求的" class="btns">
-				<input type="button" value="请求我的" class="btns">
+				<input type="button" value="已完成订单" id="haveDone" class="btns btnsActive">
+				<input type="button" value="我请求的" id="meDone"  class="btns">
+				<input type="button" value="请求我的" id="qingDone" class="btns">
 				<div class="dingdan" style="display:block">
 						<h2>已完成订单（已交换的）</h2>
 						<ul class="allOrder">
@@ -273,20 +273,7 @@
 		xhr.open('POST', 'http://192.168.2.54:8080/huanle/personal/updatePasswd', true)
 		xhr.send(fn)
 	}
-	let btns=document.querySelectorAll('.btns')
-	let dingdan=document.querySelectorAll('.dingdan')
 
-	for(let i=0;i<btns.length;i++){
-		btns[i].onclick=function(){
-			for(let j=0;j<btns.length;j++){
-			btns[j].className='btns';
-			dingdan[j].style.display='none'
-		}
-		btns[i].className='btns btnsActive';
-		dingdan[i].style.display='block'
-		}
-		
-	}
 </script>
 
 </html>

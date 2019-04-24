@@ -18,10 +18,11 @@
     <result column="update_at" property="updateAt" jdbcType="INTEGER" />
     <result column="advice" property="advice" jdbcType="INTEGER" />
     <result column="p_uid" property="pUid" jdbcType="INTEGER" />
+    <result column="standard" property="standard" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
     pid, title, my_type, inventory, is_new, price, detail, product_date, product_expire, 
-    exchange_type, status, picture, create_at, update_at, advice, p_uid
+    exchange_type, status, picture, create_at, update_at, advice, p_uid,standard
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
@@ -39,13 +40,13 @@
       detail, product_date, product_expire, 
       exchange_type, status, picture, 
       create_at, update_at, advice, 
-      p_uid)
+      p_uid,standard)
     values (#{pid,jdbcType=INTEGER}, #{title,jdbcType=VARCHAR}, #{myType,jdbcType=VARCHAR}, 
       #{inventory,jdbcType=INTEGER}, #{isNew,jdbcType=INTEGER}, #{price,jdbcType=DOUBLE}, 
       #{detail,jdbcType=VARCHAR}, #{productDate,jdbcType=DATE}, #{productExpire,jdbcType=DATE}, 
       #{exchangeType,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER}, #{picture,jdbcType=VARCHAR}, 
       #{createAt,jdbcType=INTEGER}, #{updateAt,jdbcType=INTEGER}, #{advice,jdbcType=INTEGER}, 
-      #{pUid,jdbcType=INTEGER})
+      #{pUid,jdbcType=INTEGER},#{standard,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.huanle.entity.ProductInfo" >
     insert into productInfo
@@ -98,6 +99,9 @@
       <if test="pUid != null" >
         p_uid,
       </if>
+      <if test="standard != null" >
+        standard,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="pid != null" >
@@ -147,6 +151,9 @@
       </if>
       <if test="pUid != null" >
         #{pUid,jdbcType=INTEGER},
+      </if>
+      <if test="standard != null" >
+        #{standard,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -198,6 +205,9 @@
       <if test="pUid != null" >
         p_uid = #{pUid,jdbcType=INTEGER},
       </if>
+      <if test="standard != null" >
+        standard = #{standard,jdbcType=VARCHAR},
+      </if>
     </set>
     where pid = #{pid,jdbcType=INTEGER}
   </update>
@@ -217,7 +227,8 @@
       create_at = #{createAt,jdbcType=INTEGER},
       update_at = #{updateAt,jdbcType=INTEGER},
       advice = #{advice,jdbcType=INTEGER},
-      p_uid = #{pUid,jdbcType=INTEGER}
+      p_uid = #{pUid,jdbcType=INTEGER},
+      standard = #{standard,jdbcType=VARCHAR}
     where pid = #{pid,jdbcType=INTEGER}
   </update>
 </mapper>

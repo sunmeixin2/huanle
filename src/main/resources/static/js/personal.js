@@ -69,6 +69,7 @@ function ajax() {
                 var aInfoPhone = document.getElementsByClassName('infoPhone');
                 var aInfoSex = document.getElementsByClassName('infoQQ');
                 var aInfoRT = document.getElementsByClassName('infoRegTime');
+                var infoH2 = document.getElementsByClassName('infoH2');
                 var aInfoLL = document.getElementsByClassName('infoLastLog');
                 var userHistory = document.getElementsByClassName('userHistory');
                 console.log(data)
@@ -81,8 +82,8 @@ function ajax() {
                    regTimes=data.data.regTime.split('T')
                     aInfoRT[0].innerHTML = regTimes[0].replace(/-/g,'/');
                 }else{
-                    aInfoRT.style.display='none'
-                    aInfoLL.style.display='none'
+                    infoH2[4].style.display='none'
+                    infoH2[5].style.display='none'
                     for(let i=0;i<userHistory.length;i++){
                         userHistory[i].style.display='none'
                     }
@@ -171,7 +172,7 @@ console.log(data)
                             } else {
                                 aRelease[0].innerHTML = data.data.productList.length;
                                 for (var i = 0; i < data.data.productList.length; i++) {
-                                    $('.boxFourUl').prepend('<li><div class="history"><div class="histImg"><a href="" class="histImgA"><img src="images/01_mid.jpg" alt="" class="histImgCont"></a></div><div class="histInfo"><span class="histInfo-name">名称</span><span class="histInfo-cont histInfoCont"></span><span class="histInfo-name">价格</span><span class="histInfo-cont histInfoPrice"></span><span class="histInfo-name">发布时间</span><span class="histInfo-cont histInfoTime"></span></div><span class="pressStatus"></span><div class="histCancle"><span>删除记录</span></div></div></li>');
+                                    $('.boxFourUl').prepend('<li><div class="history"><div class="histImg"><a href="" class="histImgA"><img src="images/01_mid.jpg" alt="" class="histImgCont"></a></div><div class="histInfo"><span class="histInfo-name">名称</span><span class="histInfo-cont histInfoCont"></span><span class="histInfo-name">价格</span><span class="histInfo-cont histInfoPrice"></span><span class="histInfo-name">type</span><span class="histInfo-cont histInfo-type"></span><span class="histInfo-name">发布时间</span><span class="histInfo-cont histInfoTime"></span></div><span class="pressStatus"></span><div class="histCancle"><span>删除记录</span></div></div></li>');
                                 }
                                 var ahistCancle = document.getElementsByClassName('histCancle');
                                 for (var i = 0; i < data.data.productList.length; i++) {
@@ -228,6 +229,7 @@ console.log(data)
                 })
                 var oids = [];
                 function dianji(j,k){
+                    var orderContent=document.getElementById('orderContent')
                     orderContent.style.display = 'block';
                     $.ajax({
                         url: `huanle/orders/orderDetail?oid=${oids[j]}`,
@@ -264,14 +266,15 @@ console.log(data)
 			   <p>新旧程度：<span>${data.data.other.is_new}</span></p>
 			   <p>联系方式：<span>${data.data.other.contact}</span></p>
 		   </div>
-		   <button class="agreeOrder orderdoWell">agree</button><button class="cancelOrder orderdoWell">cancel</button>`
+		   <button class="agreeOrder orderdoWell">agree</button><button class="cancelOrder2 orderdoWell">cancel</button>`
                                 var deleteX = document.querySelector('.deleteX')
                                 deleteX.onclick = function () {
                                     orderContent.style.display = 'none'
                                 }
-                                var cancelOrder = document.querySelector('.cancelOrder')
+                                var cancelOrder2 = document.querySelector('.cancelOrder2')
 
-                                cancelOrder.onclick = function () {
+                                cancelOrder2.onclick = function () {
+
                                      $.ajax({
                                          url: "huanle/orders/agreeRequest",
                                          type: "post",
@@ -283,7 +286,7 @@ console.log(data)
  
                                              if (data.code != 0) {
                                                  alert('很抱歉，agree失败!');
-                                             } else if (data.code == 1) {
+                                             } else if (data.code == 0) {
                                                  alert('删除成功！');
                                                  location.reload([true]);
                                              }
@@ -307,7 +310,7 @@ console.log(data)
 
                                             if (data.code != 0) {
                                                 alert('很抱歉，agree失败!');
-                                            } else if (data.code == 1) {
+                                            } else if (data.code == 0) {
                                                 alert('删除成功！');
                                                 location.reload([true]);
                                             }
@@ -323,80 +326,181 @@ console.log(data)
 
 
                 }
+                function exchangeOthers() {
 
-                $.ajax({
-                    url: "huanle/orders/orderList",
-                    type: "get",
-                    success: function (data) {
-                        console.log(data)
-                        if (data.code == 0) {
-                            //订单历史
+                    $.ajax({
+                        url: "huanle/orders/exchangeOthers",
+                        type: "get",
+                        success: function (data) {
+  console.log(data)
+                            if (data.code == 0) {
+                                oids=[]
+                                var woqingqiu = document.querySelector('.woqingqiu')
+                                woqingqiu.innerHTML=''
+                                for (var i = 0; i < data.data.orders.length; i++) {
+                                    oids.push(data.data.orders[i].oid)
+                                    woqingqiu.innerHTML += `<li><img src="${data.data.orders[i].picture}" width="90px" height="90px" alt=""><span>${data.data.orders[i].title}</span><a class="orderDetail2" href="javascript:;">订单详情</a><button class="cancelOrder">取消订单</button></li>`
+                                }
 
-                            var allOrder = document.querySelector('.allOrder')
+                                  var cancelOrder=document.querySelectorAll('.cancelOrder')
+                                 for (let i=0;i<cancelOrder.length;i++){
+                                     cancelOrder[i].onclick=function () {
+                                         $.ajax({
+                                             url: "huanle/orders/agreeRequest",
+                                             type: "post",
+                                             data: {
+                                                 "oid": oids[i],
+                                                 "type": 2
+                                             },
+                                             success: function (data) {
 
-                            for (var i = 0; i < data.data.orders.length; i++) {
-                                oids.push(data.data.orders[i].oid)
-                                allOrder.innerHTML += `<li><img src="${data.data.orders[i].picture}" width="90px" height="90px" alt=""><span>${data.data.orders[i].title}</span><a class="orderDetail" href="javascript:;">订单详情</a><button class="cancelOrder">取消订单</button></li>`
+                                                 if (data.code != 0) {
+                                                     alert('很抱歉，agree失败!');
+                                                 } else if (data.code == 0) {
+                                                     alert('删除成功！');
+                                                     location.reload([true]);
+                                                 }
+                                             }
+                                         })
+                                     }
+                                 }
+                                var orderDetail2 = document.querySelectorAll('.orderDetail2')
+
+
+                                for (let j = 0; j < orderDetail2.length; j++) {
+
+                                    orderDetail2[j].addEventListener('click',function (){dianji(j)})
+
+                                }
                             }
+                        }
+                    })
 
-                            $.ajax({
-                                url: "huanle/orders/exchangeOthers",
-                                type: "get",
-                                success: function (data) {
-                                    if (data.code == 0) {
-                                        var woqingqiu = document.querySelector('.woqingqiu')
-                                        for (var i = 0; i < data.data.orders.length; i++) {
-                                            woqingqiu.innerHTML += `<li><img src="${data.data.orders[i].picture}" width="90px" height="90px" alt=""><span>${data.data.orders[i].title}</span><a class="orderDetail2" href="javascript:;">订单详情</a><button class="cancelOrder">取消订单</button></li>`
-                                        }
-                                        var orderContent = document.getElementById('orderContent')
+                }
+                function exchangeMe() {
+                    $.ajax({
+                        url: "huanle/orders/exchangeMe",
+                        type: "get",
+                        success: function (data) {
+                            if (data.code == 0) {
+                                oids=[]
+                                var qingqiuwo = document.querySelector('.qingqiuwo')
+                                qingqiuwo.innerHTML=''
+                                for (var i = 0; i < data.data.orders.length; i++) {
+                                    oids.push(data.data.orders[i].oid)
+                                    qingqiuwo.innerHTML += `<li><img src="${data.data.orders[i].picture}" width="90px" height="90px" alt=""><span>${data.data.orders[i].title}</span><a class="orderDetail3 specialDetail" href="javascript:;">订单详情</a><button class="cancelOrder3">取消订单</button></li>`
+                                }
+                                var cancelOrder3=document.querySelectorAll('.cancelOrder3')
+                                for (let i=0;i<cancelOrder3.length;i++){
+                                    cancelOrder3[i].onclick=function () {
+                                        $.ajax({
+                                            url: "huanle/orders/agreeRequest",
+                                            type: "post",
+                                            data: {
+                                                "oid": oids[i],
+                                                "type": 2
+                                            },
+                                            success: function (data) {
 
-                                        var orderDetail2 = document.querySelectorAll('.orderDetail2')
-
-
-                                        for (let j = 0; j < orderDetail2.length; j++) {
-
-                                            orderDetail2[j].addEventListener('click',function (){dianji(j)})
-
-                                        }
+                                                if (data.code != 0) {
+                                                    alert('很抱歉，agree失败!');
+                                                } else if (data.code == 0) {
+                                                    alert('删除成功！');
+                                                    location.reload([true]);
+                                                }
+                                            }
+                                        })
                                     }
                                 }
-                            })
-                            $.ajax({
-                                url: "huanle/orders/exchangeMe",
-                                type: "get",
-                                success: function (data) {
-                                    if (data.code == 0) {
-                                        var qingqiuwo = document.querySelector('.qingqiuwo')
-                                        for (var i = 0; i < data.data.orders.length; i++) {
-                                            qingqiuwo.innerHTML += `<li><img src="${data.data.orders[i].picture}" width="90px" height="90px" alt=""><span>${data.data.orders[i].title}</span><a class="orderDetail3 specialDetail" href="javascript:;">订单详情</a><button class="cancelOrder">取消订单</button></li>`
-                                        }
-                                      
-                                        var orderDetail3 = document.querySelectorAll('.orderDetail3')
-                                   
-                                        for (let j = 0; j < orderDetail3.length; j++) {
+                                var orderDetail3 = document.querySelectorAll('.orderDetail3')
 
-                                            orderDetail3[j].addEventListener('click',function (){dianji(j,0)})
+                                for (let j = 0; j < orderDetail3.length; j++) {
 
-                                        }
+                                    orderDetail3[j].addEventListener('click',function (){dianji(j,0)})
+
+                                }
+                            }
+                        }
+                    })
+
+                }
+                function OrderHistory(){
+                    $.ajax({
+                        url: "huanle/orders/orderList",
+                        type: "get",
+                        success: function (data) {
+                            console.log(data)
+                            if (data.code == 0) {
+                                //订单历史
+                                oids=[]
+                                var allOrder = document.querySelector('.allOrder')
+                                allOrder.innerHTML=''
+                                for (var i = 0; i < data.data.orders.length; i++) {
+                                    oids.push(data.data.orders[i].oid)
+                                    allOrder.innerHTML += `<li><img src="${data.data.orders[i].picture}" width="90px" height="90px" alt=""><span>${data.data.orders[i].title}</span><a class="orderDetail" href="javascript:;">订单详情</a></li>`
+                                }
+                                var cancelOrder4=document.querySelectorAll('.cancelOrder4')
+                                for (let i=0;i<cancelOrder4.length;i++){
+                                    cancelOrder4[i].onclick=function () {
+                                        $.ajax({
+                                            url: "huanle/orders/agreeRequest",
+                                            type: "post",
+                                            data: {
+                                                "oid": oids[i],
+                                                "type": 2
+                                            },
+                                            success: function (data) {
+
+                                                if (data.code != 0) {
+                                                    alert('很抱歉，agree失败!');
+                                                } else if (data.code == 0) {
+                                                    alert('删除成功！');
+                                                    location.reload([true]);
+                                                }
+                                            }
+                                        })
                                     }
                                 }
-                            })
+                                var orderDetail = document.querySelectorAll('.orderDetail')
 
 
-                      
-                            var orderDetail = document.querySelectorAll('.orderDetail')
-                          
+                                for (let j = 0; j < orderDetail.length; j++) {
 
-                            for (let j = 0; j < orderDetail.length; j++) {
+                                    orderDetail[j].addEventListener('click',function (){dianji(j)})
 
-                                orderDetail[j].addEventListener('click',function (){dianji(j)})
+                                }
 
                             }
 
                         }
+                    })
+                }
+                OrderHistory();
+                // var haveDone=document.getElementById('haveDone')
+                // var meDone=document.getElementById('meDone')
+                // var qingDone=document.getElementById('qingDone')
+                let btns=document.querySelectorAll('.btns')
+                let dingdan=document.querySelectorAll('.dingdan')
 
+                for(let i=0;i<btns.length;i++){
+                    btns[i].onclick=function(){
+                        for(let j=0;j<btns.length;j++){
+                            btns[j].className='btns';
+                            dingdan[j].style.display='none'
+                        }
+                        btns[i].className='btns btnsActive';
+                        if(i===0){
+                            OrderHistory();
+                        }else if(i===1){
+                            exchangeOthers();
+                        }else{
+                            exchangeMe();
+                        }
+                        dingdan[i].style.display='block'
                     }
-                })
+
+                }
+
 
 
             }

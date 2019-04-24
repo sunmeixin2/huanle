@@ -41,6 +41,16 @@ public class ProductInfo {
 
     private Integer pUid;
 
+    private String standard;
+
+    public String getStandard() {
+        return standard;
+    }
+
+    public void setStandard(String standard) {
+        this.standard = standard;
+    }
+
     public Integer getPid() {
         return pid;
     }
