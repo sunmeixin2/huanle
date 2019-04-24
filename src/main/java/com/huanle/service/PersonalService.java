@@ -119,17 +119,20 @@ public class PersonalService {
      */
     public Map getCollectList(Integer uid){
         Map<String,Object> result = new HashMap<>();
-        List<CollectionEntity> collectionEntityList = collectionMapper.getListByUid(uid);
+        List<Map> collectionEntityList = collectionMapper.getListByUid(uid);
         if(collectionEntityList == null){
             return result;
         }
         List<Map> data = new ArrayList<>();
-        for (CollectionEntity collectionEntity:collectionEntityList){
+        for (Map collectionEntity:collectionEntityList){
             Map map  = new HashMap();
-            map.put("ccId",collectionEntity.getCcId());
-            map.put("productId",collectionEntity.getProductId());
-            map.put("productTile",collectionEntity.getProTitle());
-            map.put("createAt",collectionEntity.getCreateAt());
+            map.put("ccId",collectionEntity.get("cc_id"));
+            map.put("productId",collectionEntity.get("product_id"));
+            map.put("productTile",collectionEntity.get("pro_title"));
+            map.put("createAt",collectionEntity.get("create_at"));
+            String[] picture = CommonUtil.pictureToArr((String)collectionEntity.get("picture"));
+            map.put("picture",picture[0]);
+
             data.add(map);
         }
         result.put("total",collectionEntityList.size());

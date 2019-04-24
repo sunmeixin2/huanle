@@ -6,6 +6,7 @@ import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 
 import java.util.List;
+import java.util.Map;
 
 @Mapper
 public interface CollectionMapper {
@@ -24,7 +25,7 @@ public interface CollectionMapper {
     @Select("select cc_id from collection where product_id = #{pid} and user_id = #{uid}")
     CollectionEntity getCollectionByPidAndUid(Integer pid,Integer uid);
 
-    @Select("select * from collection where user_id = #{uid}")
-    List<CollectionEntity> getListByUid(Integer uid);
+    @Select(" select c.*,p.picture from collection c left join productInfo p on c.product_id = p.pid where c.user_id = #{uid}")
+    List<Map> getListByUid(Integer uid);
 
 }

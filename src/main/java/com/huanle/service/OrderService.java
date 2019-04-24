@@ -48,7 +48,7 @@ public class OrderService {
 
                 tmp.put("pid",productInfo.getPid());
                 tmp.put("title",productInfo.getTitle());
-                String picture[] = CommonUtil.pictureToArr(productInfo.getPicture());
+                String[] picture = CommonUtil.pictureToArr(productInfo.getPicture());
                 tmp.put("picture",picture[0]);
                 tmp.put("price",productInfo.getPrice());
                 tmp.put("inventory",productInfo.getInventory());
@@ -108,6 +108,7 @@ public class OrderService {
         if(type == 1){      //乙方同意
              ordersMapper.updateStatusByOid(oid);
              Orders orders = ordersMapper.selectByPrimaryKey(oid);
+             productInfoMapper.updateStatus(orders.getaPid(),orders.getbPid());
              flag = orders.getStatus().equals(2) ? 1:2;
 
         }else if(type == 2){        //取消订单
@@ -137,7 +138,7 @@ public class OrderService {
                 Integer uid = (Integer)dataOfMy.get("uid");
                 String[] picture = CommonUtil.pictureToArr((String) dataOfMy.get("picture"));
                 dataOfMy.put("picture",picture);
-                if(uid.equals(upId)){
+                if(uid.equals(upId) || orders.getStatus().equals(2)){
                     dataOfMy.put("status","同意");
                 }else{
                     dataOfMy.put("status","等待同意");
@@ -150,7 +151,7 @@ public class OrderService {
                 Integer uid = (Integer)dataOfOther.get("uid");
                 String[] picture = CommonUtil.pictureToArr((String) dataOfOther.get("picture"));
                 dataOfOther.put("picture",picture);
-                if(uid.equals(upId)){
+                if(uid.equals(upId) || orders.getStatus().equals(2)){
                     dataOfOther.put("status","同意");
                 }else{
                     dataOfOther.put("status","等待同意");
