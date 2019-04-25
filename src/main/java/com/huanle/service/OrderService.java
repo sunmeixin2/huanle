@@ -108,6 +108,7 @@ public class OrderService {
         if(type == 1){      //乙方同意
              ordersMapper.updateStatusByOid(oid);
              Orders orders = ordersMapper.selectByPrimaryKey(oid);
+             //交换成功后商品下架
              productInfoMapper.updateStatus(orders.getaPid(),orders.getbPid());
              flag = orders.getStatus().equals(2) ? 1:2;
 

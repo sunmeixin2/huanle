@@ -42,7 +42,7 @@ public interface OrdersMapper {
      * @param oid
      * @return
      */
-    @Select("select p.pid,p.title,p.my_type,p.inventory,p.is_new,p.price,p.picture,u.uid,u.nick_name,u.contact " +
+    @Select("select p.pid,p.title,p.my_type,p.inventory,p.is_new,p.price,p.picture,p.standard ,u.uid,u.nick_name,u.contact " +
             "from orders o left join productInfo p on o.A_pid = p.pid  left join userInfo u on p.p_uid = u.uid " +
             "where o.oid = #{oid}")
     Map myself(Integer oid);
@@ -52,7 +52,7 @@ public interface OrdersMapper {
      * @param oid
      * @return
      */
-    @Select("select p.pid,p.title,p.my_type,p.inventory,p.is_new,p.price,p.picture,u.uid,u.nick_name,u.contact " +
+    @Select("select p.pid,p.title,p.my_type,p.inventory,p.is_new,p.price,p.picture,p.standard,u.uid,u.nick_name,u.contact " +
             "from orders o left join productInfo p on o.B_pid = p.pid  left join userInfo u on p.p_uid = u.uid " +
             "where o.oid = #{oid}")
     Map other(Integer oid);

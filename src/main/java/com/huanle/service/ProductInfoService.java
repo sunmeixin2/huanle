@@ -86,6 +86,7 @@ public class ProductInfoService {
         ProductInfo productInfo = productInfoMapper.selectByPrimaryKey(pid);
         if(productInfo == null){
             data.put("message","无此商品");
+            return null;
 
         }else {
             Integer uid = productInfo.getpUid();

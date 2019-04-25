@@ -2,8 +2,11 @@ package com.huanle.controller;
 
 
 import com.huanle.Config.ErrorCode;
+import com.huanle.entity.Comment;
+import com.huanle.entity.ParentChild;
 import com.huanle.entity.ProductInfo;
 import com.huanle.entity.UserInfo;
+import com.huanle.service.CommentService;
 import com.huanle.service.ProductInfoService;
 import com.huanle.vo.ResponseVO;
 import org.slf4j.Logger;
@@ -31,6 +34,9 @@ public class ProductController {
     @Autowired
     ProductInfoService productInfoService;
 
+    @Autowired
+    CommentService commentService;
+
 
     /**
      * 添加(编辑)商品信息
@@ -51,13 +57,16 @@ public class ProductController {
     @CrossOrigin(origins = "*")
     @RequestMapping("publish")
     public ResponseVO pubilish(@RequestParam("files")MultipartFile[] files,
-                               String title, String myType, Integer inventory , String isNew,
+                               String title, String myType, String standard,Integer inventory , String isNew,
                                Double price, String detail, String productDate, String productExpire, String exchangeType, HttpServletRequest request, Integer pid){
         if(title == null || title.equals("")){
             return new ResponseVO(ErrorCode.UNKNOW_ERROR,"非法参数:title");
         }
         if(myType == null || myType.equals("")){
             return new ResponseVO(ErrorCode.UNKNOW_ERROR,"非法参数:myType");
+        }
+        if(standard == null || standard.equals("")){
+            return new ResponseVO(ErrorCode.UNKNOW_ERROR,"非法参数:standard");
         }
         if(inventory == null || inventory < 1){
             return new ResponseVO(ErrorCode.UNKNOW_ERROR,"非法参数:inventory");
@@ -91,6 +100,7 @@ public class ProductController {
         productInfo.setIsNew(Integer.parseInt(isNew));
         productInfo.setPrice(price);
         productInfo.setDetail(detail);
+        productInfo.setStandard(standard);
         DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
         try {
             if(productDate != null && !productDate.equals("")){
@@ -174,13 +184,87 @@ public class ProductController {
         return new ResponseVO(ErrorCode.RESPONSE_SUCCESS,"");
 
 
+    }
 
+
+    /**
+     * 评论
+     * @param pid
+     * @param uid
+     * @param content
+     * @param request
+     * @return
+     */
+    @RequestMapping("comment")
+    public ResponseVO comment(Integer pid,Integer uid,String content,HttpServletRequest request){
+        UserInfo up = (UserInfo) request.getSession().getAttribute("userInfo");
+        if(up == null){
+            return new ResponseVO(ErrorCode.UNKNOW_ERROR,"未登录不可以评论");
+        }
+        if(pid == null || pid < 0){
+            return new ResponseVO(ErrorCode.UNKNOW_ERROR,"非法参数: pid");
+        }
+        if(uid == null || uid < 0){
+            return new ResponseVO(ErrorCode.UNKNOW_ERROR,"非法参数: uid");
+        }
+        if(content == null || content.equals("")){
+            return new ResponseVO(ErrorCode.UNKNOW_ERROR,"非法参数: content");
+        }
+        Comment comment = new Comment();
+        comment.setPid(pid);
+        comment.setUserId(uid);
+        comment.setContent(content);
+        comment.setReply(0);
+        comment.setCreateAt((int)(new Date().getTime()/1000));
+        if(commentService.addComment(comment)){
+            return new ResponseVO(ErrorCode.RESPONSE_SUCCESS,"ok");
+        }else {
+            return new ResponseVO(ErrorCode.UNKNOW_ERROR,"评论失败！");
+        }
+
+    }
+
+    /**
+     * 回复
+     * @param parentId
+     * @param childId
+     * @param content
+     * @param pid
+     * @param request
+     * @return
+     */
+    @RequestMapping("reply")
+    public ResponseVO reply(Integer parentId,Integer childId,String content,Integer pid,HttpServletRequest request){
+        UserInfo up = (UserInfo) request.getSession().getAttribute("userInfo");
+        if(up == null){
+            return new ResponseVO(ErrorCode.UNKNOW_ERROR,"未登录不可以回复");
+        }
+        if(parentId == null || parentId < 0){
+            return new ResponseVO(ErrorCode.UNKNOW_ERROR,"非法参数: parentId");
+        }
+        if(childId == null || childId < 0){
+            return new ResponseVO(ErrorCode.UNKNOW_ERROR,"非法参数: childId");
+        }
+        if(content == null || content.equals("")){
+            return new ResponseVO(ErrorCode.UNKNOW_ERROR,"非法参数: content");
+        }
+        if(pid == null || pid < 0){
+            return new ResponseVO(ErrorCode.UNKNOW_ERROR,"非法参数: pid");
+        }
+        ParentChild parentChild = new ParentChild();
+        parentChild.setParentId(parentId);
+        parentChild.setChildId(childId);
+        if(commentService.addReply(parentChild,content,pid)) {
+            return new ResponseVO(ErrorCode.RESPONSE_SUCCESS, "");
+        }else{
+            return new ResponseVO(ErrorCode.UNKNOW_ERROR,"回复失败！");
+        }
 
     }
 
 
     /**
-     * 删除商品信息
+     * 删除(下架)商品信息
      * @param pid
      * @return
      */
