@@ -58,7 +58,7 @@
                 </div>
             </div>
           <div class="formContent">
-           <p> <label for="">商品名称: </label><input type="text" name="title" placeholder="请输入商品名称" maxlength="14" required><span> &nbsp;14个字以内</span></p>
+           <p> <label for="">商品名称: </label><input type="text" name="title"  placeholder="请输入商品名称" maxlength="14" required><span> &nbsp;14个字以内</span></p>
            <p>  <label for="descript">商品详情: </label><textarea name="detail" id="" cols="100" rows="12" required></textarea></p>
            <p> <label for="class">分类:</label><select name="myType" id="">
                 <option value="校园代步">校园代步</option>
@@ -70,6 +70,10 @@
                 <option value="衣物伞帽">衣物伞帽</option>
                 <option value="图书教材">图书教材</option>
                 <option value="其他">其他</option>
+            </select></p> 
+            <p> <label for="class">置换标准:</label><select name="standard" id="">
+                <option value="等价值">等价值</option>
+                <option value="可补差价">可补差价</option>
             </select></p> 
             <p><label for="">交换数量:</label><input type="number" name="inventory" style="height: 30px;width: 60px" required></p>
             <p><label for="">新旧程度:</label><select name="isNew" id="isNew">
@@ -198,6 +202,80 @@
 	}
 
 }
+function ajaxContent() {
+	$.ajax({
+		url: `/huanle/product/showProduct${window.location.search}`,
+		type: "GET",
+		dataType: "json",
+		success: function (data) {
+            for(let i=0;i<img.files.length;i++){
+            let newDiv=document.createElement('div');
+            let twoDiv=document.createElement('div');
+            twoDiv.innerText='X';
+            twoDiv.className='delete'
+
+        newDiv.className="files";
+        let goodsImg=document.createElement('img');
+        goodsImg.style.width=`150px`
+        goodsImg.style.height=150+'px'
+        goodsImg.src=data.data.img[i];
+        newDiv.appendChild(goodsImg)
+        newDiv.appendChild(twoDiv)
+        mes.appendChild(newDiv);
+         twoDiv.onclick=function(){
+             mes.removeChild(this.parentNode)
+         }
+       }
+       let releaseTitle=document.getElementsByName('title')[0];
+       let releaseDetail=document.getElementsByName('detail')[0];
+       let releaseType=document.getElementsByName('myType')[0];
+       let releaseTypes=releaseType.getElementsByTagName('option');
+       let releaseStandard=document.getElementsByName('standard')[0];
+       let releaseStandards=releaseStandard.getElementsByTagName('option');
+       let releaseInventory=document.getElementsByName('inventory')[0];
+       let releaseIsNew=document.getElementsByName('isNew')[0];
+       let releaseIsNews=releaseIsNew.getElementsByTagName('option');
+       let releasePrice=document.getElementsByName('price')[0];
+       let releaseDate=document.getElementsByName('productDate')[0];
+       let releaseExpire=document.getElementsByName('productExpire')[0];
+       let releaseExType=document.getElementsByName('exchangeType')[0];
+       let releaseExTypes=releaseExType.getElementsByTagName('option');
+	   releaseTitle.value=data
+       releaseDetail.value=data
+       releaseInventory.value=data
+       releasePrice.value=data
+       var times = new Date(parseInt(data.data.productList[i].createAt) * 1000)
+                                    var timesData = times.toLocaleString().split(' ')
+                                    Date.prototype.toLocaleString = function () {
+                                        return this.getFullYear() + "年" + (this.getMonth() + 1) + "月" + this.getDate() + "日 ";
+                                    };
+                                    releaseDate.value=times[0]
+                                    releaseExpire.value=data
+                                    releaseExpire.value=data
+       for(let i=0;i<releaseTypes.length;i++){
+           if(releaseTypes[i].value==data){
+               releaseTypes[i].checked=true
+           }
+       }
+       for(let i=0;i<releaseStandards.length;i++){
+           if(releaseStandards[i].value==data){
+            releaseStandards[i].checked=true
+           }
+       }
+       for(let i=0;i<releaseIsNews.length;i++){
+           if(releaseIsNews[i].value==data){
+            releaseIsNews[i].checked=true
+           }
+       }
+       for(let i=0;i<releaseExTypes.length;i++){
+           if(releaseExTypes[i].value==data){
+            releaseExTypes[i].checked=true
+           }
+       }
+    }
+})
+}
+
 window.onload=function(){
     state()
 }

@@ -172,31 +172,68 @@ console.log(data)
                             } else {
                                 aRelease[0].innerHTML = data.data.productList.length;
                                 for (var i = 0; i < data.data.productList.length; i++) {
-                                    $('.boxFourUl').prepend('<li><div class="history"><div class="histImg"><a href="" class="histImgA"><img src="images/01_mid.jpg" alt="" class="histImgCont"></a></div><div class="histInfo"><span class="histInfo-name">名称</span><span class="histInfo-cont histInfoCont"></span><span class="histInfo-name">价格</span><span class="histInfo-cont histInfoPrice"></span><span class="histInfo-name">type</span><span class="histInfo-cont histInfo-type"></span><span class="histInfo-name">发布时间</span><span class="histInfo-cont histInfoTime"></span></div><span class="pressStatus"></span><div class="histCancle"><span>删除记录</span></div></div></li>');
+                                    $('.boxFourUl').prepend('<li><div class="history"><div class="histImg"><a href="" class="histImgA"><img src="images/01_mid.jpg" alt="" class="histImgCont"></a></div><div class="histInfo"><span class="histInfo-name">名称</span><span class="histInfo-cont histInfoCont"></span><span class="histInfo-name">价格</span><span class="histInfo-cont histInfoPrice"></span><span class="histInfo-name">想要换类型</span><span class="histInfo-cont histInfo-type"></span><span class="histInfo-cont histInfoTime">2019/12/1</span></div><span class="pressStatus"></span><div class="histCancle"><span>删除记录</span></div><div class="hasEdit"><span>编辑</span></div><div class="Lowershelf"><span>下架</span></div></div></li>');
                                 }
                                 var ahistCancle = document.getElementsByClassName('histCancle');
+                                var Lowershelf = document.getElementsByClassName('Lowershelf');
+                                var hasEdit = document.getElementsByClassName('hasEdit');
+
                                 for (var i = 0; i < data.data.productList.length; i++) {
-                                    (function (j) {
-                                        ahistCancle[i].onclick = function () {
+                                    hasEdit[i].onclick = function () {
+                                        $.ajax({
+                                            url: "",
+                                            type: "post",
+                                            data: {
+                                               id:data
+                                            },
+                                            success: function (data) {
+                                                if(data.code===0){
+                                                    window.location.href = `releasse.html?pid=${id}`
+                                                }
+                                            }  
+                                        })
+                                    }
+                            }
+                                for (var i = 0; i < data.data.productList.length; i++) {
+                                        Lowershelf[i].onclick = function () {
                                             $.ajax({
-                                                url: "delete.php",
+                                                url: "",
                                                 type: "post",
                                                 data: {
-                                                    "choice": 2,
-                                                    "order_id": data.history[j].order_id
+                                                   
                                                 },
                                                 success: function (data) {
-                                                    var data = eval("(" + data + ")");
-                                                    if (data.ok == 0) {
-                                                        alert('很抱歉，删除失败!');
-                                                    } else if (data.ok == 1) {
-                                                        alert('删除成功！');
+                                                   
+                                                    if (data.code == 0) {
+                                                        alert('下架成功！');
                                                         location.reload([true]);
+                                                    } else if (data.ok != 0) {
+                                                        alert('网络问题！');
+                                                        
                                                     }
                                                 }
                                             })
                                         }
-                                    })(i)
+                                }
+                                for (var i = 0; i < data.data.productList.length; i++) {
+                                        ahistCancle[i].onclick = function () {
+                                            $.ajax({
+                                                url: "",
+                                                type: "post",
+                                                data: {
+                                                   
+                                                },
+                                                success: function (data) {
+                                                 
+                                                    if (data.code == 0) {
+                                                        alert('删除成功！');
+                                                        location.reload([true]);
+                                                    } else if (data.code != 1) {
+                                                        alert('网络问题！');
+                                                    }
+                                                }
+                                            })
+                                        }
                                 }
                                 var ahistImgA = document.getElementsByClassName('histImgA');
                                 var ahistImgCont = document.getElementsByClassName('histImgCont');

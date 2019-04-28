@@ -51,7 +51,8 @@
 			cursor: pointer;
 			margin-left: -30px;
 		}
-		#changeList{
+
+		#changeList {
 			position: absolute;
 			top: 190px;
 			left: 30%;
@@ -59,24 +60,27 @@
 			box-sizing: border-box;
 			padding: 10px;
 			height: 600px;
-			border-radius: 10px;	
+			border-radius: 10px;
 			background: rgb(212, 227, 230);
 			display: none;
 			z-index: 1000;
 		}
-		#changeList .classList p{
+
+		#changeList .classList p {
 			margin: 10px auto;
 			width: 460px;
 			height: 130px;
 			border-bottom: 1px solid #ccc
 		}
-		#changeList a{
+
+		#changeList a {
 			width: 100px;
 			float: right;
 			text-align: right;
 			text-decoration: none
 		}
-		#changeList button{
+
+		#changeList button {
 			width: 70px;
 			height: 50px;
 			border-radius: 10px;
@@ -85,16 +89,19 @@
 			margin: 5px 400px;
 
 		}
-		.classList{
+
+		.classList {
 			clear: both;
 			width: 480px;
 			height: 490px;
 			overflow: auto;
 			background: rgb(255, 255, 255)
 		}
-		.classList label{
+
+		.classList label {
 			width: 230px;
 		}
+
 		.classList p span {
 			font-size: 16px;
 			margin-left: 65px;
@@ -102,7 +109,7 @@
 
 		}
 
-		#haveLogin{
+		#haveLogin {
 
 			height: 80px;
 			line-height: 80px;
@@ -111,21 +118,26 @@
 			right: -120px;
 			bottom: 20px;
 		}
-		#xiabanjie{
+
+		#xiabanjie {
 			width: 100%;
 			height: auto;
 		}
-		.inttt{
-			
-		    margin-top: 50px !important;
+
+		.inttt {
+
+			margin-top: 50px !important;
 		}
-		#hello{
+
+		#hello {
 			margin-top: 10px
 		}
-		#sanjiao{
+
+		#sanjiao {
 			margin-left: 10px;
 		}
-		#tips{
+
+		#tips {
 			margin-left: 0px;
 		}
 	</style>
@@ -134,33 +146,34 @@
 <body>
 	<!-- header头部——logo、搜索框、登录注册 -->
 	<div class="header">
-			
+
 		<span class="tag"><img src="images/互联交换清算系统.png" width="100px" alt=""> <a href="homepage.html">换乐</a></span>
 		</span>
 		<nav>
-		<div class="login" id="noneLogin" style="display:none"><a href="logreg.html#/firstPage">登录</a><a href="logreg.html#/secondPage">注册</a></div>
+			<div class="login" id="noneLogin" style="display:none"><a href="logreg.html#/firstPage">登录</a><a
+					href="logreg.html#/secondPage">注册</a></div>
 
 			<div class="user login" id="haveLogin" style="display:block">
 				<p id="center">个人信息<img src="img/users.png" width="30px"></p>
 			</div>
 		</nav>
 	</div>
-<div class="sanjiao" id="sanjiao"></div>
-		<div class="tips" id="tips">
-			<div class="tipsHeader">
-				<img src="img/back.jpeg" alt="" width="60px" height="60px" id="touxiang">
-				<p id="hello">你好！<span id="userNick">Yufengxxx</span></p>
-			</div>
-			<div id="xiabanjie">
-				<p class="inttt">
-					<a href="javascript:;" id="gerenzhuye">个人主页</a>
+	<div class="sanjiao" id="sanjiao"></div>
+	<div class="tips" id="tips">
+		<div class="tipsHeader">
+			<img src="img/back.jpeg" alt="" width="60px" height="60px" id="touxiang">
+			<p id="hello">你好！<span id="userNick">Yufengxxx</span></p>
+		</div>
+		<div id="xiabanjie">
+			<p class="inttt">
+				<a href="javascript:;" id="gerenzhuye">个人主页</a>
 			</p>
 			<p class="inttt">
 				<a href="javascript:;" id="out">退出</a>
 			</p>
-			</div>
-			
 		</div>
+
+	</div>
 
 	<!-- 主体内容——仿淘宝图片放大镜展示、物品信息、分享接口、卖家寄语、热门推荐、热门评价、发表评价 -->
 	<article>
@@ -199,6 +212,18 @@
 					<p class="info-wrName">发布时间</p>
 					<p class="info-name info-time"></p>
 				</div>
+				<div class="info-wr">
+					<p class="info-wrName" id="releaseUser" style="color:rgb(50, 51, 53);cursor:pointer;font-weight:bold">发布者</p>
+					<p class="info-name info-user"></p>
+				</div>
+				<div class="info-wr">
+					<p class="info-wrName">联系方式</p>
+					<p class="info-name info-contract"></p>
+				</div>
+				<div class="info-wr">
+					<p class="info-wrName">置换标准</p>
+					<p class="info-name info-standard"></p>
+				</div>
 			</div>
 			<div class="info-bot">
 				<div class="bdsharebuttonbox">
@@ -212,14 +237,21 @@
 			</div>
 		</div>
 		<button value="想要换" id="doWell">想要换</button>
+		<p class="art-bot-nav"><span class="Navbtn activeNav">商品详情 </span>&nbsp;<span class="Navbtn"> 交易记录</a></span>
 		<!-- 卖家寄语 -->
-		<div class="art-bot-describe">
+		<div class="art-bot-describe art-box">
 			<div class="descTop"></div>
 			<div class="descCont">
 				<p class="infodetail">物品描述</p>
 			</div>
 			<div class="descBot"></div>
 		</div>
+		<div class="art-bot-history art-box">
+				<div class="descCont">
+					<p class="infodetail">交易记录</p>
+				</div>
+			</div>
+		
 
 		<!-- 相似推荐，热门评价 -->
 		<div class="art-hot-evaluation">
@@ -237,9 +269,9 @@
 		<div id="changeList">
 			<p>你的物品：</p> <a href="javascript:;" id="close">X</a>
 			<div class="classList">
-			 <form class="detailList">
+				<form class="detailList">
 
-			 </form>
+				</form>
 
 			</div>
 			<button id="tochange">want</button>
@@ -267,7 +299,21 @@
 				triangle.style.display = 'none';
 			}, 600)
 		}
+		let Navbtn=document.querySelectorAll('.Navbtn');
+		let artBox=document.querySelectorAll('.art-box')
+		for(let i=0;i<Navbtn.length;i++){
+			Navbtn[i].onclick=function(){
+				for(let j=0;j<Navbtn.length;j++){
+					Navbtn[j].className='';
+					artBox[j].style.display='none'
+				}
+				Navbtn[i].className='activeNav';
+				artBox[i].style.display='block'
 
+
+			}
+			
+		}
 	</script>
 	<!-- JS文件引入 -->
 	<script src="js/jquery-2.1.1.min.js"></script>压缩Jquery库

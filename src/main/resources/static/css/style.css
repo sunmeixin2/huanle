@@ -54,7 +54,7 @@ header span{
 	font-size: 35px;
 	height: 62px;
 	text-align: left;
-	margin: 20px;
+	margin: 20px 60px;
 	line-height: 30px;
 	position: fixed;
 	left: 120px;
@@ -315,13 +315,13 @@ section .right .release  .code h5{
 	font-weight: normal;
 }
 .right .main{
-	width: 950px;
+	width: 75%;
 	float: right;
 	height: auto;
-	margin:10px 50px;
+	margin:-20px 15%;
 }
 .main .report{
-	width: 97%;
+	width: 99%;
 	height: 100px;
 	background: white;
 	border:1px solid white;

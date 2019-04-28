@@ -104,7 +104,7 @@ function ajaxContent() {
 			var content = document.getElementById('evalutArea')
 			submit.onclick = function () {
 				$.ajax({
-					url: "pinglun.php",
+					url: "",
 					type: "post",
 					dataType: "json",
 					data: {
@@ -112,10 +112,9 @@ function ajaxContent() {
 						"order_id": order_idNum
 					},
 					success: function (data) {
-						var xStatus = eval(data);
-						if (xStatus.ok == 0) {
+						if (data.code != 0) {
 							alert('不好意思，' + xStatus.err);
-						} else if (xStatus.ok == 1) {
+						} else if (data.code == 0) {
 							alert('提交成功，感谢您的评价');
 							location.reload([true]);
 						}
@@ -123,26 +122,10 @@ function ajaxContent() {
 				})
 			}
 
-			// var signOut = document.getElementsByClassName('signOut');
-			// signOut[0].onclick = function () {
-			// 	$.ajax({
-			// 		url: "signOut.php",
-			// 		type: "post",
-			// 		success: function (data) {
-			// 			var signOut = eval(data);
-			// 			if (signOut.ok == 1) {
-			// 				alert('退出成功！');
-			// 				location.reload([true]);
-			// 			} else {
-			// 				alert('很遗憾，退出失败');
-			// 			}
-			// 		},
-			// 		error: function () {
-			// 			alert('抱歉，操作失败，请检查网络连接！');
-			// 		}
-			// 	})
-			// }
-
+			let releaseUser=document.getElementById('releaseUser')
+			releaseUser.onclick=function(){
+				window.location.href=`personal.html?${d}`
+			}
 			// 4.填充商品信息
 			var infoTitle = document.getElementsByClassName('info-title');
 			var infoPrice = document.getElementsByClassName('info-price');
@@ -152,9 +135,17 @@ function ajaxContent() {
 			var infoContact = document.getElementsByClassName('info-contact');
 			var infoPlace = document.getElementsByClassName('info-place');
 			var infoTime = document.getElementsByClassName('info-time');
-			var infodetail = document.querySelector('.infodetail');
+			var infodetail = document.querySelector('.infodetail')[0];
+			var infohistory = document.querySelector('.infodetail')[1];
+			var infouser = document.querySelector('.info-user');
+			var infocontract = document.querySelector('.info-contract');
+			var infostandard = document.querySelector('.info-standard');
 
 			infoTitle[0].innerHTML = data.data.productInfo.title;
+			infouser.innerHTML = data.data.productInfo;
+			infohistory.innerHTML = data.data.productInfo;
+			infocontract.innerHTML = data.data.productInfo;
+			infostandard.innerHTML = data.data.productInfo;
 			infoPrice[0].innerHTML = "￥"+data.data.productInfo.price;
 			infoBargain[0].innerHTML = data.data.productInfo.myType;
 			infoSeller[0].innerHTML = data.data.productInfo.isNew+'成新';
@@ -214,31 +205,20 @@ function ajaxContent() {
 			var aevalutA = document.getElementsByClassName('evalutA');
 			var aevalutImg = document.getElementsByClassName('evalutImg');
 
-			// for (var i = 0; i < data.data.conmment.length; i++) {
-			// 	//循环创建评论条
-			// 	$(".evalu-title-ul").prepend('<li><div class="evalutInfo"><div class="evalutPhoto"><a class="evalutA" href=""><img class="evalutImg" src="" alt=""></a></div><div class="evalutCont"></div></div></li>')
-			// }
-			// evalu(); //执行评价分页函数
-			// for (var i = 0; i < data.data.conmment.length; i++) {
-			// 	//循环添加评论内容
-			// 	aevalutCont[i].innerHTML = data.data.conmment[i].content;
-			// 	aevalutA[i].href = "personal.html" + "?user_id=" + data.data.conmment[i].user_name;
-			// 	aevalutImg[i].src = "images/" + data.data.conmment[i].image;
-			// }
+			for (var i = 0; i < data.data.conmment.length; i++) {
+				//循环创建评论条
+				$(".evalu-title-ul").prepend('<li><div class="evalutInfo"><div class="evalutPhoto"><a class="evalutA" href=""><img class="evalutImg" src="" alt=""></a></div><div class="evalutCont"></div></div></li>')
+			}
+			evalu(); //执行评价分页函数
+			for (var i = 0; i < data.data.conmment.length; i++) {
+				//循环添加评论内容
+				aevalutCont[i].innerHTML = data.data.conmment[i].content;
+				aevalutA[i].href = "personal.html" + "?user_id=" + data.data.conmment[i].user_name;
+				aevalutImg[i].src = data;
+			}
 
 
-			// 7.填充推荐信息
-			// var ahotHrefOne = document.getElementsByClassName('cont-imgA');
-			// var ahotHrefTwo = document.getElementsByClassName('cont-titleA');
-			// var ahotImg = document.getElementsByClassName('cont-imgAcont');
-			// var ahotTitle = document.getElementsByClassName('img-title');
-			//
-			// for (var i = 0; i < arr.tuijian.length; i++) {
-			// 	ahotHrefOne[i].href = "goods.html?order_id=" + arr.tuijian[i].order_id;
-			// 	ahotHrefTwo[i].href = "goods.html?order_id=" + arr.tuijian[i].order_id;
-			// 	ahotImg[i].src = "images/" + arr.tuijian[i].tupian;
-			// 	ahotTitle[i].innerHTML = arr.tuijian[i].order_name;
-			// }
+		
 
 			//8.填充meta与title标签
 			// var aMeta = document.getElementsByTagName('meta');

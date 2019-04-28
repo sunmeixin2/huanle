@@ -192,7 +192,9 @@ article {
 	min-height: 200px;
 	padding-bottom: 30px;
 }
-
+.boxFourUl li{
+	position: relative
+}
 .personal-mid .box .accountInfo {
 	width: 700px;
 	height: 160px;
@@ -574,7 +576,7 @@ article {
 	color: #37B15E;
 	font-size: 24px;
 	font-family: "楷体";
-	text-align: center;
+	text-align: right;
 	line-height: 30px;
 	margin-top: 13px;
 }
@@ -790,4 +792,48 @@ article {
 }
 .btnsActive{
 	background: rgb(72, 75, 69)
+}
+.histInfoTime{
+	width: auto;
+	position: absolute;
+	left: 55%;
+	top: 70%;
+	font-size: 15px;
+	color: rgb(17, 183, 248)
+}
+.hasEdit{
+   position: absolute;
+   left: 85%;
+margin-left: -5px;
+top: -15%;
+	width: 130px;
+	height: 160px;
+
+}
+.Lowershelf{
+   position: absolute;
+	left: 70%;
+	top: 8%;
+	width: 130px;
+	height: 160px;
+
+}
+.hasEdit span,
+.Lowershelf span{
+	display: block;
+	width: 130px;
+	height: 30px;
+	font-size: 18px;
+	text-align: center;
+	line-height: 30px;
+	text-overflow: hidden;
+	margin-top: 120px;
+	border: 1px solid #37B15E;
+	border-radius: 10px;
+	cursor: pointer;
+}
+.hasEdit span:hover,
+.Lowershelf span:hover{
+	background: #37B15E;
+	color: white;
 }

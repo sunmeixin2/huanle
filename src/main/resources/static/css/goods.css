@@ -84,7 +84,7 @@ article .art-left-photo{/*左侧仿淘宝放大镜图片展示*/
 article .art-right-info{/*右侧信息模块*/
 	float: left;
 	width: 600px;
-	height: 480px;
+	height: 700px;
 	margin-top: 20px;
 	margin-left: 50px;
 	margin-bottom: 10px;
@@ -136,7 +136,7 @@ article .art-right-info .info-coll{
 }
 article .art-right-info .info-others{
 	width: 600px;
-	height: 315px;
+	height: 500px;
 	overflow: hidden;
 }
 article .art-right-info .info-wrName{
@@ -176,6 +176,7 @@ article .art-right-info .info-seller a{
 article .art-right-info .info-bot{
 	width: 600px;
 	height: 65px;
+margin: 0;
 	overflow: hidden;
 }
 article .art-right-info .bdsharebuttonbox{
@@ -188,7 +189,7 @@ article .art-bot-describe{
 	clear: both;
 	width: 1100px;
 	min-height: 100px;
-	margin: 0 auto;
+	margin: 500px auto 0;
 }
 article .art-bot-describe .descTop{/*双引号开*/
 	width: 1100px;
@@ -326,4 +327,38 @@ article .evalutIam #evalutSubmit{/*提交评价submit*/
 	color: white;
 	font-size: 24px;
 	cursor: pointer;
+}
+.art-bot-history{
+	clear: both;
+	width: 1100px;
+	min-height: 100px;
+	margin: 500px auto 100px;
+	display: none
+	
+}
+.art-bot-history .descCont{
+	width: 800px;
+	min-height: 100px;
+	margin-left: 140px;
+	border: 1px solid #ccc;
+}
+.art-bot-nav{
+	position: absolute;
+	top: 750px;
+	left: 300px;
+}
+.art-bot-nav span{
+	cursor: pointer;
+	border: 1px orange dashed;
+	border-radius: 10px;
+	width: 80px;
+	height: 60px;
+	padding: 5px;text-align: center;
+	margin: 0 30px 0 0;
+}
+.art-bot-nav span:hover{
+	background: rgb(115, 191, 241)	
+}
+.activeNav{
+	background: rgb(42, 147, 218)	
 }
