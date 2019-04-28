@@ -1,14 +1,14 @@
 package com.huanle.service;
 
+import com.huanle.Util.FileUtil;
 import com.huanle.dao.CommentMapper;
-import com.huanle.dao.ParentChildMapper;
+import com.huanle.dao.ReplyMapper;
 import com.huanle.entity.Comment;
-import com.huanle.entity.ParentChild;
-import com.sun.org.apache.bcel.internal.generic.DADD;
+import com.huanle.entity.Reply;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Date;
+import java.util.*;
 
 @Service
 public class CommentService {
@@ -16,8 +16,9 @@ public class CommentService {
     @Autowired
     CommentMapper commentMapper;
 
+
     @Autowired
-    ParentChildMapper parentChildMapper;
+    ReplyMapper replyMapper;
 
     public Boolean addComment(Comment comment){
 
@@ -27,18 +28,49 @@ public class CommentService {
         return false;
     }
 
-    public Boolean addReply(ParentChild parentChild,String content,Integer pid){
-        Comment comment = new Comment();
-        comment.setPid(pid);
-        comment.setContent(content);
-        comment.setUserId(parentChild.getChildId());
-        comment.setCreateAt((int)(new Date().getTime()/1000));
-        comment.setReply(0);
-        if(commentMapper.insertSelective(comment)== 1 && parentChildMapper.insertSelective(parentChild) == 1){
-
+    public Boolean addReply(Reply reply){
+        if(replyMapper.insertSelective(reply) == 1){
+            commentMapper.updateReplyById(reply.getParentId());
             return true;
         }
+
         return false;
+
+    }
+
+    public Map commentList(Integer pid){
+        Map result = new HashMap();
+        List<Map> data = new ArrayList<>();
+
+        List<Map> comments = commentMapper.getListByPid(pid);
+        if(comments != null){
+            for (Map tmp : comments){
+                Map map = new HashMap();
+                tmp.put("profile_img", FileUtil.PATH + "/" + tmp.get("profile_img"));
+                if((Integer)tmp.get("reply") > 0){
+                    Integer parentId = Integer.parseInt(tmp.get("id").toString());
+                    List<Map> replys = replyMapper.getReplyListByParentId(parentId);
+                    map.put("reply",replys);
+                    for (Map reply : replys){
+                        reply.put("profile_img", FileUtil.PATH + "/" + reply.get("profile_img"));
+                    }
+                }else{
+                    map.put("reply","");
+
+                }
+                map.put("comment",tmp);
+
+                data.add(map);
+            }
+        } else{
+            result.put("total",0);
+            result.put("commentList","");
+            return result;
+        }
+        result.put("total",comments.size());
+        result.put("commentList",data);
+        return result;
+
     }
 
 }

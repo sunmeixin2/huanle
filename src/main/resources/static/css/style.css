@@ -243,15 +243,10 @@ section .right .release{
 	font-weight: bold;
 	display: inline-block;
 	width: 140px;
-	height: 52px;
-	background: url(../images/发布.png) no-repeat ;
-	background-size: 40%;
+	height: 52px;background: url(../images/release-button-1.png) no-repeat;
+	background-size: 100%;
 	transition: all 0.8s;
 	margin: 10px 0;
-}
-.right .release  a:hover.one{
-	background: url(../images/release-button-1.png);
-	font-size: 0
 }
 section .right .release img{
    margin: 20px 0;

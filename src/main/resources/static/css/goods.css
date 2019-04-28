@@ -216,7 +216,7 @@ article .art-bot-describe .descCont p{/*双引号内容*/
 /*热门推荐——热门评论*/
 article .art-hot-evaluation{
 	width: 1100px;
-	height:760px;
+	height:900px;
 	margin: 0 auto;
 }
 article .evaluation{/*热门评价*/
@@ -239,16 +239,17 @@ article .evaluation .evalu-title{/*热门评价标题*/
 	background: #1C826C;
 }
 article .evaluation .evalutInfo{/*热评总包裹*/
-	width: 980px;
+	width: 1000px;
 	min-height: 80px;
 	margin: 0 auto;
 	margin-top: 22px;
 	overflow: hidden;
+	border: 1px solid
 
 }
 article .evaluation .evalutPhoto{/*热评头像*/
 	float: left;
-	width: 60px;
+	width: 160px;
 	height: 60px;
 	margin-top: 10px;
 	margin-left: 10px;
@@ -256,25 +257,61 @@ article .evaluation .evalutPhoto{/*热评头像*/
 }
 article .evaluation .evalutPhoto a{/*热评头像链接及居中*/
 	display: table-cell;
-	width: 60px;
+	width: 160px;
 	height: 60px;
 	text-align: center;
 	vertical-align: middle;
+
+	line-height: 60px;
+}
+article .evaluation .evalutPhoto a p{
+	float: left;
+	margin-left: 10px;
+
 }
 article .evaluation .evalutPhoto img{/*热评头像图片圆形显示*/
 	width: 50px;
 	height: 50px;
+	float: left;
 	border-radius: 50px;
 }
 article .evaluation .evalutCont{/*热评具体内容，字数56*/
 	float: left;
-	width: 560px;
-	min-height:40px; 
+	width: 410px;
+	min-height:40px;
 	padding: 10px;
-	margin-top: 10px;
-	margin-left: 15px;
+	margin-top: 20px;
+	margin-left: 0px;
 	line-height: 20px;
 	font-size: 20px;
+}
+article .evaluation .evalutTime{
+	width: 120px;
+	float: right;
+	margin: 30px 40px;
+	color: rgb(122, 120, 120);
+	font-size: 15px
+}
+.replay{
+	/*border: 1px solid*/
+	height: 100px;
+	overflow: auto;
+	margin-top: 80px;
+}
+.replay li .evalutCont,
+.replay li,
+.replay li .evalutTime{
+	font-size: 14px;
+}
+.replay li{
+	height: 85px;
+}
+
+.replay li .evalutPhoto img{
+	width: 30px;
+	height: 30px;
+	margin-top: 10px;
+	margin-left: 10px;
 }
 
 /*发表评论*/

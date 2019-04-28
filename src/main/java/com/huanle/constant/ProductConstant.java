@@ -8,6 +8,10 @@ public  class ProductConstant {
 
     public static final Map<Integer,String> ADVICE;
 
+    public static final Map<Integer,String> STATUS ;
+
+//    public static final Map<Integer,String> ORDER_STATUS;
+
 //    public static final Map<Integer,String> IS_NEW;
 
 //    static {
@@ -28,5 +32,21 @@ public  class ProductConstant {
         tmpAdvice.put(3,"审核失败");
         ADVICE = Collections.unmodifiableMap(tmpAdvice);
     }
+
+    static {
+        Map<Integer,String> tmpStatus = new HashMap<>();
+        tmpStatus.put(1,"已发布");
+        tmpStatus.put(2,"已交换");
+        tmpStatus.put(3,"已下架");
+        STATUS = Collections.unmodifiableMap(tmpStatus);
+    }
+//
+//    static {
+//        Map<Integer,String> tmpStatus = new HashMap<>();
+//        tmpStatus.put(1,"");
+//        tmpStatus.put(2,"已交换");
+//        tmpStatus.put(3,"已下架");
+//        ORDER_STATUS = Collections.unmodifiableMap(tmpStatus);
+//    }
 
 }

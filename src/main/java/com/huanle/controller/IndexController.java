@@ -38,6 +38,7 @@ public class IndexController {
         }
 
     }
+
     @RequestMapping("upInfo")
     public ResponseVO upInfo(HttpServletRequest request){
         UserInfo up = (UserInfo) request.getSession().getAttribute("userInfo");

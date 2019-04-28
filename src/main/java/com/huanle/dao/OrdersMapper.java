@@ -1,7 +1,10 @@
 package com.huanle.dao;
 
+import com.alibaba.fastjson.JSONObject;
+import com.huanle.dao.provider.OrderDaoProvider;
 import com.huanle.entity.Orders;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.SelectProvider;
 
 import java.util.List;
 import java.util.Map;
@@ -56,4 +59,19 @@ public interface OrdersMapper {
             "from orders o left join productInfo p on o.B_pid = p.pid  left join userInfo u on p.p_uid = u.uid " +
             "where o.oid = #{oid}")
     Map other(Integer oid);
+
+    @Select("select count(*) from orders where A_uid = #{uid} or B_uid = #{uid}")
+    Integer getCountByUid(Integer uid);
+
+    @Select("select count(*) from orders where A_uid = #{uid}")
+    Integer getCountByAUid(Integer uid);
+
+    @Select("select count(*) from orders where B_uid = #{uid}")
+    Integer getCountByBUid(Integer uid);
+
+
+//    @Select("select * from orders order by oid ")
+//    List<Orders> getAllList();
+    @SelectProvider(type = OrderDaoProvider.class,method = "selectByFilter")
+    List<Orders> getAllList(JSONObject param);
 }

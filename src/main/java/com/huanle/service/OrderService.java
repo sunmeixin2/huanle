@@ -1,5 +1,6 @@
 package com.huanle.service;
 
+import com.alibaba.fastjson.JSONObject;
 import com.huanle.Util.CommonUtil;
 import com.huanle.Util.OrderCoderUtil;
 import com.huanle.dao.OrdersMapper;
@@ -163,6 +164,19 @@ public class OrderService {
         }
 
         return result;
+    }
+
+
+    public Map getAllOrdersList(JSONObject param){
+        Map result = new HashMap();
+
+        List<Orders> ordersList = ordersMapper.getAllList(param);
+        if(ordersList != null) {
+            result.put("total", ordersList.size());
+            result.put("orders", ordersList);
+        }
+        return result;
+
     }
 
 }

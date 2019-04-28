@@ -2,10 +2,7 @@ package com.huanle.controller;
 
 
 import com.huanle.Config.ErrorCode;
-import com.huanle.entity.Comment;
-import com.huanle.entity.ParentChild;
-import com.huanle.entity.ProductInfo;
-import com.huanle.entity.UserInfo;
+import com.huanle.entity.*;
 import com.huanle.service.CommentService;
 import com.huanle.service.ProductInfoService;
 import com.huanle.vo.ResponseVO;
@@ -23,6 +20,7 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Map;
 
 @RequestMapping("huanle/product")
@@ -181,7 +179,17 @@ public class ProductController {
      */
     @RequestMapping("productComment")
     public ResponseVO productComment(Integer pid){
-        return new ResponseVO(ErrorCode.RESPONSE_SUCCESS,"");
+        if(pid == null || pid < 0){
+            return new ResponseVO(ErrorCode.UNKNOW_ERROR,"非法参数: pid");
+        }
+
+        Map data = commentService.commentList(pid);
+        if(data != null){
+            return new ResponseVO(ErrorCode.RESPONSE_SUCCESS,data);
+        }else {
+            return new ResponseVO(ErrorCode.UNKNOW_ERROR,"error comment!");
+        }
+
 
 
     }
@@ -192,11 +200,14 @@ public class ProductController {
      * @param pid
      * @param uid
      * @param content
+     * @param parentId
      * @param request
      * @return
      */
     @RequestMapping("comment")
-    public ResponseVO comment(Integer pid,Integer uid,String content,HttpServletRequest request){
+    public ResponseVO comment( Integer pid,Integer uid,String content,Integer parentId,HttpServletRequest request){
+        System.out.println("uid==="+uid);
+
         UserInfo up = (UserInfo) request.getSession().getAttribute("userInfo");
         if(up == null){
             return new ResponseVO(ErrorCode.UNKNOW_ERROR,"未登录不可以评论");
@@ -216,48 +227,23 @@ public class ProductController {
         comment.setContent(content);
         comment.setReply(0);
         comment.setCreateAt((int)(new Date().getTime()/1000));
-        if(commentService.addComment(comment)){
-            return new ResponseVO(ErrorCode.RESPONSE_SUCCESS,"ok");
-        }else {
-            return new ResponseVO(ErrorCode.UNKNOW_ERROR,"评论失败！");
-        }
-
-    }
-
-    /**
-     * 回复
-     * @param parentId
-     * @param childId
-     * @param content
-     * @param pid
-     * @param request
-     * @return
-     */
-    @RequestMapping("reply")
-    public ResponseVO reply(Integer parentId,Integer childId,String content,Integer pid,HttpServletRequest request){
-        UserInfo up = (UserInfo) request.getSession().getAttribute("userInfo");
-        if(up == null){
-            return new ResponseVO(ErrorCode.UNKNOW_ERROR,"未登录不可以回复");
-        }
-        if(parentId == null || parentId < 0){
-            return new ResponseVO(ErrorCode.UNKNOW_ERROR,"非法参数: parentId");
-        }
-        if(childId == null || childId < 0){
-            return new ResponseVO(ErrorCode.UNKNOW_ERROR,"非法参数: childId");
-        }
-        if(content == null || content.equals("")){
-            return new ResponseVO(ErrorCode.UNKNOW_ERROR,"非法参数: content");
-        }
-        if(pid == null || pid < 0){
-            return new ResponseVO(ErrorCode.UNKNOW_ERROR,"非法参数: pid");
-        }
-        ParentChild parentChild = new ParentChild();
-        parentChild.setParentId(parentId);
-        parentChild.setChildId(childId);
-        if(commentService.addReply(parentChild,content,pid)) {
-            return new ResponseVO(ErrorCode.RESPONSE_SUCCESS, "");
-        }else{
-            return new ResponseVO(ErrorCode.UNKNOW_ERROR,"回复失败！");
+        if(parentId == null || parentId < 0) {   //comment
+            if (commentService.addComment(comment)) {
+                return new ResponseVO(ErrorCode.RESPONSE_SUCCESS, "ok!");
+            } else {
+                return new ResponseVO(ErrorCode.UNKNOW_ERROR, "评论失败！");
+            }
+        }else{          //reply
+            Reply reply = new Reply();
+            reply.setMessage(content);
+            reply.setParentId(parentId);
+            reply.setUserId(uid);
+            reply.setCreateAt((int)(new Date().getTime()/1000));
+            if(commentService.addReply(reply)) {
+                return new ResponseVO(ErrorCode.RESPONSE_SUCCESS, "ok!");
+            }else{
+                return new ResponseVO(ErrorCode.UNKNOW_ERROR,"回复失败！");
+            }
         }
 
     }
@@ -282,6 +268,33 @@ public class ProductController {
             return new ResponseVO(ErrorCode.RESPONSE_SUCCESS,"删除成功！");
         }else {
             return new ResponseVO(ErrorCode.UNKNOW_ERROR,"删除失败！");
+        }
+
+    }
+
+    /**
+     * 商品和订单信息统计
+     * @param uid
+     * @param request
+     * @return
+     */
+    @RequestMapping("statistics")
+    public ResponseVO statistics(Integer uid ,HttpServletRequest request){
+//        UserInfo up = (UserInfo) request.getSession().getAttribute("userInfo");
+//        if(up == null){
+//            return new ResponseVO(ErrorCode.UNKNOW_ERROR,"请登录！");
+//        }
+
+        if(uid == null || uid < 0){
+            return new ResponseVO(ErrorCode.UNKNOW_ERROR,"非法参数:uid");
+        }
+
+        Map data = productInfoService.getStatisticsRecord(uid);
+
+        if(data == null){
+            return new ResponseVO(ErrorCode.UNKNOW_ERROR,"error!");
+        }else{
+            return new ResponseVO(ErrorCode.RESPONSE_SUCCESS,data);
         }
 
     }

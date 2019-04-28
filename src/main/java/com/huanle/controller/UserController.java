@@ -111,7 +111,8 @@ public class UserController {
      * @return
      */
     @RequestMapping("/editUserInfo")
-    public ResponseVO editUserInfo(@RequestParam("files")MultipartFile[] files,String nickName,String email,String gender,String contact,HttpServletRequest request){
+    public ResponseVO editUserInfo(@RequestParam("files")MultipartFile[] files,String nickName,String email,
+                                   String gender,String contact,Integer groupId ,HttpServletRequest request){
         UserInfo up = (UserInfo)request.getSession().getAttribute("userInfo");
         if(up == null){
             return new ResponseVO(ErrorCode.UNKNOW_ERROR,"未登录");
@@ -149,6 +150,12 @@ public class UserController {
         if(userInfoRet != null){
             request.getSession().setAttribute("userInfo",userInfoRet);
             return new ResponseVO(ErrorCode.RESPONSE_SUCCESS,userInfoRet);
+        }
+
+        if(groupId != null){
+            /**
+             * admin
+             */
         }
 
         return new ResponseVO(ErrorCode.UNKNOW_ERROR,"修改信息失败！");

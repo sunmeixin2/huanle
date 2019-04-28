@@ -1,3 +1,9 @@
+var sendData={
+	uidd:'',
+	pidd:[],
+	uid:'',
+	user:''
+}
 // 使用ajax设置页面信息
 function state() {
 	var userNick = document.getElementById('userNick');
@@ -18,6 +24,7 @@ function state() {
 				haveLogin.style.display = 'block';
 				noneLogin.style.display = 'none';
 				userNick.innerHTML = peo.data.nickName;
+				sendData.user=peo.data.uid
 				headImg.src = ''
 				$(".evalutIam").prepend('<span>客官，为这个给力的宝贝留下你的真心话呗！</span><form class="evalutForm" action="" method="get"><textarea class="evalutArea" id="evalutArea" name="evalutArea" maxlength="56" placeholder="请填写56字以内的评价！"></textarea><input type="button" name="evalutSubmit" id="evalutSubmit" class="evalutSubmit" value="提交"></form>');
 				uid=peo.data.uid
@@ -37,10 +44,7 @@ function state() {
 	}
 
 }
-var sendData={
-	uidd:'',
-	pidd:[]
-}
+
 function ajaxContent() {
 	var infoTitle = document.querySelector('.info-title');
 	$.ajax({
@@ -104,16 +108,18 @@ function ajaxContent() {
 			var content = document.getElementById('evalutArea')
 			submit.onclick = function () {
 				$.ajax({
-					url: "",
+					url: "huanle/product/comment",
 					type: "post",
 					dataType: "json",
 					data: {
-						"content": content.value,
-						"order_id": order_idNum
+						pid:sendData.uidd,
+						uid:sendData.user,
+						content: content.value
+
 					},
 					success: function (data) {
 						if (data.code != 0) {
-							alert('不好意思，' + xStatus.err);
+							alert('不好意思，');
 						} else if (data.code == 0) {
 							alert('提交成功，感谢您的评价');
 							location.reload([true]);
@@ -135,17 +141,17 @@ function ajaxContent() {
 			var infoContact = document.getElementsByClassName('info-contact');
 			var infoPlace = document.getElementsByClassName('info-place');
 			var infoTime = document.getElementsByClassName('info-time');
-			var infodetail = document.querySelector('.infodetail')[0];
-			var infohistory = document.querySelector('.infodetail')[1];
+			var infodetail = document.querySelectorAll('.infodetail');
 			var infouser = document.querySelector('.info-user');
 			var infocontract = document.querySelector('.info-contract');
 			var infostandard = document.querySelector('.info-standard');
 
 			infoTitle[0].innerHTML = data.data.productInfo.title;
-			infouser.innerHTML = data.data.productInfo;
-			infohistory.innerHTML = data.data.productInfo;
-			infocontract.innerHTML = data.data.productInfo;
-			infostandard.innerHTML = data.data.productInfo;
+			infouser.innerHTML = data.data.nickName;
+			sendData.uid=data.data.uid;
+			// infohistory.innerHTML = data.data.productInfo;
+			// infocontract.innerHTML = data.data.productInfo;
+			infostandard.innerHTML = data.data.productInfo.standard;
 			infoPrice[0].innerHTML = "￥"+data.data.productInfo.price;
 			infoBargain[0].innerHTML = data.data.productInfo.myType;
 			infoSeller[0].innerHTML = data.data.productInfo.isNew+'成新';
@@ -171,7 +177,7 @@ function ajaxContent() {
 				return this.getFullYear() + "年" + (this.getMonth() + 1) + "月" + this.getDate() + "日 ";
 			};
 			infoTime[0].innerHTML =  timesData[0];
-			infodetail.innerHTML= data.data.productInfo.detail;
+			infodetail[0].innerHTML= data.data.productInfo.detail;
 
 			//5.填充商品图片
 
@@ -204,18 +210,51 @@ function ajaxContent() {
 			var aevalutCont = document.getElementsByClassName('evalutCont');
 			var aevalutA = document.getElementsByClassName('evalutA');
 			var aevalutImg = document.getElementsByClassName('evalutImg');
-
-			for (var i = 0; i < data.data.conmment.length; i++) {
-				//循环创建评论条
-				$(".evalu-title-ul").prepend('<li><div class="evalutInfo"><div class="evalutPhoto"><a class="evalutA" href=""><img class="evalutImg" src="" alt=""></a></div><div class="evalutCont"></div></div></li>')
+			var evaluUl=document.querySelector('.evalu-title-ul')
+			$.ajax({
+				url: `/huanle/product/productComment?pid=${sendData.uidd}`,
+				type: "get",
+				success: function (data) {
+					console.log(data)
+					if (data.code != 0) {
+						alert('很抱歉，收藏失败');
+					} else if (data.code == 0) {
+						// for (var i = 0; i < data.data.commentList.length; i++) {
+						// 	//循环创建评论条
+						// 	$(".evalu-title-ul").prepend('<li><div class="evalutInfo"><div class="evalutPhoto"><a class="evalutA" href=""><img class="evalutImg" src="" alt=""></a></div><div class="evalutCont"></div></div></li>')
+						// }
+						// evalu(); //执行评价分页函数
+						// for (var i = 0; i < data.data.commentList.length; i++) {
+						// 	//循环添加评论内容
+						// 	aevalutCont[i].innerHTML = data.data.commentList[i].comment.content;
+						// 	aevalutA[i].href = sendData.user
+						// 	aevalutImg[i].src = data.data.commentList[i].comment.profile_img;
+						// }
+                    for(let i=0;i<data.data.commentList.length;i++){
+                    	var times=new Date(( data.data.commentList[i].comment.create_at)*1000).toLocaleDateString()
+						evaluUl.innerHTML+=`<li>
+                            <div class="evalutInfo">
+                                <div class="evalutPhoto"><a class="evalutA" href=""><img class="evalutImg"
+                                            src="${data.data.commentList[i].comment.profile_img}" alt="">
+                                        <p>${data.data.commentList[i].comment.nick_name}</p >：
+                                    </a ></div>
+                                <div class="evalutCont">${data.data.commentList[i].comment.content}</div>
+                                <div class="evalutTime">(${times})&nbsp;&nbsp;<a href="">回复</a ></div>
+                                <ul class="replay">
+                                <li><div class="evalutPhoto"><a class="evalutA" href=""><img class="evalutImg"
+                                    src="img/demo.jpg" alt="">
+                                <p>smxsssss</p >：
+                            </a ></div>
+                        <div class="evalutCont">666</div>
+                        <div class="evalutTime">(2019/4/27)&nbsp;&nbsp;</div></li>
+                            </ul>
+                            </div>
+                            
+                        </li>`
 			}
-			evalu(); //执行评价分页函数
-			for (var i = 0; i < data.data.conmment.length; i++) {
-				//循环添加评论内容
-				aevalutCont[i].innerHTML = data.data.conmment[i].content;
-				aevalutA[i].href = "personal.html" + "?user_id=" + data.data.conmment[i].user_name;
-				aevalutImg[i].src = data;
-			}
+					}
+				}
+			})
 
 
 		
@@ -249,11 +288,18 @@ function share() {
 }
 
 //评价分页功能实现
+// function evalu() {
+// 	$('.evalu-title-ul').kkPages({
+// 		PagesClass: 'li', //需要分页的按钮
+// 		PagesMth: 6, //每页显示个数
+// 		PagesNavMth: 5 //导航显示个数
+// 	});
+// }
 function evalu() {
 	$('.evalu-title-ul').kkPages({
-		PagesClass: 'li', //需要分页的按钮
-		PagesMth: 6, //每页显示个数
-		PagesNavMth: 5 //导航显示个数
+		PagesClass: 'li',
+		PagesMth: 4,
+		PagesNavMth: 5
 	});
 }
 

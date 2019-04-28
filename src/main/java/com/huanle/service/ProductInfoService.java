@@ -1,14 +1,13 @@
 package com.huanle.service;
 
+import com.alibaba.fastjson.JSONObject;
 import com.huanle.Util.CommonUtil;
 import com.huanle.Util.FileUtil;
-import com.huanle.dao.CategoryMapper;
-import com.huanle.dao.CollectionMapper;
-import com.huanle.dao.ProductInfoMapper;
-import com.huanle.dao.UserInfoMapper;
+import com.huanle.dao.*;
 import com.huanle.entity.CollectionEntity;
 import com.huanle.entity.ProductInfo;
 import com.huanle.entity.UserInfo;
+import com.huanle.vo.ResponseVO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,6 +33,9 @@ public class ProductInfoService {
 
     @Autowired
     CollectionMapper collectionMapper;
+
+    @Autowired
+    OrdersMapper ordersMapper;
 
     /**
      *  添加商品
@@ -63,15 +65,15 @@ public class ProductInfoService {
 
         List<ProductInfo> productInfos = productInfoMapper.getList();     //获取商品信息
         result.put("total",productInfos.size());
-        List<Map> data = new ArrayList<>();
-        for (ProductInfo productInfo : productInfos){
-            Map<String,Object> map = new HashMap<>();
-
-            String[] picture = CommonUtil.pictureToArr(productInfo.getPicture());
-            map.put("product",productInfo);
-            map.put("picture",picture);
-            data.add(map);
-        }
+        List<Map> data = formatProductList(productInfos);
+//        for (ProductInfo productInfo : productInfos){
+//            Map<String,Object> map = new HashMap<>();
+//
+//            String[] picture = CommonUtil.pictureToArr(productInfo.getPicture());
+//            map.put("product",productInfo);
+//            map.put("picture",picture);
+//            data.add(map);
+//        }
         result.put("productList",data);
         return result;
     }
@@ -212,18 +214,54 @@ public class ProductInfoService {
 
     }
 
+    public Map getStatisticsRecord(Integer uid){
+        Map<String,Object> result = new HashMap<>();
+        Integer totalProd = productInfoMapper.productCountByPuid(uid);
+        Integer totalOrder = ordersMapper.getCountByUid(uid);
+        Integer totalOfMy = ordersMapper.getCountByAUid(uid);
+        Integer totalOfOther = ordersMapper.getCountByBUid(uid);
+
+        if(totalProd == null || totalProd.equals(0)){
+            return null;
+        }else{
+            result.put("totalProd",totalProd);
+            result.put("totalOrder",totalOrder);
+            result.put("totalOfMy",totalOfMy);
+            result.put("totalOfOther",totalOfOther);
+        }
+
+        return result;
+    }
+
     /**
-     * 图片字符串分割成数组
-     * @param tmp
+     * admin
      * @return
      */
-//    public String[] pictureToArr(String tmp){
-//        //配置图片路径
-//        String[] picture = tmp.split(",");
-//        int i = 0;
-//        for (String pic:picture) {
-//            picture[i++] = FileUtil.PATH + "/" + pic;
-//        }
-//        return picture;
-//    }
+    public Map getAllProductList(JSONObject param){
+
+        Map result = new HashMap();
+        List<ProductInfo> productInfoList = productInfoMapper.getAllList(param);
+        if(productInfoList == null){
+            return null;
+        }else{
+            List<Map> data = formatProductList(productInfoList);
+            result.put("productList",data);
+            result.put("total",productInfoList.size());
+            return result;
+        }
+    }
+
+    private List<Map> formatProductList(List<ProductInfo> productInfoList){
+        List<Map> data = new ArrayList<>();
+        for (ProductInfo productInfo : productInfoList){
+            Map<String,Object> map = new HashMap<>();
+
+            String[] picture = CommonUtil.pictureToArr(productInfo.getPicture());
+            map.put("product",productInfo);
+            map.put("picture",picture);
+            data.add(map);
+        }
+        return data;
+    }
+
 }

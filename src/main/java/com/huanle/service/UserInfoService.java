@@ -1,5 +1,6 @@
 package com.huanle.service;
 
+import com.alibaba.fastjson.JSONObject;
 import com.huanle.Util.CommonUtil;
 import com.huanle.Util.FileUtil;
 import com.huanle.dao.UserInfoMapper;
@@ -10,7 +11,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Service
@@ -95,6 +98,51 @@ public class UserInfoService {
         }
         userInfo = userInfoMapper.selectByPrimaryKey(uid);
         return userInfo;
+    }
+
+    /**
+     * admin
+     * @param param
+     * @return
+     */
+    public Map getAllUserList(JSONObject param){
+        Map result = new HashMap();
+        List<UserInfo> userInfoList = userInfoMapper.getAllList(param);
+        if(userInfoList  == null){
+            return null;
+        }else{
+            List<Map> data = formatUserInfo(userInfoList);
+            result.put("total",userInfoList.size());
+            result.put("data",data);
+        }
+        return result;
+    }
+
+
+    public Map getAdminList(){
+        Map result = new HashMap();
+        List<UserInfo> userInfoList = userInfoMapper.getAdminList();
+
+        if(userInfoList != null){
+            List<Map> data = formatUserInfo(userInfoList);
+            result.put("total",userInfoList.size());
+            result.put("data",data);
+        }
+
+        return result;
+    }
+
+    public List<Map> formatUserInfo(List<UserInfo> userInfoList){
+        List<Map> data = new ArrayList<>();
+
+        for (UserInfo userInfo:userInfoList){
+            Map<String,Object> map = new HashMap<>();
+            String[] picture = CommonUtil.pictureToArr(userInfo.getProfileImg());
+            map.put("userInfo",userInfo);
+            map.put("profileImg",picture);
+            data.add(map);
+        }
+        return data;
     }
 
 

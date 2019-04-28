@@ -1,8 +1,14 @@
 package com.huanle.dao;
 
+import com.alibaba.fastjson.JSONObject;
+import com.huanle.dao.provider.UserDaoProvider;
 import com.huanle.entity.UserInfo;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.SelectProvider;
+
+import java.util.List;
+
 @Mapper
 public interface UserInfoMapper {
     int deleteByPrimaryKey(Integer uid);
@@ -33,5 +39,11 @@ public interface UserInfoMapper {
 
     @Select("update  userInfo set passwd = #{newPasswd} where uid = #{uid} and passwd = #{oldPasswd}")
     void updatePasswdByUidAndPwd(Integer uid,String newPasswd,String oldPasswd);
+
+    @SelectProvider(type = UserDaoProvider.class,method = "selectByFilter")
+    List<UserInfo> getAllList(JSONObject param);
+
+    @Select("select * from userInfo where group_id = 1 order by uid")
+    List<UserInfo> getAdminList();
 
 }
