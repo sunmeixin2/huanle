@@ -84,11 +84,10 @@ article .art-left-photo{/*左侧仿淘宝放大镜图片展示*/
 article .art-right-info{/*右侧信息模块*/
 	float: left;
 	width: 600px;
-	height: 700px;
+	height: 520px;
 	margin-top: 20px;
 	margin-left: 50px;
 	margin-bottom: 10px;
-	overflow: hidden;
 }
 /*
 	info模块分为main（title、price、bargain）
@@ -96,7 +95,7 @@ article .art-right-info{/*右侧信息模块*/
 			   bot（分享接口）
 */
 article .art-right-info .info-main{
-	width: 600px;
+	width: 800px;
 	height: 100px;
 	line-height: 50px;
 	text-align: center;
@@ -135,9 +134,9 @@ article .art-right-info .info-coll{
 	background: #F64561;
 }
 article .art-right-info .info-others{
-	width: 600px;
-	height: 500px;
-	overflow: hidden;
+	width: 800px;
+	height: 350px;
+	/* overflow: hidden; */
 }
 article .art-right-info .info-wrName{
 	display: block;
@@ -157,7 +156,7 @@ article .art-right-info .info-wrName{
 article .art-right-info .info-name{
 	display: block;
 	float: left;
-	width: 410px;
+	width: 200px;
 	height: 40px;
 	line-height: 40px;
 	margin-left: 25px;
@@ -381,7 +380,7 @@ article .evalutIam #evalutSubmit{/*提交评价submit*/
 }
 .art-bot-nav{
 	position: absolute;
-	top: 750px;
+	top: 593px;
 	left: 300px;
 }
 .art-bot-nav span{
@@ -398,4 +397,33 @@ article .evalutIam #evalutSubmit{/*提交评价submit*/
 }
 .activeNav{
 	background: rgb(42, 147, 218)	
+}
+#replyBox{
+	width: 500px;
+	height: 300px;
+	background: white;
+	border-radius: 10px;
+	border: 1px solid;
+	box-shadow: 1px 1px 2px #ccc;
+	position: absolute;
+	top: 1200px;
+	left: 30%;
+	display: none
+}
+#replyBox textarea{
+	width: 480px;
+	height: 240px;
+	resize: none;
+	margin:5px;
+}
+#replyBox button{
+	width: 55px;
+	height: 35px;
+	border: none;
+	border-radius: 10px;
+	margin: 0 0 0 80%
+}
+.baoguo{
+	 float: left;
+     width: 400px;
 }

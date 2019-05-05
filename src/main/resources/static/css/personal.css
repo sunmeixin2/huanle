@@ -605,13 +605,13 @@ article {
 	float: left;
 	width: 130px;
 	height: 160px;
-	margin-top: 13px;
+	margin-top: 14px;
 }
 
 .personal-mid .box .clctCancle span,
 .histCancle span {
 	display: block;
-	width: 130px;
+	width: 80px;
 	height: 30px;
 	font-size: 18px;
 	text-align: center;
@@ -803,16 +803,16 @@ article {
 }
 .hasEdit{
    position: absolute;
-   left: 85%;
+   left: 76%;
 margin-left: -5px;
-top: -15%;
+margin-bottom: 5px;
+top: 8%;
 	width: 130px;
-	height: 160px;
-
+	height: auto;
 }
 .Lowershelf{
    position: absolute;
-	left: 70%;
+	left: 67%;
 	top: 8%;
 	width: 130px;
 	height: 160px;
@@ -821,7 +821,7 @@ top: -15%;
 .hasEdit span,
 .Lowershelf span{
 	display: block;
-	width: 130px;
+	width: 80px;
 	height: 30px;
 	font-size: 18px;
 	text-align: center;

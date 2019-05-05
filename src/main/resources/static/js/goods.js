@@ -106,6 +106,7 @@ function ajaxContent() {
 			//生成提交评论内容
 			var submit = document.getElementById('evalutSubmit')
 			var content = document.getElementById('evalutArea')
+			
 			submit.onclick = function () {
 				$.ajax({
 					url: "huanle/product/comment",
@@ -127,6 +128,7 @@ function ajaxContent() {
 					}
 				})
 			}
+			
 
 			let releaseUser=document.getElementById('releaseUser')
 			releaseUser.onclick=function(){
@@ -211,6 +213,8 @@ function ajaxContent() {
 			var aevalutA = document.getElementsByClassName('evalutA');
 			var aevalutImg = document.getElementsByClassName('evalutImg');
 			var evaluUl=document.querySelector('.evalu-title-ul')
+			var replyBtn = document.getElementById('replyBtn')
+			var replyBox = document.getElementById('replyBox')
 			$.ajax({
 				url: `/huanle/product/productComment?pid=${sendData.uidd}`,
 				type: "get",
@@ -230,6 +234,9 @@ function ajaxContent() {
 						// 	aevalutA[i].href = sendData.user
 						// 	aevalutImg[i].src = data.data.commentList[i].comment.profile_img;
 						// }
+						function showReply(){
+							replyBox.style.display='block'
+						}
                     for(let i=0;i<data.data.commentList.length;i++){
                     	var times=new Date(( data.data.commentList[i].comment.create_at)*1000).toLocaleDateString()
 						evaluUl.innerHTML+=`<li>
@@ -239,7 +246,7 @@ function ajaxContent() {
                                         <p>${data.data.commentList[i].comment.nick_name}</p >：
                                     </a ></div>
                                 <div class="evalutCont">${data.data.commentList[i].comment.content}</div>
-                                <div class="evalutTime">(${times})&nbsp;&nbsp;<a href="">回复</a ></div>
+                                <div class="evalutTime">(${times})&nbsp;&nbsp;<a href="" onclick="${showReply()}">回复</a ></div>
                                 <ul class="replay">
                                 <li><div class="evalutPhoto"><a class="evalutA" href=""><img class="evalutImg"
                                     src="img/demo.jpg" alt="">
@@ -248,10 +255,31 @@ function ajaxContent() {
                         <div class="evalutCont">666</div>
                         <div class="evalutTime">(2019/4/27)&nbsp;&nbsp;</div></li>
                             </ul>
-                            </div>
-                            
-                        </li>`
-			}
+                            </div>    
+						</li>`
+						replyBtn.onclick=function(){
+							$.ajax({
+								url: "huanle/product/comment",
+								type: "post",
+								dataType: "json",
+								data: {
+									pid:sendData.uidd,
+									uid:sendData.user,
+									content: content.value
+			
+								},
+								success: function (data) {
+									if (data.code != 0) {
+										alert('不好意思，');
+									} else if (data.code == 0) {
+										alert('提交成功，感谢您的评价');
+										location.reload([true]);
+									}
+								}
+							})
+						}
+			}  
+			
 					}
 				}
 			})
