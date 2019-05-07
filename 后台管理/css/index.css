@@ -1,0 +1,264 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box
+}
+
+ul,
+li {
+    list-style: none;
+    position: relative;
+}
+
+input {
+    background: none;
+    border: none;
+    color: #A3A3A3;
+}
+
+.head {
+    box-sizing: border-box;
+    width: 100%;
+    height: 40px;
+}
+
+.head h2 {
+    font-family: Monospace;
+    line-height: 40px;
+    margin-left: 20px;
+    font-size: 30px;
+    float: left;
+}
+.head p{
+float: left;
+line-height: 40px;
+margin-left:75%
+}
+.head a{
+    text-decoration: none
+}
+#div1 {
+    background: #001D26;
+    width: 100%;
+    height: 1000px;
+    border: 2px solid rgb(46, 46, 51);
+    border-radius: 10px;
+    position: relative;
+    margin-top: 20px;
+    overflow: hidden;
+    box-sizing: border-box;
+}
+
+.active {
+    background: #006B8E !important;
+    border: 1px solid lightblue;
+    color: white;
+}
+
+.left-nav input{
+    display: block;
+    font-size: 20px;
+    cursor: pointer;
+    outline: none;
+    width: 300px;
+    height: 40px;
+    margin-top: 30px;
+}
+
+.left-nav input:hover {
+    background: rgb(16, 107, 138);
+}
+
+.left-nav .child {
+    background: #F2F2F2;
+    width: 85%;
+    height: 100%;
+    border: 1px solid;
+    border-radius: 10px;
+    display: none;
+    position: absolute;
+    left: 220px;
+    top: 5px;
+    overflow: scroll;
+    margin-left: 5%;
+}
+
+.content-head {
+    width: 1200px;
+    margin: 0 50px;
+}
+
+.content-head .message {
+    width: 800px;
+    height: 20px;
+    margin-top: 15px;
+    display: inline-block;
+    border: 1px solid gray;
+    cursor: text;
+    color: black;
+}
+
+label {
+    color: rgb(36, 85, 175);
+    text-align: right;
+    width: auto;
+    margin-left: 10px;
+    display: inline-block;
+}
+
+textarea {
+    margin: 18px 15px;
+    vertical-align: middle;
+    background: white;
+    font-size: 15px;
+    resize: none;
+    outline: none;
+}
+
+#submit {
+    margin-top: 20px;
+    margin-left: 120px;
+    width: 70px;
+    color: black;
+    border: 1px solid gray;
+    border-radius: 8px;
+}
+
+#EmaiNum {
+    margin: 5px;
+    font-size: 15px;
+}
+
+.checkUl {
+    list-style: none;
+    font-size: 13px;
+    /* border: 1px solid; */
+}
+
+.checkUl li {
+    border-bottom: 1px solid #ccc;
+}
+
+.checkUl input{
+    width: 13px;
+    vertical-align: middle;
+    margin-top: 2px;
+    display: inline-block;
+
+}
+
+.checkUl label{
+    width: 29px;
+    text-align: left;
+}
+
+.content {
+    margin-left: 30px;
+    display: inline-block;
+    width: 500px;
+
+}
+
+.checkUl a {
+    text-decoration: none;
+    color: rgb(16, 100, 224)
+}
+
+.checkUl span {
+    margin-left: 500px;
+}
+
+#all {
+    width: 40px;
+}
+
+.far-nav {
+    background: #F2F2F2;
+}
+
+.first-nav {
+    background: #001D26
+}
+
+.biaozhi {
+    transition: 1s
+}
+
+.child-nav,
+.child-nav2 {
+    display: none;
+    transition: 1.5s all;
+}
+
+.children,
+.children2 {
+    display: none;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.activeNav {
+    color: black;
+    font-weight: bolder
+}
+.searchForm{
+    width:95%;
+    height: auto;   
+    margin-bottom: 20px;
+}
+.searchForm p{
+    float: left;
+    width: auto;
+    height: 60px;
+    line-height: 90px;
+}
+.searchForm button{
+    margin:30px 20px;
+    vertical-align: sub
+}
+/* .special{
+    margin-top: 30px;
+} */
+.searchForm input{
+    border: 1px solid rgb(66, 63, 63);
+    width: 150px;
+    height: 26px;
+    display: inline-block;
+    font-size: 15px;
+    cursor: pointer;
+    outline: none;
+    margin-left: 5px;
+    color: black
+}
+.Fbtn{
+    margin-top: 10px !important;
+}
+.searchForm input:hover{
+    background: none
+}
+.searchBtn{
+    width: 55px;
+    height:30px;
+    border: none;
+    background: rgb(87, 167, 221);
+    border-radius: 10px;
+    margin-top: 25px;    
+}
+.tables{
+    width: 95%;
+    height: auto;
+    margin: 5px 5px;
+    clear: both;
+}
+.tables td{
+    width: 12%;
+    text-align: center;
+    overflow: auto
+}
+.searchForm input[type='radio']{
+      width: 15px;
+      vertical-align: sub
+}
