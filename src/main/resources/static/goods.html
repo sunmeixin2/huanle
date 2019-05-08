@@ -49,9 +49,21 @@
 			margin-top: 79px;
 			outline: none;
 			cursor: pointer;
-			margin-left: -30px;
+			margin-left: -50px;
 		}
-
+        #feedback{
+			width: 65px;
+			font-size: 15px;
+			height: 30px;
+			color: white;
+			border: none;
+			border-radius: 30px;
+			background: rgb(47, 231, 41);
+			margin-top: 79px;
+			outline: none;
+			cursor: pointer;
+			margin-left: 0px;
+		}
 		#changeList {
 			position: absolute;
 			top: 190px;
@@ -241,6 +253,7 @@
 			</div>
 		</div>
 		<button value="想要换" id="doWell">想要换</button>
+		<button value="想要换" id="feedback">反馈</button>
 		<p class="art-bot-nav"><span class="Navbtn activeNav">商品详情 </span>&nbsp;<span class="Navbtn"> 交易记录</a></span>
 		<!-- 卖家寄语 -->
 		<div class="art-bot-describe art-box">
@@ -285,6 +298,20 @@
 		<textarea name="reply" id="replyContent" cols="30" rows="10"></textarea>
 		<button id="replyBtn">回复</button>
 	</div>
+	<div id="feedbackBox">
+		<span class="closeRep2" style="margin-left:95%">X</span>
+		<form action="" id="feedForm">
+			<select name="">
+				<option value="图片虚假">图片虚假</option>
+				<option value="违禁物品">违禁物品</option>
+				<option value="质量问题">质量问题</option>
+				<option value="假冒及盗版">假冒及盗版</option>
+				<option value="其它">其它</option>
+			</select>
+			<textarea name="feddBack"  id="feedbackContent" cols="30" rows="10"></textarea>
+		</form>
+		<button id="feedBtn">回复</button>
+	</div>
 	<script>
 		let users = document.querySelector('.user');
 		let tips = document.querySelector('.tips');
@@ -298,7 +325,6 @@
 			triangle.style.display = 'block';
 			clearTimeout(timer)
 		}
-
 		function unshow() {
 
 			timer = setTimeout(function () {

@@ -418,6 +418,40 @@ close.onclick=function(){
 	changeList.style.display='none';
 }
 
+
+let feedbackBox=document.getElementById('feedbackBox')
+let feedForm=document.getElementById('feedForm')
+let feedback=document.getElementById('feedback')
+let feedBtn=document.getElementById('feedBtn')
+let closeRep2=document.querySelector('.closeRep2')
+
+	feedback.onclick=function(){
+		feedbackBox.style.display='block';
+
+			 feedBtn.onclick=function(){
+				 let form=new FormData(feedForm)
+				 $.ajax({
+						url: "huanle/orders/exchange",
+						type: "post",
+						data: form,
+						success: function (data) {
+                               if(data.code==0){
+                               	alert(data.data)
+								   location.reload([true])
+							   }
+						}
+					})
+			}
+			 }
+					
+
+		
+	
+
+let close=document.getElementById('close')
+close.onclick=function(){
+	changeList.style.display='none';
+}
 window.onload = function () {
 	state()
 	ajaxContent(); //ajax动态填充内容

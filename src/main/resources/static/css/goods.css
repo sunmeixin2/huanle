@@ -434,3 +434,30 @@ article .evalutIam #evalutSubmit{/*提交评价submit*/
 	 float: left;
      width: 400px;
 }
+#feedbackBox{
+	width: 500px;
+	height: 350px;
+	background: white;
+	border-radius: 10px;
+	border: 1px solid;
+	box-shadow: 1px 1px 2px #ccc;
+	position: absolute;
+	top: 300px;
+	left: 30%;
+
+	z-index: 999;
+	display: none
+}
+#feedbackBox textarea{
+	width: 480px;
+	height: 240px;
+	resize: none;
+	margin:15px 5px;
+}
+#feedbackBox button{
+	width: 55px;
+	height: 35px;
+	border: none;
+	border-radius: 10px;
+	margin: 0 0 0 80%
+}

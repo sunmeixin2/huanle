@@ -127,13 +127,16 @@
     }
     let img=document.getElementById('sendImg');
     let mes=document.getElementById('filesHead');
+    let newImgs=[]
    function add(){
        if(img.files.length>5)
       {
           alert('兄dei最多五张，不能再多了')
           location.reload([true])
        }
+      
        for(let i=0;i<img.files.length;i++){
+        newImgs.push(img.files[i])
             let newDiv=document.createElement('div');
             let twoDiv=document.createElement('div');
             twoDiv.innerText='X';
@@ -149,14 +152,20 @@
         mes.appendChild(newDiv);
          twoDiv.onclick=function(){
              mes.removeChild(this.parentNode)
+             newImgs.splice(i,1)
+       
          }
        }
+          
            
     }
     let imgMes=document.getElementById('textMes');
     let submit=document.getElementById('submit');
       submit.onclick=function(){
           var imgData=new FormData(imgMes)
+          imgData.delete('files')
+          imgData.append('files',newImgs)
+          
           console.log(imgData.get('files'))
             var xhr=new XMLHttpRequest;
             xhr.onreadystatechange=function(){
