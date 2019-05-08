@@ -61,7 +61,7 @@
            <p> <label for="">商品名称: </label><input type="text" name="title"  placeholder="请输入商品名称" maxlength="14" required><span> &nbsp;14个字以内</span></p>
            <p>  <label for="descript">商品详情: </label><textarea name="detail" id="" cols="100" rows="12" required></textarea></p>
            <p> <label for="class">分类:</label><select name="myType" id="">
-                <option value="校园代步">校园代步</option>
+                <option value="代步">代步代步</option>
                 <option value="手机">手机</option>
                 <option value="电脑">电脑</option>
                 <option value="数码配件">数码配件</option>
@@ -72,7 +72,7 @@
                 <option value="其他">其他</option>
             </select></p> 
             <p> <label for="class">置换标准:</label><select name="standard" id="">
-                <option value="等价值">等价值</option>
+                <option value="等价交换">等价交换</option>
                 <option value="可补差价">可补差价</option>
             </select></p> 
             <p><label for="">交换数量:</label><input type="number" name="inventory" style="height: 30px;width: 60px" required></p>
@@ -88,7 +88,7 @@
             <p><label for="">生产日期:</label><input type="date" name="productDate" required></p>
             <p><label for="">过期日期:</label><input type="date" name="productExpire" required></p>
             <p><label for="">想要交换的类型:</label><select name="exchangeType" id="">
-                <option value="校园代步">校园代步</option>
+                <option value="代步">代步</option>
                 <option value="手机">手机</option>
                 <option value="电脑">电脑</option>
                 <option value="数码配件">数码配件</option>
@@ -104,6 +104,7 @@
         </div>
     </div>
 </body>
+<script src="../js/jquery-2.1.1.min.js"></script>
 <script>
     let users = document.querySelector('.user');
     let tips = document.querySelector('.tips');
@@ -171,7 +172,9 @@
                     }
                 }
             }
+            var pid=window.location.search
             xhr.open('POST','/huanle/product/publish' ,true)
+          // xhr.setRequestHeader("Content-type","application/x-www-form-urlencoded")
             xhr.send(imgData)
       }
       function state() {
@@ -203,12 +206,14 @@
 
 }
 function ajaxContent() {
+
 	$.ajax({
 		url: `/huanle/product/showProduct${window.location.search}`,
 		type: "GET",
 		dataType: "json",
 		success: function (data) {
-            for(let i=0;i<img.files.length;i++){
+		    console.log(data)
+            for(let i=0;i<data.data.picture.length;i++){
             let newDiv=document.createElement('div');
             let twoDiv=document.createElement('div');
             twoDiv.innerText='X';
@@ -218,7 +223,7 @@ function ajaxContent() {
         let goodsImg=document.createElement('img');
         goodsImg.style.width=`150px`
         goodsImg.style.height=150+'px'
-        goodsImg.src=data.data.img[i];
+        goodsImg.src=data.data.picture[i];
         newDiv.appendChild(goodsImg)
         newDiv.appendChild(twoDiv)
         mes.appendChild(newDiv);
@@ -240,35 +245,37 @@ function ajaxContent() {
        let releaseExpire=document.getElementsByName('productExpire')[0];
        let releaseExType=document.getElementsByName('exchangeType')[0];
        let releaseExTypes=releaseExType.getElementsByTagName('option');
-	   releaseTitle.value=data
-       releaseDetail.value=data
-       releaseInventory.value=data
-       releasePrice.value=data
-       var times = new Date(parseInt(data.data.productList[i].createAt) * 1000)
-                                    var timesData = times.toLocaleString().split(' ')
-                                    Date.prototype.toLocaleString = function () {
-                                        return this.getFullYear() + "年" + (this.getMonth() + 1) + "月" + this.getDate() + "日 ";
-                                    };
-                                    releaseDate.value=times[0]
-                                    releaseExpire.value=data
-                                    releaseExpire.value=data
+	   releaseTitle.value=data.data.productInfo.title
+       releaseDetail.value=data.data.productInfo.detail
+       releaseInventory.value=data.data.productInfo.inventory
+       releasePrice.value=data.data.productInfo.price
+       var times1 = new Date(parseInt(data.data.productInfo.productDate) * 1000)
+
+            var day = ("0" + times1.getDate()).slice(-2);
+            var month = ("0" + (times1.getMonth() + 1)).slice(-2);
+            var today = times1.getFullYear() + "-" + (month) + "-" + (day);
+            var times2 = new Date(parseInt(data.data.productInfo.productExpire) * 1000)
+
+                                    releaseDate.value=today
+                                    releaseExpire.value=times2
+
        for(let i=0;i<releaseTypes.length;i++){
-           if(releaseTypes[i].value==data){
+           if(releaseTypes[i].value==data.data.productInfo.myType){
                releaseTypes[i].checked=true
            }
        }
        for(let i=0;i<releaseStandards.length;i++){
-           if(releaseStandards[i].value==data){
+           if(releaseStandards[i].value==data.data.productInfo.standard){
             releaseStandards[i].checked=true
            }
        }
        for(let i=0;i<releaseIsNews.length;i++){
-           if(releaseIsNews[i].value==data){
+           if(releaseIsNews[i].value==data.data.productInfo.isNew){
             releaseIsNews[i].checked=true
            }
        }
        for(let i=0;i<releaseExTypes.length;i++){
-           if(releaseExTypes[i].value==data){
+           if(releaseExTypes[i].value==data.data.productInfo.exchangeType){
             releaseExTypes[i].checked=true
            }
        }
@@ -278,6 +285,8 @@ function ajaxContent() {
 
 window.onload=function(){
     state()
+    if(window.location.search)
+    ajaxContent()
 }
 
 </script>

@@ -56,7 +56,8 @@ public class ProductController {
     @RequestMapping("publish")
     public ResponseVO pubilish(@RequestParam("files")MultipartFile[] files,
                                String title, String myType, String standard,Integer inventory , String isNew,
-                               Double price, String detail, String productDate, String productExpire, String exchangeType, HttpServletRequest request, Integer pid){
+                               Double price, String detail, String productDate, String productExpire, String exchangeType,Integer pid, HttpServletRequest request){
+        System.out.println("pid:"+pid);
         if(title == null || title.equals("")){
             return new ResponseVO(ErrorCode.UNKNOW_ERROR,"非法参数:title");
         }
@@ -206,7 +207,7 @@ public class ProductController {
      */
     @RequestMapping("comment")
     public ResponseVO comment( Integer pid,Integer uid,String content,Integer parentId,HttpServletRequest request){
-        System.out.println("uid==="+uid);
+        System.out.println("parentId==="+parentId);
 
         UserInfo up = (UserInfo) request.getSession().getAttribute("userInfo");
         if(up == null){
@@ -297,6 +298,27 @@ public class ProductController {
             return new ResponseVO(ErrorCode.RESPONSE_SUCCESS,data);
         }
 
+    }
+
+    /**
+     * 推荐
+     * @param pid
+     * @param type
+     * @return
+     */
+    @RequestMapping("recommend")
+    public ResponseVO recommend(Integer pid ,String type){
+        if(pid == null || pid < 0){
+            return new ResponseVO(ErrorCode.UNKNOW_ERROR,"非法参数: pid");
+        }
+        if(type == null || type.equals("")){
+            return new ResponseVO(ErrorCode.UNKNOW_ERROR,"非法参数: type");
+        }
+
+        Map data = productInfoService.recommendList(pid,type);
+
+
+        return new ResponseVO(ErrorCode.RESPONSE_SUCCESS,data);
     }
 
 }

@@ -12,13 +12,13 @@ public class OrderDaoProvider {
         Integer uid = param.getInteger("uid");
         String sql = new SQL() {
             {
-                SELECT("select * from orders ");
+                SELECT(" * from orders ");
 
                 if(oid != null){
                     WHERE("oid = #{oid}");
                 }
 
-                if(status != null){
+                if(status != null && !status.isEmpty()){
                     WHERE("status = #{status}");
                 }
 

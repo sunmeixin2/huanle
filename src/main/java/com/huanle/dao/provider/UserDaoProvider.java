@@ -11,12 +11,12 @@ public class UserDaoProvider {
 
         String sql = new SQL(){
             {
-                SELECT("select * from userInfo");
+                SELECT(" * from userInfo");
 
                 if(uid != null){
                     WHERE("uid = #{uid}");
                 }
-                if(nickName != null){
+                if(nickName != null && !nickName.isEmpty()){
                     WHERE("nick_name = #{nickName}");
                 }
                 ORDER_BY("uid desc");

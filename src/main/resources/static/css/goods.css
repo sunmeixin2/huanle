@@ -221,6 +221,9 @@ article .art-hot-evaluation{
 article .evaluation{/*热门评价*/
 	width: 1050px;
 	min-height: 760px;
+	height:900px;
+
+	overflow: auto;
 	margin-left: 48px;
 	border-left: 1px dashed #1C826C;
 }
@@ -242,9 +245,13 @@ article .evaluation .evalutInfo{/*热评总包裹*/
 	min-height: 80px;
 	margin: 0 auto;
 	margin-top: 22px;
-	overflow: hidden;
-	border: 1px solid
+	overflow: auto;
+	/*border: 1px solid*/
 
+}
+.closeRep{
+	cursor: pointer;
+	margin-left: 5px;
 }
 article .evaluation .evalutPhoto{/*热评头像*/
 	float: left;
@@ -318,7 +325,7 @@ article .evalutIam{/*评价盒子*/
 	clear: both;
 	width: 1100px;
 	min-height: 180px;
-	margin: 0 auto;
+	margin: 100px auto;
 	border-top: 1px dashed #1C826C;
 	background: url(../images/finger.png) no-repeat 780px 30px;
 }

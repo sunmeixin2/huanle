@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
@@ -20,7 +21,7 @@ import java.util.Date;
 import java.util.Map;
 
 @RequestMapping("huanle/admin")
-@Controller
+@RestController
 public class adminController {
 
     @Autowired
@@ -43,14 +44,14 @@ public class adminController {
      * @param request
      * @return
      */
-    @RequestMapping("feeback")
-    public ResponseVO feeback(Integer pid, String type , String message, HttpServletRequest request){
-        UserInfo up = (UserInfo) request.getSession().getAttribute("userInfo");
-        if(up == null){
-            return new ResponseVO(ErrorCode.UNKNOW_ERROR,"未登录不可以评论");
-        }
-        Integer upId = up.getUid();
-
+    @RequestMapping("feedback")
+    public ResponseVO feedback(Integer pid, String type , String message, HttpServletRequest request){
+//        UserInfo up = (UserInfo) request.getSession().getAttribute("userInfo");
+//        if(up == null){
+//            return new ResponseVO(ErrorCode.UNKNOW_ERROR,"未登录不可以评论");
+//        }
+//        Integer upId = up.getUid();
+        Integer upId = 19;
         if(pid == null || pid < 0){
             return new ResponseVO(ErrorCode.UNKNOW_ERROR,"非法参数: pid");
         }
@@ -81,10 +82,10 @@ public class adminController {
      */
     @RequestMapping("feebackList")
     public ResponseVO feebackList(HttpServletRequest request){
-        UserInfo up = (UserInfo) request.getSession().getAttribute("userInfo");
-        if(up == null){
-            return new ResponseVO(ErrorCode.UNKNOW_ERROR,"未登录!");
-        }
+//        UserInfo up = (UserInfo) request.getSession().getAttribute("userInfo");
+//        if(up == null){
+//            return new ResponseVO(ErrorCode.UNKNOW_ERROR,"未登录!");
+//        }
         Map data = feedbackService.getFeedbackList();
 
         if(data != null){
@@ -104,10 +105,10 @@ public class adminController {
     @RequestMapping("deleteFeedback")
     public ResponseVO deleteFeedback(Integer fid,HttpServletRequest request){
 
-        UserInfo up = (UserInfo) request.getSession().getAttribute("userInfo");
-        if(up == null){
-            return new ResponseVO(ErrorCode.UNKNOW_ERROR,"未登录!");
-        }
+//        UserInfo up = (UserInfo) request.getSession().getAttribute("userInfo");
+//        if(up == null){
+//            return new ResponseVO(ErrorCode.UNKNOW_ERROR,"未登录!");
+//        }
         if(fid == null || fid < 0){
             return new ResponseVO(ErrorCode.UNKNOW_ERROR,"非法参数: fid");
         }
@@ -126,28 +127,22 @@ public class adminController {
      * @return
      */
     @RequestMapping("allProductList")
-    public ResponseVO allProductList(Integer pid,Integer title,Integer type , Integer beginTime,Integer endTime,Integer uid,
+    public ResponseVO allProductList(Integer pid,String title,String type , Integer beginTime,Integer endTime,Integer uid,
                                      HttpServletRequest request){
-        UserInfo up = (UserInfo) request.getSession().getAttribute("userInfo");
-        if(up == null){
-            return new ResponseVO(ErrorCode.UNKNOW_ERROR,"未登录!");
-        }
+//        UserInfo up = (UserInfo) request.getSession().getAttribute("userInfo");
+//        if(up == null){
+//            return new ResponseVO(ErrorCode.UNKNOW_ERROR,"未登录!");
+//        }
         JSONObject param = new JSONObject();
         if(pid != null && pid < 0){
             return new ResponseVO(ErrorCode.UNKNOW_ERROR,"非法参数: pid");
         }else{
             param.put("pid",pid);
         }
-        if(title != null && title.equals("")){
-            return new ResponseVO(ErrorCode.UNKNOW_ERROR,"非法参数: title");
-        }else{
-            param.put("title",title);
-        }
-        if(type != null && type.equals("")){
-            return new ResponseVO(ErrorCode.UNKNOW_ERROR,"非法参数: type");
-        }else{
-            param.put("type",type);
-        }
+
+        param.put("title",title);
+        param.put("type",type);
+
         if(beginTime != null && beginTime < 0){
             return new ResponseVO(ErrorCode.UNKNOW_ERROR,"非法参数: beginTime");
         }else {
@@ -177,13 +172,13 @@ public class adminController {
      * @return
      */
     @RequestMapping("allOrderList")
-    public ResponseVO allOrderList(Integer oid,Integer uid,Integer status,HttpServletRequest request){
+    public ResponseVO allOrderList(Integer oid,Integer uid,String status,HttpServletRequest request){
         JSONObject param = new JSONObject();
 
-        UserInfo up = (UserInfo) request.getSession().getAttribute("userInfo");
-        if(up == null){
-            return new ResponseVO(ErrorCode.UNKNOW_ERROR,"未登录!");
-        }
+//        UserInfo up = (UserInfo) request.getSession().getAttribute("userInfo");
+//        if(up == null){
+//            return new ResponseVO(ErrorCode.UNKNOW_ERROR,"未登录!");
+//        }
         if(oid != null && oid < 0){
             return new ResponseVO(ErrorCode.UNKNOW_ERROR,"非法参数: oid");
         }else{
@@ -194,11 +189,8 @@ public class adminController {
         }else{
             param.put("uid",uid);
         }
-        if(status != null && status.equals("")){
-            return new ResponseVO(ErrorCode.UNKNOW_ERROR,"非法参数: status");
-        }else{
-            param.put("status",status);
-        }
+
+        param.put("status",status);
 
         Map data = orderService.getAllOrdersList(param);
         if(data == null){
@@ -225,11 +217,8 @@ public class adminController {
         }else{
             param.put("uid",uid);
         }
-        if(nickName != null && nickName.equals("")){
-            return new ResponseVO(ErrorCode.UNKNOW_ERROR,"非法参数: nickName");
-        }else{
-            param.put("nickName",nickName);
-        }
+        param.put("nickName",nickName);
+
         Map data = userInfoService.getAllUserList(param);
         if(data == null){
             return new ResponseVO(ErrorCode.UNKNOW_ERROR,"null !");
@@ -248,13 +237,13 @@ public class adminController {
             return new ResponseVO(ErrorCode.RESPONSE_SUCCESS, data);
         }
     }
-
-    @RequestMapping("addAdmin")
-    public ResponseVO addAdmin(@RequestParam("files") MultipartFile[] files, String nickName, String email,
-                               String gender, String contact, HttpServletRequest request){
-
-        return new ResponseVO(ErrorCode.RESPONSE_SUCCESS, "");
-    }
+//
+//    @RequestMapping("addAdmin")
+//    public ResponseVO addAdmin(@RequestParam("files") MultipartFile[] files, String nickName, String email,
+//                               String gender, String contact, HttpServletRequest request){
+//
+//        return new ResponseVO(ErrorCode.RESPONSE_SUCCESS, "");
+//    }
 
 
 

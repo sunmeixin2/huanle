@@ -60,7 +60,7 @@ public class ProductInfoService {
      * 获取审核通过且已上架的商品
      * @return
      */
-    public Map getProductList(){
+    public Map getProductList(Integer upId){
         Map<String,Object> result = new HashMap();
 
         List<ProductInfo> productInfos = productInfoMapper.getList();     //获取商品信息
@@ -77,6 +77,44 @@ public class ProductInfoService {
         result.put("productList",data);
         return result;
     }
+
+//    public Map getProductList(Integer upId){
+//        Map<String,Object> result = new HashMap();
+//        upId = 14;
+//        if(upId != null){
+//            Set<Integer> cPid = collectionMapper.getPidByUid(upId);
+//            Set<Integer> oPid = ordersMapper.getPidByUid(upId);;
+//            cPid.add(3);
+//            oPid.add(5);
+//            oPid.add(3);
+//
+//            Map<Integer,Integer> pids = new HashMap<>();
+//            System.out.println(pids.get(0));
+//            if(cPid.size() != 0){
+//                for(Integer key: cPid) {
+//                    if (pids.get(key) == null) {
+//                        pids.put(key, 5);
+//                    } else {
+//                        pids.put(key, pids.get(key) + 5);
+//                    }
+//                }
+//            }
+//            if(cPid.size() != 0){
+//                for(Integer key: oPid) {
+//                    if (pids.get(key) == null) {
+//                        pids.put(key, 10);
+//                    } else {
+//                        pids.put(key, pids.get(key) + 10);
+//                    }
+//                }
+//            }
+//
+//            System.out.println(pids);
+//        }
+//
+//
+//        return result;
+//    }
 
     /**
      * 获取指定商品信息
@@ -260,6 +298,51 @@ public class ProductInfoService {
             map.put("product",productInfo);
             map.put("picture",picture);
             data.add(map);
+        }
+        return data;
+    }
+
+    public Map recommendList(Integer pid,String type){
+        Map result = new HashMap();
+        ProductInfo productInfo = productInfoMapper.selectByPrimaryKey(pid);
+        List<Map> data = new ArrayList<>();
+        if(productInfo != null){
+
+            Integer uid = productInfo.getpUid();
+            List<ProductInfo> productInfoList = productInfoMapper.getPublishedList(uid);
+            data = commonFormat(productInfoList,data);
+        }
+        if(data.size() < 7 ){
+            List<ProductInfo> productInfoList = productInfoMapper.queryByType(type);
+            data = commonFormat(productInfoList,data);
+
+        }
+
+        if(data.size() < 7){
+            List<ProductInfo> productInfoList = productInfoMapper.getList();
+            data = commonFormat(productInfoList,data);
+        }
+
+        result.put("total",data.size());
+        result.put("recomment",data);
+
+        return result;
+    }
+
+    private List<Map> commonFormat(List<ProductInfo> productInfoList, List<Map> data){
+        int i = data.size();
+        if(productInfoList != null) {
+            for (ProductInfo productInfo : productInfoList) {
+                if (i < 7 ) {
+                    Map<String, Object> map = new HashMap<>();
+
+                    String[] picture = CommonUtil.pictureToArr(productInfo.getPicture());
+                    map.put("picture", picture);
+                    map.put("product", productInfo);
+
+                    data.add(i++, map);
+                }
+            }
         }
         return data;
     }

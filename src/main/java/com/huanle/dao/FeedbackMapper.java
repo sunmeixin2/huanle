@@ -4,6 +4,7 @@ import com.huanle.entity.Feedback;
 import org.apache.ibatis.annotations.Select;
 
 import java.util.List;
+import java.util.Map;
 
 public interface FeedbackMapper {
     int deleteByPrimaryKey(Integer fid);
@@ -18,6 +19,7 @@ public interface FeedbackMapper {
 
     int updateByPrimaryKey(Feedback record);
 
-    @Select("select * from feedback order by create_at desc")
-    List<Feedback> getList();
+    @Select("select f.*,u.nick_name,p.title,p.my_type from feedback f left join userInfo u on u.uid = f.uid " +
+            "left join productInfo p on f.pid = p.pid  order by create_at desc")
+    List<Map> getList();
 }

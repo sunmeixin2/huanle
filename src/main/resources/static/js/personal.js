@@ -177,22 +177,24 @@ console.log(data)
                                 var ahistCancle = document.getElementsByClassName('histCancle');
                                 var Lowershelf = document.getElementsByClassName('Lowershelf');
                                 var hasEdit = document.getElementsByClassName('hasEdit');
-
-                                for (var i = 0; i < data.data.productList.length; i++) {
-                                    hasEdit[i].onclick = function () {
-                                        $.ajax({
-                                            url: "",
-                                            type: "post",
-                                            data: {
-                                               id:data
-                                            },
-                                            success: function (data) {
-                                                if(data.code===0){
-                                                    window.location.href = `releasse.html?pid=${id}`
-                                                }
-                                            }  
-                                        })
-                                    }
+                                function releaseGoods(id) {
+                                    $.ajax({
+                                        url: "huanle/product/publishAction",
+                                        type: "post",
+                                        data: {
+                                            pid:id
+                                        },
+                                        success: function (data) {
+                                            if(data.code===0){
+                                                window.location.href = `release.html?pid=${id}`
+                                            }
+                                        }
+                                    })
+                                }
+                                for (let i = 0; i < data.data.productList.length; i++) {
+                                    hasEdit[i].addEventListener('click',function () {
+                                        releaseGoods(data.data.productList[i].pid)
+                                    })
                             }
                                 for (var i = 0; i < data.data.productList.length; i++) {
                                         Lowershelf[i].onclick = function () {

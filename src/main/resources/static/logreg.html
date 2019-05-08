@@ -104,10 +104,17 @@
 
                                     success: function (data) {
                                         console.log(vertyText.value)
+                                        console.log(item)
                                         if (data.code === 0) {
                                         console.log(data)
-                                            window.location.href = "homepage.html";
-                                        } else if (data.code != 0) {
+                                            if(item==2){
+                                                window.location.href = "homepage.html";
+                                            }
+                                            else if(item==1)
+                                            {
+                                                window.location.href = "admin/index.html";}
+                                        }
+                                       else if (data.code != 0) {
                                             alert(data.data)
                                         }
                                     },

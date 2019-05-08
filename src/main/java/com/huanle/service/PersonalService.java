@@ -100,9 +100,10 @@ public class PersonalService {
             map.put("title",productInfo.getTitle());
             map.put("myType",productInfo.getMyType());
             map.put("createAt",productInfo.getCreateAt());
-            String advice = productInfo.getAdvice().equals(2)? ProductConstant.STATUS.get(productInfo.getAdvice()):ProductConstant.ADVICE.get(productInfo.getAdvice());
+            String advice = productInfo.getAdvice().equals(2)? ProductConstant.STATUS.get(productInfo.getStatus()):ProductConstant.ADVICE.get(productInfo.getAdvice());
             map.put("advice", advice);
             map.put("exchangeType",productInfo.getExchangeType());
+            map.put("price",productInfo.getPrice());
             String[] picture = CommonUtil.pictureToArr(productInfo.getPicture());
             map.put("picture",picture);
 

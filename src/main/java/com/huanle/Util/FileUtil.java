@@ -12,7 +12,7 @@ import java.io.IOException;
  */
 public class FileUtil {
 
-//    public static String PATH = "/home/sunmeixin/JAVA/SpringBoot/image/";
+//    public static String PATH = "/home/sunmeixin/JAVA/SpringBoot/image";
     public static String PATH = "/picture";
     public static String root =  "/home/sunmeixin/JAVA/SpringBoot/huanle/src/main/resources/static";
 
@@ -25,7 +25,6 @@ public class FileUtil {
     public static Boolean upload(MultipartFile file,String fileName){
 
         String localPath = root +PATH + "/";
-
         if(file.isEmpty()){
             return false;
         }

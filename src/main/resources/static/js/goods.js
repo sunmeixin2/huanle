@@ -132,7 +132,7 @@ function ajaxContent() {
 
 			let releaseUser=document.getElementById('releaseUser')
 			releaseUser.onclick=function(){
-				window.location.href=`personal.html?${d}`
+				window.location.href=`personal.html?${uid}`
 			}
 			// 4.填充商品信息
 			var infoTitle = document.getElementsByClassName('info-title');
@@ -215,6 +215,7 @@ function ajaxContent() {
 			var evaluUl=document.querySelector('.evalu-title-ul')
 			var replyBtn = document.getElementById('replyBtn')
 			var replyBox = document.getElementById('replyBox')
+
 			$.ajax({
 				url: `/huanle/product/productComment?pid=${sendData.uidd}`,
 				type: "get",
@@ -234,9 +235,28 @@ function ajaxContent() {
 						// 	aevalutA[i].href = sendData.user
 						// 	aevalutImg[i].src = data.data.commentList[i].comment.profile_img;
 						// }
-						function showReply(){
-							replyBox.style.display='block'
-						}
+                        function pinlun(id){
+                            $.ajax({
+                                url: "huanle/product/comment",
+                                type: "post",
+                                dataType: "json",
+                                data: {
+                                    pid:sendData.uidd,
+                                    uid:sendData.user,
+                                    content: replyContent.value,
+                                    parentId:id
+                                },
+                                success: function (data) {
+                                    console.log(data)
+                                    if (data.code != 0) {
+                                        alert('不好意思，');
+                                    } else if (data.code == 0) {
+                                        alert('提交成功，感谢您的评价');
+                                        location.reload([true]);
+                                    }
+                                }
+                            })
+                        }
                     for(let i=0;i<data.data.commentList.length;i++){
                     	var times=new Date(( data.data.commentList[i].comment.create_at)*1000).toLocaleDateString()
 						evaluUl.innerHTML+=`<li>
@@ -246,40 +266,49 @@ function ajaxContent() {
                                         <p>${data.data.commentList[i].comment.nick_name}</p >：
                                     </a ></div>
                                 <div class="evalutCont">${data.data.commentList[i].comment.content}</div>
-                                <div class="evalutTime">(${times})&nbsp;&nbsp;<a href="" onclick="${showReply()}">回复</a ></div>
+                                <div class="evalutTime">(${times})&nbsp;&nbsp;<a href="javascript:;" class="replyBox2">回复</a ></div>
+                               
                                 <ul class="replay">
-                                <li><div class="evalutPhoto"><a class="evalutA" href=""><img class="evalutImg"
-                                    src="img/demo.jpg" alt="">
-                                <p>smxsssss</p >：
-                            </a ></div>
-                        <div class="evalutCont">666</div>
-                        <div class="evalutTime">(2019/4/27)&nbsp;&nbsp;</div></li>
+                               
                             </ul>
                             </div>    
 						</li>`
-						replyBtn.onclick=function(){
-							$.ajax({
-								url: "huanle/product/comment",
-								type: "post",
-								dataType: "json",
-								data: {
-									pid:sendData.uidd,
-									uid:sendData.user,
-									content: content.value
-			
-								},
-								success: function (data) {
-									if (data.code != 0) {
-										alert('不好意思，');
-									} else if (data.code == 0) {
-										alert('提交成功，感谢您的评价');
-										location.reload([true]);
-									}
-								}
-							})
+						var replayUl=document.querySelectorAll('.replay')
+						for(let j=0;j<data.data.commentList[i].reply.length;j++){
+							var times2=new Date(( data.data.commentList[i].reply[j].create_at)*1000).toLocaleDateString()
+
+							replayUl[i].innerHTML+=`<li><div class="evalutPhoto"><a class="evalutA" href=""><img class="profile_img"
+                                    src="${data.data.commentList[i].reply[j].profile_img}" alt="">
+                                <p>${data.data.commentList[i].reply[j].nick_name}</p >：
+                            </a ></div>
+                        <div class="evalutCont">${data.data.commentList[i].reply[j].message}</div>
+                        <div class="evalutTime">${times2}&nbsp;&nbsp;</div></li>`
 						}
-			}  
-			
+
+						var replyA=document.querySelectorAll('.replyBox2')
+                        var replyContent=document.getElementById('replyContent')
+
+
+
+                        var closeRep=document.querySelector('.closeRep')
+                        closeRep.onclick=function(){
+                            replyBox.style.display='none'
+                        }
+
+			}
+                        for(let i=0;i<replyA.length;i++){
+                            replyA[i].onclick=function () {
+                                replyBox.style.display='block'
+                                var id=data.data.commentList[i].comment.id
+                                replyBtn.addEventListener('click',function () {
+                                    pinlun(id)
+                                })
+                            }
+
+
+
+                        }
+
 					}
 				}
 			})

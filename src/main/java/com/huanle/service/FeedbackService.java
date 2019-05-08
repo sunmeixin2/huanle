@@ -24,7 +24,7 @@ public class FeedbackService {
 
     public Map getFeedbackList(){
         Map result = new HashMap();
-        List<Feedback> feedbackList = feedbackMapper.getList();
+        List<Map> feedbackList = feedbackMapper.getList();
 
         if(feedbackList == null){
             return null;

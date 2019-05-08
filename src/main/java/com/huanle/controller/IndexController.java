@@ -28,9 +28,10 @@ public class IndexController {
     CategoryService categoryService;
 
     @RequestMapping("productList")
-    public ResponseVO index(){
-
-        Map productInfos = productInfoService.getProductList();
+    public ResponseVO index(HttpServletRequest request){
+        UserInfo up = (UserInfo) request.getSession().getAttribute("userInfo");
+        Integer upId = up == null ? null : up.getUid();
+        Map productInfos = productInfoService.getProductList(upId);
         if(productInfos != null && productInfos.size() > 0){
             return new ResponseVO(ErrorCode.RESPONSE_SUCCESS,productInfos);
         }else{

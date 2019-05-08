@@ -15,15 +15,15 @@ public class ProductDaoProvider {
 
         String sql = new SQL(){
             {
-                SELECT("select * from productInfo");
+                SELECT(" * from productInfo");
 
                 if(pid != null){
                     WHERE("pid = #{pid}");
                 }
-                if(title != null){
+                if(title != null && !title.isEmpty()){
                     WHERE("title = #{title}");
                 }
-                if(type != null){
+                if(type != null && !type.isEmpty()){
                     WHERE("my_type = #{type}");
                 }
                 if(uid != null){
@@ -48,12 +48,12 @@ public class ProductDaoProvider {
 
         String sql = new SQL(){
             {
-                SELECT("select * from productInfo");
+                SELECT(" * from productInfo");
                 WHERE("advice = 2 and status = 1");
-                if(title != null){
+                if(title != null && !title.isEmpty()){
                     WHERE("title like  #{title}");
                 }
-                if(type != null){
+                if(type != null && !type.isEmpty()){
                     WHERE("my_type = #{type}");
                 }
                 ORDER_BY("create_at DESC,is_new DESC,update_at DESC");

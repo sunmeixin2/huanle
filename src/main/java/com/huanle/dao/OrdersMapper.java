@@ -8,6 +8,7 @@ import org.apache.ibatis.annotations.SelectProvider;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 public interface OrdersMapper {
     int deleteByPrimaryKey(Integer oid);
@@ -74,4 +75,7 @@ public interface OrdersMapper {
 //    List<Orders> getAllList();
     @SelectProvider(type = OrderDaoProvider.class,method = "selectByFilter")
     List<Orders> getAllList(JSONObject param);
+
+    @Select("select B_pid from orders where A_uid = #{uid}")
+    Set<Integer> getPidByUid(Integer uid);
 }
