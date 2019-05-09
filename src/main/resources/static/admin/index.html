@@ -47,9 +47,10 @@
                 <div class="children2">5</div> -->
                 <div class="children2"  style="display: block;">
                     <form class="searchForm">
-                        <p><label for="">ID:</label><input type="text"></p>
-                        <p><label for="">用户名:</label><input type="text"></p>
-                        <button class="searchBtn">查询</button>
+                        <p><label for="">ID:</label><input type="text" name="uid"></p>
+                        <p><label for="">用户名:</label><input type="text" name="nickName"></p>
+                        <input type="button" class="searchBtn" value="查询">
+                        <input type="button" class="goBack" value="返回">
                     </form>
                     <div>
                         <table border="1" cellspacing='0' class="tables" class="mesTable">
@@ -81,9 +82,10 @@
             </div>
             <div class="child">
                 <form class="searchForm">
-                    <p><label for="">ID:</label><input type="text"></p>
-                    <p><label for="">名称:</label><input type="text"></p>
-                    <p><label for="" class="special">分类:</label><select name="myType"  class="special" id="">
+                    <p><label for="">ID:</label><input type="text" name="pid"></p>
+                    <p><label for="">名称:</label><input type="text" name="title"></p>
+                    <p><label for="" class="special">分类:</label><select name="type"  class="special" id="">
+                            <option value=""></option>                        
                         <option value="校园代步">校园代步</option>
                         <option value="手机">手机</option>
                         <option value="电脑">电脑</option>
@@ -94,9 +96,11 @@
                         <option value="图书教材">图书教材</option>
                         <option value="其他">其他</option>
                     </select></p>
-                    <p><label for="">发布时间:</label><input type="date"></p>
-                    <p><label for="">用户ID:</label><input type="text"></p><br>
-                   <button class="searchBtn Fbtn">查询</button>
+                    <p><label for="">发布时间:</label><input type="date" name="beginTime" > ——<input type="date" name="endTime"></p>
+                    <p><label for="">用户ID:</label><input type="text" name="uid"></p><br>
+                <!-- <button class="searchBtn Fbtn" onsubmit="func()" >查询</button>                    -->
+                <input class="searchBtn Fbtn" onsubmit="func()" type="button" value="查询">   
+                <input type="button" class="goBack" value="返回">
                 </form>
                 <table border="1" cellspacing='0' class="tables" class="mesTable">
                     <thead>
@@ -107,6 +111,7 @@
                         <td>数量</td>
                         <td>发布者</td>
                         <td>状态</td>
+                        <td>发布时间</td>
                         <td>操做</td>
                     </thead>
                     <tbody class="tableBodies">
@@ -115,6 +120,7 @@
                         <td>啦啦啦</td>
                         <td>书籍</td>
                         <td>50</td>
+                        <td>50</td>
                         <td>20</td>
                         <td>x'y'f</td>
                         <td>已完成</td>
@@ -122,22 +128,59 @@
                         </tr>
                     </tbody>
                 </table>
+                <div class="goodContent">
+                    <span class="closeContent">X</span>
+                    <div class="mainContent">
+                        <div class="imgContent">
+                           
+                        </div>
+                        <div class="mesContent">
+                            <p><span>ID:</span><span>123</span></p>
+                            <p><span>名称:</span><span>123</span></p>
+                            <p><span>详情:</span><span>123</span></p>
+                            <p><span>发布时间:</span><span>123</span></p>
+                            <p><span>类型:</span><span>123</span></p>
+                            <p><span>价格:</span><span>123</span></p>
+                            <p><span>数量:</span><span>123</span></p>
+                            <p><span>状态:</span><span>123</span></p>
+                        </div>
+                        <div  class="mesContent">
+                            <p><span>想要换类型:</span><span>123</span></p>
+                            <p><span>新旧程度:</span><span>123</span></p>
+                            <p><span>生产日期:</span><span>123</span></p>
+                            <p><span>过期时间:</span><span>123</span></p>
+                            <p><span>交换方式:</span><span>123</span></p>
+                        </div>
+                    </div>
+                </div>
+                <div class="goodContent">
+                        <span class="closeContent">X</span>
+                    <form action="" class="xiajiaForm">
+                        <textarea name="content" id="" cols="70" rows="12" placeholder="下架原因"></textarea>
+                    </form>
+                     <button class="tijiaoForm">提交</button>
+                </div>
             </div>
             <div class="child">
                 <div class="children" style="display: block;">
                     <form class="searchForm">
-                        <p><label for="">订单ID:</label><input type="text"></p>
-                        <p><label for="">用户ID:</label><input type="text"></p>
+                        <p><label for="">订单编号:</label><input type="text" name="nums"></p>
+                        <p><label for="">用户名称:</label><input type="text" name="nickName"></p>
                         <p><label for="">状态:</label><input type="radio" name="status" value="1"> 已完成<input type="radio" name="status" value="0"> 未完成</p>
-                        <button class="searchBtn">查询</button>
                     </form>
+                    <button class="searchBtn specialBtn">查询</button>
+                    <button  class="goBack" >返回</button>
                     <table border="1" cellspacing='0' class="tables" class="mesTable">
                         <thead>
                             <td>oid</td>
                             <td>编号</td>
-                            <td>名称</td>
+                            <td>交换者A</td>
+                            <td>商品名称</td>
+                            <td>交换者B</td>
+                            <td>商品名称</td>
                             <td>状态</td>
-                            <td>创建时间</td>
+                            <td>时间</td>
+                            <td>操做</td>
                         </thead>
                         <tbody class="tableBodies">
                             <tr>
@@ -145,6 +188,10 @@
                                 <td>2</td>
                                 <td>方便面</td>
                                 <td>已完成</td>
+                                <td>2019/2/5</td>
+                                <td>2019/2/5</td>
+                                <td>2019/2/5</td>
+                                <td>2019/2/5</td>
                                 <td>2019/2/5</td>
                             </tr>
                         </tbody>
@@ -157,6 +204,7 @@
                     <form class="searchForm">
                             <p><label for="" class="special">类型:</label>
                                 <select name="">
+                                        <option value=""></option>
                                     <option value="图片虚假">图片虚假</option>
                                     <option value="违禁物品">违禁物品</option>
                                     <option value="质量问题">质量问题</option>
@@ -165,8 +213,9 @@
                                 </select></p>
                                 <p><label for="">商品ID:</label><input type="text"></p>
                             <p><label for="">状态:</label><input type="date"></p>
-                            <button class="searchBtn">查询</button>
                         </form>
+                        <button class="searchBtn specialBtn">查询</button>
+                    <button  class="goBack" >返回</button>
                         <table border="1" cellspacing='0' class="tables" class="mesTable">
                             <thead>
                                 <td>ID</td>
@@ -198,5 +247,9 @@
 <script src="js/jquery.js"></script>
 <script src="js/index.js" type="text/javascript"></script>
 </body>
+<script>
+function func(){
+        return false
+    }</script>
 
 </html>

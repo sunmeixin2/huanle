@@ -240,12 +240,25 @@ textarea {
     background: none
 }
 .searchBtn{
-    width: 55px;
-    height:30px;
+    width: 55px !important;
+    height:30px !important;
     border: none;
     background: rgb(87, 167, 221);
     border-radius: 10px;
     margin-top: 25px;    
+}
+.goBack{
+    width: 55px !important;
+    height:30px !important;
+    border: none !important;
+    background: rgb(87, 167, 221) !important;
+    border-radius: 10px !important; 
+    color: black;
+    font-size: 14px !important   
+}
+.specialBtn{
+    margin:10px 15px !important;    
+
 }
 .tables{
     width: 95%;
@@ -261,4 +274,44 @@ textarea {
 .searchForm input[type='radio']{
       width: 15px;
       vertical-align: sub
+}
+.goodContent{
+    width: 900px;
+    height: 500px;
+    background: white;
+    border: 1px solid #ccc;
+    border-radius: 10px;    
+    position: absolute;
+    top: 10%;
+    left: 10%;
+    display: none
+}
+.goodContent span{
+    cursor: pointer;
+}
+.mainContent{
+    width: 99%;
+    height: 460px;
+    border-radius: 10px;
+    border: 1px solid #ccc;
+    margin: 5px auto
+}
+.imgContent{
+    width: 99%;
+    border: 1px dotted;
+    height: 155px;
+    margin: 0 auto
+}
+.imgContent img{
+    float: left;
+}
+.mesContent{
+    width: 400px;
+    float: left;
+}
+.mesContent p{
+     width: auto;
+      height: auto;
+    margin: 10px;
+    
 }
