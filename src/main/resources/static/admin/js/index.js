@@ -9,17 +9,29 @@ function state() {
 
             if (peo.code != 0) {
                 alert('您还没有登录！')
-                window.location.href = "logreg.html"
+                window.location.href = "../logreg.html"
             } else if (peo.code === 0) {
-                userNick.innerHTML = peo.userNick;
+                userNick.innerHTML = peo.data.userNick;
             }
         }
     }
     mes.open('GET', 'http://192.168.2.54:8080/huanle/index/upInfo', true)
     mes.send(null)
     out.onclick = function () {
-        window.localStorage.clear()
-        window.close()
+        $.ajax({
+            url: "http://192.168.2.54:8080/huanle/user/logout",
+            type: "get",
+            success: function (data) {
+                if (data.code != 0) {
+                    alert('error')
+
+                } else if (data.code === 0) {
+                    window.location.href = "../logreg.html"
+
+
+                }
+            }
+        })
     }
 }
 
@@ -75,10 +87,10 @@ function tableMes() {
                                 uid:mes.data.data[i].userInfo.uid
                             },
                             success: function (data) {
-                                if (peo.code != 0) {
+                                if (data.code != 0) {
                                     alert('error')
 
-                                } else if (peo.code === 0) {
+                                } else if (data.code === 0) {
                                     alert('删除成功')
                                     tableMes()
                                 }
@@ -161,10 +173,10 @@ function tableMes2() {
                                     pid:mes.data.productList[i].product.pid
                             },
                             success: function (data) {
-                                if (peo.code != 0) {
+                                if (data.code != 0) {
                                     alert('error')
 
-                                } else if (peo.code === 0) {
+                                } else if (data.code === 0) {
                                     alert('删除成功')
                                     tableMes2()
                                 }
@@ -208,6 +220,8 @@ function tableMes2() {
                         goodContent[1].style.display='block';
                          let xiajiaForm=document.querySelector('.xiajiaForm')
                          let tijiaoForm=document.querySelector('.tijiaoForm')
+                         let xiajia=document.getElementById('xiajia')
+
                          let formC=new FormData(xiajiaForm)
                          tijiaoForm.onclick=function(){
 
@@ -215,14 +229,18 @@ function tableMes2() {
                              url: "http://192.168.2.54:8080/huanle/product/downProduct",
                              type: "post",
                              data: {
-                                formC,
-                                pid:mes.data.productList[i].product.pid
+
+                                 pid:mes.data.productList[i].product.pid,
+                                 content:xiajia.value
+
                              },
+
                              success: function (data) {
-                                 if (peo.code != 0) {
+                                 console.log(data)
+                                 if (data.code != 0) {
                                      alert('error')
  
-                                 } else if (peo.code === 0) {
+                                 } else if (data.code == 0) {
                                      alert('成功')
                                      location.reload([true])
                                  }
@@ -247,7 +265,7 @@ function tableMes3() {
     var xhr = new XMLHttpRequest
     xhr.onreadystatechange = function () {
         if (xhr.status == 200 && xhr.readyState == 4) {
-            var mes =JSON.parse(xhr.responseText);
+            var mes = JSON.parse(xhr.responseText);
             console.log(mes)
 
             if (mes.code != 0) {
@@ -264,55 +282,55 @@ function tableMes3() {
                     oTr.appendChild(oTd);
 
                     var oTd = document.createElement('td');
-                    oTd.innerHTML =  mes.data.orders[i].uidA;
+                    oTd.innerHTML = mes.data.orders[i].uidA;
                     oTr.appendChild(oTd);
                     var oTd = document.createElement('td');
-                    oTd.innerHTML =  mes.data.orders[i].pidA;
+                    oTd.innerHTML = mes.data.orders[i].pidA;
                     oTr.appendChild(oTd);
                     var oTd = document.createElement('td');
-                    oTd.innerHTML =  mes.data.orders[i].uidB;
+                    oTd.innerHTML = mes.data.orders[i].uidB;
                     oTr.appendChild(oTd);
                     var oTd = document.createElement('td');
-                    oTd.innerHTML =  mes.data.orders[i].pidB;
+                    oTd.innerHTML = mes.data.orders[i].pidB;
                     oTr.appendChild(oTd);
                     var oTd = document.createElement('td');
-                    oTd.innerHTML =  mes.data.orders[i].status;
+                    oTd.innerHTML = mes.data.orders[i].status;
                     oTr.appendChild(oTd);
                     var oTd = document.createElement('td');
-                    oTd.innerHTML =  new Date(parseInt(mes.data.orders[i].createAt)*1000).toLocaleString();
+                    oTd.innerHTML = new Date(parseInt(mes.data.orders[i].createAt) * 1000).toLocaleString();
                     oTr.appendChild(oTd);
                     var oTd = document.createElement('td');
                     oTd.innerHTML = '<a href="javascript:;">删除</a>'
                     oTr.appendChild(oTd);
 
                     oTd.getElementsByTagName('a')[0].onclick = function () {
-                        var mes = new XMLHttpRequest
-                        mes.onreadystatechange = function () {
-                            if (mes.status == 200 && mes.readyState == 4) {
-                                var peo = JSON.parse(mes.responseText);
-                                console.log(peo)
+                        $.ajax({
+                            url: "http://192.168.2.54:8080/huanle/orders/deleteOrders",
+                            type: "post",
+                            data: {
+                                oid: mes.data.orders[i].oid
 
-                                if (peo.code != 0) {
-                                    alert('')
+                            },
 
-                                } else if (peo.code === 0) {
-                                    alert('删除成功')
+                            success: function (data) {
+                                console.log(data)
+                                if (data.code != 0) {
+                                    alert('error')
+
+                                } else if (data.code == 0) {
+                                    alert('成功')
                                     tableMes3()
                                 }
                             }
-                        }
-                        mes.open('POST', '', true)
-
-                        mes.send()
+                        })
                     }
                     tableBodies.appendChild(oTr);
                 }
             }
         }
     }
-    xhr.open('GET', 'http://192.168.2.54:8080/huanle/admin/allOrderList', true)
-    xhr.send(null)
 }
+
 function tableMes4() {
     let mesTable1 = document.querySelectorAll('.mesTable')[3]
     let tableBodies = document.querySelectorAll('.tableBodies')[3]
@@ -356,24 +374,25 @@ function tableMes4() {
                     oTr.appendChild(oTd);
 
                     oTd.getElementsByTagName('a')[0].onclick = function () {
-                        var mes = new XMLHttpRequest
-                        mes.onreadystatechange = function () {
-                            if (mes.status == 200 && mes.readyState == 4) {
-                                var peo = JSON.parse(mes.responseText);
-                                console.log(peo)
+                        $.ajax({
+                            url: "http://192.168.2.54:8080/huanle/admin/deleteFeedback",
+                            type: "post",
+                            data: {
+                                fid: mes.data.feedbackList[i].fid
 
-                                if (peo.code != 0) {
+                            },
+
+                            success: function (data) {
+                                console.log(data)
+                                if (data.code != 0) {
                                     alert('error')
 
-                                } else if (peo.code === 0) {
-                                    alert('删除成功')
-                                    tableMes3()
+                                } else if (data.code == 0) {
+                                    alert('成功')
+                                    tableMes4()
                                 }
                             }
-                        }
-                        mes.open('POST', '', true)
-
-                        mes.send()
+                        })
                     }
                     tableBodies.appendChild(oTr);
                 }

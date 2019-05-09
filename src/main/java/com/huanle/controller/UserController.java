@@ -40,9 +40,9 @@ public class UserController {
             return new ResponseVO(ErrorCode.UNKNOW_ERROR,"非法参数:verify");
         }
         String verifyCode =(String) request.getSession().getAttribute("RANDOMVALIDATECODEKEY");
-        if(verifyCode == null || !verify.equals(verifyCode)){
-            return new ResponseVO(ErrorCode.UNKNOW_ERROR,"验证码错误！");
-        }
+//        if(verifyCode == null || !verify.equals(verifyCode)){
+//            return new ResponseVO(ErrorCode.UNKNOW_ERROR,"验证码错误！");
+//        }
         if(groupId == null || groupId < 0){
             return new ResponseVO(ErrorCode.UNKNOW_ERROR,"非法参数:groupId");
         }
@@ -111,20 +111,20 @@ public class UserController {
      * @return
      */
     @RequestMapping("/editUserInfo")
-    public ResponseVO editUserInfo(@RequestParam("files")MultipartFile[] files,String nickName,String email,
-                                   String gender,String contact,Integer groupId ,HttpServletRequest request){
+    public ResponseVO editUserInfo(String nickName,String contact,String email,
+                                       String gender,@RequestParam("files")MultipartFile[] files,HttpServletRequest request){
         UserInfo up = (UserInfo)request.getSession().getAttribute("userInfo");
         if(up == null){
             return new ResponseVO(ErrorCode.UNKNOW_ERROR,"未登录");
         }
-
+        System.out.println(gender);
         if(email == null || email.equals("")){
             return new ResponseVO(ErrorCode.UNKNOW_ERROR,"非法参数:email");
         }
         if(nickName == null || nickName.equals("") || nickName.length() > 32){
             return new ResponseVO(ErrorCode.UNKNOW_ERROR,"非法参数:nickName");
         }
-        if(gender == null || gender.equals("") || gender.length() > 2){
+        if(gender == null || gender.equals("") ){
             return new ResponseVO(ErrorCode.UNKNOW_ERROR,"非法参数:gender");
         }
         if(contact == null || contact.equals("")){
@@ -150,15 +150,9 @@ public class UserController {
         if(userInfoRet != null){
             request.getSession().setAttribute("userInfo",userInfoRet);
             return new ResponseVO(ErrorCode.RESPONSE_SUCCESS,userInfoRet);
+        }else {
+            return new ResponseVO(ErrorCode.UNKNOW_ERROR, "修改信息失败！");
         }
-
-        if(groupId != null){
-            /**
-             * admin
-             */
-        }
-
-        return new ResponseVO(ErrorCode.UNKNOW_ERROR,"修改信息失败！");
     }
 
     /**
@@ -194,6 +188,16 @@ public class UserController {
             logger.error("获取验证码失败>>>>   ", e);
         }
 
+    }
+
+    @CrossOrigin(origins = "*")
+    @RequestMapping("deleteUserInfo")
+    public ResponseVO deleteUserInfo(Integer uid,HttpServletRequest request){
+        if(uid == null || uid < 0){
+            return new ResponseVO(ErrorCode.UNKNOW_ERROR,"非法参数:uid");
+        }
+        System.out.println("deleteUserInfo-----"+uid);
+        return new ResponseVO(ErrorCode.RESPONSE_SUCCESS,"");
     }
 
 

@@ -48,7 +48,7 @@ public interface OrdersMapper {
      */
     @Select("select p.pid,p.title,p.my_type,p.inventory,p.is_new,p.price,p.picture,p.standard ,u.uid,u.nick_name,u.contact " +
             "from orders o left join productInfo p on o.A_pid = p.pid  left join userInfo u on p.p_uid = u.uid " +
-            "where o.oid = #{oid}")
+            "where o.oid = #{oid} and (p.status = 1 or p.status = 2) ")
     Map myself(Integer oid);
 
     /**
@@ -58,7 +58,7 @@ public interface OrdersMapper {
      */
     @Select("select p.pid,p.title,p.my_type,p.inventory,p.is_new,p.price,p.picture,p.standard,u.uid,u.nick_name,u.contact " +
             "from orders o left join productInfo p on o.B_pid = p.pid  left join userInfo u on p.p_uid = u.uid " +
-            "where o.oid = #{oid}")
+            "where  o.oid = #{oid} and (p.status = 1 or p.status = 2)")
     Map other(Integer oid);
 
     @Select("select count(*) from orders where A_uid = #{uid} or B_uid = #{uid}")

@@ -395,9 +395,19 @@ article {
 	display: inline-block;
 	border: 1px solid;
 	overflow: hidden;
+	position: relative;
 }
 .headImg input{
-	margin: 20px;opacity: 0;
+	position: absolute;
+	top: 20px;
+	opacity: 0;
+	z-index: 9999;
+}
+.headImg .imggg{
+	position: absolute;
+	left: 0;
+	top: 0;
+	z-index: 99;
 }
 .personal-mid .box .releaseInfo input {
 	width: 290px;

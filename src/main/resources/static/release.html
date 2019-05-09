@@ -87,7 +87,7 @@
             <p><label for="">价格:</label><input type="text" name="price" required></p>
             <p><label for="">生产日期:</label><input type="date" name="productDate" required></p>
             <p><label for="">过期日期:</label><input type="date" name="productExpire" required></p>
-            <p><label for="">想要交换的类型:</label><select name="exchangeType" id="">
+            <p><label for="">想要交换的类型:</label><select name="exchangeType">
                 <option value="代步">代步</option>
                 <option value="手机">手机</option>
                 <option value="电脑">电脑</option>
@@ -163,9 +163,9 @@
     let submit=document.getElementById('submit');
       submit.onclick=function(){
           var imgData=new FormData(imgMes)
-          imgData.delete('files')
-          imgData.append('files',newImgs)
-          
+          let pid=window.location.search.split('=')[1];
+          // imgData.set('files',newImgs)
+          imgData.append('pid',pid)
           console.log(imgData.get('files'))
             var xhr=new XMLHttpRequest;
             xhr.onreadystatechange=function(){
@@ -181,9 +181,10 @@
                     }
                 }
             }
-            var pid=window.location.search
-            xhr.open('POST','/huanle/product/publish' ,true)
+
+            xhr.open('POST','huanle/product/publish' ,true)
           // xhr.setRequestHeader("Content-type","application/x-www-form-urlencoded")
+
             xhr.send(imgData)
       }
       function state() {
@@ -227,7 +228,7 @@ function ajaxContent() {
             let twoDiv=document.createElement('div');
             twoDiv.innerText='X';
             twoDiv.className='delete'
-
+                // newImgs.push(data.data.picture[i])
         newDiv.className="files";
         let goodsImg=document.createElement('img');
         goodsImg.style.width=`150px`
@@ -236,8 +237,10 @@ function ajaxContent() {
         newDiv.appendChild(goodsImg)
         newDiv.appendChild(twoDiv)
         mes.appendChild(newDiv);
+
          twoDiv.onclick=function(){
              mes.removeChild(this.parentNode)
+
          }
        }
        let releaseTitle=document.getElementsByName('title')[0];

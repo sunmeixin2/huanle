@@ -46,4 +46,7 @@ public interface UserInfoMapper {
     @Select("select * from userInfo where group_id = 1 order by uid")
     List<UserInfo> getAdminList();
 
+    @Select(" select * from userInfo where nick_name like #{nickName}")
+    UserInfo getByNickName(String nickName);
+
 }

@@ -255,6 +255,7 @@ public class ProductController {
      * @param pid
      * @return
      */
+    @CrossOrigin(origins = "*")
     @RequestMapping("deleteProductInfo")
     public ResponseVO deleteProductInfo(Integer pid,HttpServletRequest request){
         if(pid == null || pid <= 0){
@@ -319,6 +320,29 @@ public class ProductController {
 
 
         return new ResponseVO(ErrorCode.RESPONSE_SUCCESS,data);
+    }
+
+
+
+    @CrossOrigin(origins = "*")
+    @RequestMapping("downProduct")
+    public ResponseVO downProduct(Integer pid,String content,HttpServletRequest request){
+
+        System.out.println("downProduct----pid"+pid);
+        System.out.println("downProduct----"+content);
+
+        UserInfo up = (UserInfo) request.getSession().getAttribute("userInfo");
+        if(pid == null || pid < 0){
+            return new ResponseVO(ErrorCode.UNKNOW_ERROR,"非法参数: pid");
+        }
+        if(up == null){
+            return new ResponseVO(ErrorCode.UNKNOW_ERROR,"未登录!");
+        }
+        Integer upId = up.getUid();
+
+
+        return new ResponseVO(ErrorCode.RESPONSE_SUCCESS,"");
+
     }
 
 }

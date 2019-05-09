@@ -3,10 +3,13 @@ package com.huanle.service;
 import com.alibaba.fastjson.JSONObject;
 import com.huanle.Util.CommonUtil;
 import com.huanle.Util.OrderCoderUtil;
+import com.huanle.constant.ProductConstant;
 import com.huanle.dao.OrdersMapper;
 import com.huanle.dao.ProductInfoMapper;
+import com.huanle.dao.UserInfoMapper;
 import com.huanle.entity.Orders;
 import com.huanle.entity.ProductInfo;
+import com.huanle.entity.UserInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,6 +23,9 @@ public class OrderService {
 
     @Autowired
     OrdersMapper ordersMapper;
+
+    @Autowired
+    UserInfoMapper userInfoMapper;
 
     public Boolean addOrders(Orders orders){
         orders.setCreateAt((int)(new Date().getTime()/1000));
@@ -98,8 +104,10 @@ public class OrderService {
 
     public List<Map> commonDealPicture(List<Map> orders){
         for(Map order : orders){
-            String[] picture = CommonUtil.pictureToArr((String)order.get("picture"));
-            order.put("picture",picture[0]);
+            if(order.get("picture") != null) {
+                String[] picture = CommonUtil.pictureToArr((String) order.get("picture"));
+                order.put("picture", picture[0]);
+            }
         }
         return orders;
     }
@@ -170,7 +178,47 @@ public class OrderService {
     public Map getAllOrdersList(JSONObject param){
         Map result = new HashMap();
 
-        List<Orders> ordersList = ordersMapper.getAllList(param);
+        if(param.getString("nickName") != null && !param.getString("nickName").isEmpty()) {
+
+            String nickName = "%" + param.getString("nickName") + "%";
+            UserInfo userInfo = userInfoMapper.getByNickName(nickName);
+            if (userInfo != null) {
+                param.put("uid", userInfo.getUid());
+            } else {
+                param.put("uid", null);
+            }
+        }
+
+        List<Orders> orders = ordersMapper.getAllList(param);
+        List<Map> ordersList = new ArrayList<>();
+        for (Orders order : orders){
+            Map tmp = new HashMap();
+            UserInfo userA = userInfoMapper.selectByPrimaryKey(order.getaUid());
+            UserInfo userB = userInfoMapper.selectByPrimaryKey(order.getbUid());
+            if(userA != null && userB != null) {
+                tmp.put("uidA", userA.getNickName() + " (ID: " + userA.getUid() + ")");
+//            tmp.put("nickName_A",userA.getNickName());
+                tmp.put("uidB", userB.getNickName() + " (ID: " + userB.getUid() + ")");
+//            tmp.put("nickName_B",userB.getNickName());
+            }
+
+            ProductInfo productInfoA = productInfoMapper.selectByPrimaryKey(order.getaPid());
+            ProductInfo productInfoB = productInfoMapper.selectByPrimaryKey(order.getbPid());
+            if(productInfoA != null && productInfoB != null) {
+                tmp.put("pidA", productInfoA.getTitle() + " (ID: " + productInfoA.getPid() + ")");
+//            tmp.put("title_A",productInfoA.getTitle());
+                tmp.put("pidB", productInfoB.getTitle() + " (ID: " + productInfoB.getPid() + ")");
+//            tmp.put("title_B",productInfoB.getTitle());
+            }
+
+            tmp.put("oid",order.getOid());
+            tmp.put("nums",order.getNums());
+            tmp.put("status", ProductConstant.ORDER_STATUS.get(order.getStatus()));
+            tmp.put("createAt",order.getCreateAt());
+
+            ordersList.add(tmp);
+
+        }
         if(ordersList != null) {
             result.put("total", ordersList.size());
             result.put("orders", ordersList);

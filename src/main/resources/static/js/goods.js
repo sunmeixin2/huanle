@@ -147,6 +147,14 @@ function ajaxContent() {
 			var infouser = document.querySelector('.info-user');
 			var infocontract = document.querySelector('.info-contract');
 			var infostandard = document.querySelector('.info-standard');
+			var xianshi = document.querySelectorAll('.xianshi');
+			for(let i=0;i<xianshi.length;i++){
+				if(data.data.productInfo.status==1){
+					xianshi[i].style.display='inline-block'
+				}else{
+					xianshi[i].style.display='none'
+				}
+			}
 
 			infoTitle[0].innerHTML = data.data.productInfo.title;
 			infouser.innerHTML = data.data.nickName;
@@ -424,16 +432,22 @@ let feedForm=document.getElementById('feedForm')
 let feedback=document.getElementById('feedback')
 let feedBtn=document.getElementById('feedBtn')
 let closeRep2=document.querySelector('.closeRep2')
-
+closeRep2.onclick=function(){
+	feedbackBox.style.display='none'
+}
 	feedback.onclick=function(){
 		feedbackBox.style.display='block';
 
 			 feedBtn.onclick=function(){
 				 let form=new FormData(feedForm)
+                  form.append('pid',sendData.uidd)
+
 				 $.ajax({
-						url: "huanle/orders/exchange",
+						url: "huanle/admin/feedback",
 						type: "post",
 						data: form,
+					 processData:false,
+					 contentType:false,
 						success: function (data) {
                                if(data.code==0){
                                	alert(data.data)
@@ -448,10 +462,7 @@ let closeRep2=document.querySelector('.closeRep2')
 		
 	
 
-let close=document.getElementById('close')
-close.onclick=function(){
-	changeList.style.display='none';
-}
+
 window.onload = function () {
 	state()
 	ajaxContent(); //ajax动态填充内容

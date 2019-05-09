@@ -130,27 +130,28 @@
 						<span>个人信息编辑</span>
 					</div>
 					<div class="editInfo-cont">
-						<form action=".php" method="get">
+						<form id="editMeses" enctype="multipart/form-data">
 							<span class="editSpan">头像</span>
-							<div class="headImg"><input type="file" class="img" onchange="add()"></div>
+							<div class="headImg">
+								<input type="file" name="files" class="img" onchange="add()" multiple="multiple"></div>
 							<div class="editInfo-contWr">
 								<span class="editSpan">昵称</span>
-								<input type="text" name="editName" class="editInput editName" maxlength="12">
+								<input type="text" name="nickName" class="editInput editName" maxlength="12">
 							</div>
 							<div class="editInfo-contWr">
 								<span class="editSpan">联系方式</span>
-								<input type="text" name="editPhone" class="editInput editPhone" maxlength="11"
+								<input type="text" name="contact" class="editInput editPhone" maxlength="11"
 									onkeyup="this.value=this.value.replace(/\D/g,'')"
 									onafterpaste="this.value=this.value.replace(/\D/g,'')">
 							</div>
 							<div class="editInfo-contWr">
 								<span class="editSpan">email</span>
-								<input type="email" name="editEmail" class="editInput editEmail" maxlength="">
+								<input type="email" name="email" class="editInput editEmail" maxlength="">
 							</div>
 							<div class="editInfo-contWr">
 								<span class="editSpan">性别</span>
-								<label for="man">男：</label> <input type="radio" id="man" value="man" name="sex">
-								<label for="woman">女：</label> <input type="radio" id="woman" value="woman" name="sex">
+								<label for="man">男：</label> <input type="radio" id="man" value="man" name="gender">
+								<label for="woman">女：</label> <input type="radio" id="woman" value="woman" name="gender">
 							</div>
 							<div class="editInfo-contWr">
 								<input type="button" name="submit" class="editSubmit" value="确认修改">
@@ -239,17 +240,7 @@
 			triangle.style.display = 'none';
 		}, 600)
 	}
-	let headImg = document.querySelector('.headImg');
-	let img = document.querySelector('.img');
 
-	function add() {
-		headImg.innerHTML = '';
-		let goodsImg = document.createElement('img');
-		goodsImg.style.width = `60px`
-		goodsImg.style.height = 60 + 'px'
-		goodsImg.src = window.URL.createObjectURL(img.files[0]);
-		headImg.appendChild(goodsImg)
-	}
 	let beforeWord = document.querySelector('.beforeWord')
 	let afterWord = document.querySelector('.afterWord')
 	let requireWord = document.querySelector('.requireWord')

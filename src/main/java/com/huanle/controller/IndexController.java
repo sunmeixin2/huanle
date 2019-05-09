@@ -1,5 +1,6 @@
 package com.huanle.controller;
 
+import com.alibaba.fastjson.JSONObject;
 import com.huanle.Config.ErrorCode;
 import com.huanle.entity.Category;
 import com.huanle.entity.UserInfo;
@@ -40,6 +41,7 @@ public class IndexController {
 
     }
 
+    @CrossOrigin(origins = "*")
     @RequestMapping("upInfo")
     public ResponseVO upInfo(HttpServletRequest request){
         UserInfo up = (UserInfo) request.getSession().getAttribute("userInfo");
@@ -83,12 +85,17 @@ public class IndexController {
      * @return
      */
     @RequestMapping("searchByType")
-    public ResponseVO searchByType(String type){
+    public ResponseVO searchByType(String type,String exchangeType){
         type = type.trim();
-        if(type == null || type.equals("")){
-            return new ResponseVO(ErrorCode.UNKNOW_ERROR,"非法参数:type");
-        }
-        Map data = productInfoService.getProductListType(type);
+        exchangeType = exchangeType.trim();
+        JSONObject param = new JSONObject();
+        param.put("type",type);
+        param.put("exchangeType",exchangeType);
+
+//        if(type == null || type.equals("")){
+//            return new ResponseVO(ErrorCode.UNKNOW_ERROR,"非法参数:type");
+//        }
+        Map data = productInfoService.getProductListType(param);
         return new ResponseVO(ErrorCode.RESPONSE_SUCCESS,data);
 
     }

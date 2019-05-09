@@ -48,6 +48,77 @@ function ajax() {
         success: function (data) {
             console.log(data)
             if (data.code == 0) {
+                let headImg = document.querySelector('.headImg');
+                var aeditName = document.getElementsByClassName('editName');
+                var aeditImg = document.getElementsByClassName('img');
+                var aeditPhone = document.getElementsByClassName('editPhone');
+                var aeditEmail = document.getElementsByClassName('editEmail');
+                var radio = document.getElementsByName("sex");
+
+
+                 headImg.innerHTML=`<input type="file" class="img" name="files" multiple="multiple"><img src="${data.data.profileImg}" class="imggg" width="60px" height="60px">`
+                aeditName[0].value=data.data.nickName;
+                aeditPhone[0].value=data.data.contact;
+                aeditEmail[0].value=data.data.email
+
+                let img = document.querySelector('.img');
+              img.onchange=  function () {
+                    headImg.innerHTML = '';
+                    let goodsImg = document.createElement('img');
+                    goodsImg.style.width = `60px`
+                    goodsImg.style.height = 60 + 'px'
+                    goodsImg.src = window.URL.createObjectURL(img.files[0]);
+                    headImg.appendChild(goodsImg)
+
+                }
+                for (var i = 0; i < radio.length; i++) {
+
+                    if (radio[i].checked == data.data.gender) {
+
+                       radio[i].checked=true
+
+                        break;
+
+                    }
+                }
+                var aeditSubmit = document.querySelector('.editSubmit');
+                aeditSubmit.onclick= function(){
+                    let editMeses=document.getElementById('editMeses')
+
+                    form=new FormData(editMeses)
+                    form.append('files',img.files[0])
+                    var xhr=new XMLHttpRequest;
+                    xhr.onreadystatechange=function(){
+                        if(xhr.status==200&&xhr.readyState==4){
+                            let data=JSON.parse(xhr.responseText)
+                            if(data.code==0){
+
+                                location.reload(([true]))
+                            } else {
+                                alert('很抱歉，修改出错！');
+                            }
+
+                        }
+                    }
+                    xhr.open('POST','huanle/user/editUserInfo')
+                    xhr.send(form)
+                    // $.ajax({
+                    //     url: "huanle/user/editUserInfo",
+                    //     type: "post",
+                    //     data: form,
+                    //     processData:false,
+                    //     contentType:false,
+                    //     success: function (data) {
+                    //
+                    //         if (data.code== 0) {
+                    //
+                    //             location.reload(([true]))
+                    //         } else {
+                    //             alert('很抱歉，修改出错！');
+                    //         }
+                    //     }
+                    // })
+                }
                 // 设置头部信息
                 var aPersPhoto = document.getElementsByClassName('personal-photo');
                 var aCollect = document.getElementsByClassName('personal-collect');
@@ -244,7 +315,7 @@ console.log(data)
                                 var ahistInfoTime = document.getElementsByClassName('histInfoTime');
                                 var pressStatus = document.getElementsByClassName('pressStatus');
                                 for (var i = 0; i < data.data.productList.length; i++) {
-                                    ahistImgA[i].href = "goods.html?order_id=" + data.data.productList[i].pid;
+                                    ahistImgA[i].href = "goods.html?pid=" + data.data.productList[i].pid;
                                     if (data.data.productList[i].picture[0])
                                         ahistImgCont[i].src = data.data.productList[i].picture[0];
                                     ahistInfoCont[i].innerHTML = data.data.productList[i].title;
@@ -547,61 +618,8 @@ console.log(data)
     })
 }
 
-//提交编辑内容
-function submitEdit() {
-    var aeditName = document.getElementsByClassName('editName');
-    var aeditImg = document.getElementsByClassName('img');
-    var aeditPhone = document.getElementsByClassName('editPhone');
-    var aeditEmail = document.getElementsByClassName('editEmail');
-    var radio = document.getElementsByName("sex");
 
-    var selectvalue = null; //  selectvalue为radio中选中的值
 
-    for (var i = 0; i < radio.length; i++) {
-
-        if (radio[i].checked == true) {
-
-            selectvalue = radio[i].value;
-
-            break;
-
-        }
-    }
-    var aeditSubmit = document.getElementsByClassName('editSubmit');
-    aeditSubmit[0].onclick = function () {
-        $.ajax({
-            url: "edit.php",
-            type: "post",
-            dataType: "json",
-            data: {
-                "touxiang": aeditImg[0].files[0],
-                "user_name": aeditName[0].value,
-                "telephone": aeditPhone[0].value,
-                "email": aeditEmail[0].value,
-                "sex": selectvalue
-            },
-            success: function (data) {
-                var data = eval(data);
-                if (data.ok == 1) {
-                    alert('恭喜您，修改成功！');
-                    var storage = newwindow.localStorage;
-                    storage.userName = aeditName[0].value;
-                    storage.telephone = aeditPhone[0].value;
-                    storage.email = aeditEmail[0].value
-                    storage.sex = selectvalue;
-                    storage.touxiang = aeditImg[0].files[0]
-                    $(".editInfoBg").hide();
-                    $(".editInfoWr").hide();
-                    event.stopPropagation();
-
-                    ajax();
-                } else if (data.ok == 0) {
-                    alert('很抱歉，修改出错！');
-                }
-            }
-        })
-    }
-}
 
 // 图片上传
 function uploadImg() {
@@ -630,23 +648,8 @@ function edit() {
 }
 
 //退出登录
-function loginOut() {
-    var outBtn = document.getElementsByClassName('loginOut');
-    outBtn.onclick = function () {
-        $.ajax({
-            url: "",
-            type: "post",
-            success: function (data) {
-                var data = eval(data);
-                if (data.status == 0) {
 
-                } else if (data.status == 1) {
 
-                }
-            },
-        })
-    }
-}
 
 // 分页
 function evlau() {
@@ -662,7 +665,9 @@ window.onload = function () {
     uploadImg(); //上传图片设置
     tab(); //执行选项卡
     edit(); //弹出编辑个人信息框
-    loginOut(); //退出登录，清除session
-    submitEdit(); //ajax上传编辑信息
+
+  //ajax上传编辑信息
     ajax(); //ajax设置个人页面
+    //提交编辑内容
+
 }

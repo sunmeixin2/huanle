@@ -1,5 +1,6 @@
 package com.huanle.service;
 
+import com.alibaba.fastjson.JSONObject;
 import com.huanle.dao.FeedbackMapper;
 import com.huanle.entity.Feedback;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,9 +23,9 @@ public class FeedbackService {
         return false;
     }
 
-    public Map getFeedbackList(){
+    public Map getFeedbackList(JSONObject param){
         Map result = new HashMap();
-        List<Map> feedbackList = feedbackMapper.getList();
+        List<Map> feedbackList = feedbackMapper.getList(param);
 
         if(feedbackList == null){
             return null;

@@ -27,7 +27,8 @@ public interface ProductInfoMapper {
     @Select("select * from productInfo where status = 1 and advice = 2 order by create_at DESC,is_new DESC,update_at DESC")
     List<ProductInfo> getList();
 
-    @Select("select *  from productInfo where  p_uid = #{uid} and status = 1 order by create_at desc")
+//    @Select("select *  from productInfo where  p_uid = #{uid} and status = 1 order by create_at desc")
+    @Select("select *  from productInfo where  p_uid = #{uid}  order by create_at desc")
     List<ProductInfo> getPublishedList(Integer uid);
 
     /**
@@ -38,12 +39,15 @@ public interface ProductInfoMapper {
     @Select("select * from productInfo where p_uid = #{uid} and status = 1 and advice = 2 order by create_at desc")
     List<ProductInfo> getListBypUid(Integer uid);
 
-    @Select("select * from productInfo where advice = 2 and status = 1 and title like  #{str} order by create_at DESC,is_new DESC,update_at DESC ")
+    @Select("select * from productInfo where advice = 2 and status = 1 and (title like  #{str} or detail like  #{str}) " +
+            "order by create_at DESC,is_new DESC,update_at DESC ")
     List<ProductInfo> queryByTitle(String str);
 
     @Select("select * from productInfo where advice = 2 and status = 1 and  my_type = #{type} order by create_at DESC,is_new DESC,update_at DESC")
-    List<ProductInfo> queryByType(String type);
+    List<ProductInfo> selectByType(String type);
 
+    @SelectProvider(type = ProductDaoProvider.class ,method = "selectByType" )
+    List<ProductInfo> queryByType(JSONObject param);
     //交换成功修改商品信息状态为 "已交换"
     @Select("update productInfo set status = 2 where pid = #{aPid} or pid = #{bPid}")
     void updateStatus(Integer aPid,Integer bPid);
@@ -56,6 +60,14 @@ public interface ProductInfoMapper {
 //    List<ProductInfo> getAllList();
     @SelectProvider(type = ProductDaoProvider.class,method = "selectByFilter")
     List<ProductInfo> getAllList(JSONObject param);
+
+
+    /**
+     * 审核商品修改状态为已下架 3 和 审核中 1
+     * @param pid
+     */
+    @Select(" update productInfo set status = 3 ,advice = 1  where pid = #{pid}")
+    void updateStatusAndAdvice(Integer pid);
 
 
 }

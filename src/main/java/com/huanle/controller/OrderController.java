@@ -200,4 +200,13 @@ public class OrderController {
             return new ResponseVO(ErrorCode.UNKNOW_ERROR,"查询订单失败！");
         }
     }
+
+
+    @CrossOrigin(origins = "*")
+    @RequestMapping("deleteOrders")
+    public ResponseVO deleteOrders(Integer oid,HttpServletRequest request){
+        System.out.println("deleteOrders----oid"+oid);
+        return new ResponseVO(ErrorCode.RESPONSE_SUCCESS,"");
+
+    }
 }

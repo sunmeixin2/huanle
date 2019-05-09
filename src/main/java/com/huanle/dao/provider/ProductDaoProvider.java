@@ -62,4 +62,24 @@ public class ProductDaoProvider {
 
         return sql;
     }
+
+    public String selectByType(JSONObject param){
+        String type = param.getString("type");
+        String exchangeType = param.getString("exchangeType");
+
+        String sql = new SQL(){
+            {
+                SELECT(" * from productInfo");
+                WHERE("advice = 2 and status = 1");
+                if(type != null && !type.isEmpty()){
+                    WHERE("my_type = #{type}");
+                }
+                if(exchangeType != null && !exchangeType.isEmpty()){
+                    WHERE("exchange_type = #{exchangeType}");
+                }
+                 ORDER_BY("create_at DESC,is_new DESC,update_at DESC");
+            }
+        }.toString();
+        return sql;
+    }
 }

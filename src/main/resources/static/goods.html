@@ -201,7 +201,7 @@
 				<p class="info-title">标题</p>
 				<p class="info-price">价格 </p>
 				<p class="info-bargain">分类</p>
-				<p class="info-coll" style="cursor:pointer">收藏</p>
+				<p class="info-coll xianshi" style="cursor:pointer">收藏</p>
 			</div>
 			<div class="info-others">
 				<div class="baoguo">
@@ -252,8 +252,8 @@
 				</div>
 			</div>
 		</div>
-		<button value="想要换" id="doWell">想要换</button>
-		<button value="想要换" id="feedback">反馈</button>
+		<button value="想要换" class="xianshi" id="doWell">想要换</button>
+		<button value="想要换" class="xianshi" id="feedback">反馈</button>
 		<p class="art-bot-nav"><span class="Navbtn activeNav">商品详情 </span>&nbsp;<span class="Navbtn"> 交易记录</a></span>
 		<!-- 卖家寄语 -->
 		<div class="art-bot-describe art-box">
@@ -299,16 +299,16 @@
 		<button id="replyBtn">回复</button>
 	</div>
 	<div id="feedbackBox">
-		<span class="closeRep2" style="margin-left:95%">X</span>
+		 <span class="closeRep2" style="margin-left:95%;cursor: pointer">X</span>
 		<form action="" id="feedForm">
-			<select name="">
+			<select name="type">
 				<option value="图片虚假">图片虚假</option>
 				<option value="违禁物品">违禁物品</option>
 				<option value="质量问题">质量问题</option>
 				<option value="假冒及盗版">假冒及盗版</option>
 				<option value="其它">其它</option>
 			</select>
-			<textarea name="feddBack"  id="feedbackContent" cols="30" rows="10"></textarea>
+			<textarea name="message"  id="feedbackContent" cols="30" rows="10"></textarea>
 		</form>
 		<button id="feedBtn">回复</button>
 	</div>

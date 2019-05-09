@@ -124,7 +124,7 @@ public class ProductInfoService {
     public Map getProduct(Integer pid, Integer upId){
         Map data = new HashMap();
         ProductInfo productInfo = productInfoMapper.selectByPrimaryKey(pid);
-        if(productInfo == null){
+        if(productInfo == null || productInfo.getStatus().equals(3)||productInfo.getAdvice().equals(3)){
             data.put("message","无此商品");
             return null;
 
@@ -233,9 +233,9 @@ public class ProductInfoService {
         return result;
     }
 
-    public Map getProductListType(String type){
+    public Map getProductListType(JSONObject param){
         Map<String,Object> result = new HashMap();
-        List<ProductInfo> productInfos = productInfoMapper.queryByType(type);
+        List<ProductInfo> productInfos = productInfoMapper.queryByType(param);
         List<Map> data = new ArrayList<>();
         if(productInfos != null) {
             for (ProductInfo productInfo : productInfos) {
@@ -293,10 +293,15 @@ public class ProductInfoService {
         List<Map> data = new ArrayList<>();
         for (ProductInfo productInfo : productInfoList){
             Map<String,Object> map = new HashMap<>();
-
+            UserInfo userInfo = userInfoMapper.selectByPrimaryKey(productInfo.getpUid());
             String[] picture = CommonUtil.pictureToArr(productInfo.getPicture());
             map.put("product",productInfo);
             map.put("picture",picture);
+            if(userInfo != null) {
+                map.put("user", userInfo.getNickName()+" (ID: "+userInfo.getUid()+")");
+            }else{
+                map.put("user","");
+            }
             data.add(map);
         }
         return data;
@@ -313,7 +318,7 @@ public class ProductInfoService {
             data = commonFormat(productInfoList,data);
         }
         if(data.size() < 7 ){
-            List<ProductInfo> productInfoList = productInfoMapper.queryByType(type);
+            List<ProductInfo> productInfoList = productInfoMapper.selectByType(type);
             data = commonFormat(productInfoList,data);
 
         }
