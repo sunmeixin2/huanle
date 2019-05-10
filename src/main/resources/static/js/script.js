@@ -75,12 +75,50 @@ function getGoods(i) {
 	xml.open('GET', '/huanle/index/productList', true);
 	xml.send(null)
 }
+function getGoodsType(type,standard){
+	content.innerHTML = ''
+	var xml = new XMLHttpRequest;
+	xml.onreadystatechange = function () {
+		if (xml.status == 200 && xml.readyState == 4) {
+			let goods = JSON.parse(xml.responseText);
+
+			console.log(goods.data)
+			for (let j = 0; j < goods.data.productList.length; j++) {
+				var oDiv = document.createElement('figure');
+				content.appendChild(oDiv);
+
+				oDiv.innerHTML = `
+                    <a href="javascript:;" onclick='sendPid(${goods.data.productList[j].product.pid})'><img src="${goods.data.productList[j].picture[0]}" width="200px" height="200px"></a>
+                    <figcaption>
+                    <a href="javascript:;" onclick='sendPid(${goods.data.productList[j].product.pid})' class='postMes'>${goods.data.productList[j].product.title}</a> 
+                    <h5>￥${goods.data.productList[j].product.price}</h5>
+								<h6 class="wantChange"><span class="fixed">想要换：${goods.data.productList[j].product.exchangeType}</span></h6>
+								`
+
+
+			}
+		}
+	}
+	xml.open('GET', `/huanle/index/productList?type=${type}&standard=${standard}`, true);
+	xml.send(null)
+
+}
+let typeMes=document.querySelectorAll('.typeMes')
 for (let i = 0; i < nav.length; i++) {
 	nav[i].onclick = function () {
-		getGoods(i)
+		 getGoodsType(typeMes[i].innerHTML)
 	}
 }
-
+let rule=document.querySelectorAll('.rule')
+for(let i=0;i<rule.length;i++){
+	rule[i].onclick=function(){
+		for(let j=0;j<rule.length;j++){
+			rule[j].className=''
+		}
+		rule[i].className='ruleActive'
+		getGoodsType('',rule[i].innerHTML)
+	}
+}
 window.onload = function () {
 	state()
 	getGoods()

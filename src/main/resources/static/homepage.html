@@ -20,16 +20,95 @@
 	font-size: 18px;
 	border: none !important
    }
+   .report p{
+	  font-size: 18px;
+	  font-weight: bold
+   }
+   .searchBox{
+	   height: 200px;
+	position: absolute;
+	z-index: 9999;
+	left: 53%;
+	top: 70px;
+	background: white;
+	border: 1px solid #44C1A5;
+	display: none
+   }
+   .searchBox table{
+	width: 380px;
+	
+   }
+  
+   .searchBox td{
+	width: 380px;
+	cursor: pointer;
+   }
+   .searchBox td:hover{
+      background: #ccc
+   }
 </style>
+<script>
+     function getMoreContents(){
+		 let content=document.getElementById('keyword')
+		 let searchBox=document.querySelector('.searchBox')
+		 if(content.value==''){
+			clearContent() 
+			 return
+		 }
+	  let xhr=new XMLHttpRequest;
+	    xhr.onreadystatechange=function(){
+           if(xhr.status==200&&xhr.readyState==4){
+			   let result=JSON.parse(xhr.responseText)
+			   clearContent()
+                for(let i=0;i<result.length;i++){
+					var nextNode=result[i];
+					var tr=document.createElement('tr')
+					var td=document.createElement('td')
+					
+					var text=document.createTextNode(nextNode)
+					
+					td.appendChild(text)
+					tr.appendChild(td)
+					document.getElementById('tbodyContent').appendChild(tr)
+					td.onclick=function(){
+						content.value=nextNode
+					}
+searchBox.style.display='block'		
+				}
+		   }
+		}
+		xhr.open('GET',)
+		xhr.send(null)
+	 }
+	 function clearContent(){
+		let searchBox=document.querySelector('.searchBox')
+searchBox.style.display='none'		
+					let contentBody=document.getElementById('tbodyContent')
+					let size=contentBody.childNodes.length
+					for(let i=size-1;i>=0;i--){
+						contentBody.removeChild(contentBody.childNodes[i])
+					}
+				}
+	 function keywordBlur(){
+		 clearContent()
+	 }
+</script>
 <body>
-
+    <div class="searchBox">
+		<table border="0" cellspacing=5 cellpadding=0 id="content_table">
+             <tbody id="tbodyContent">
+				 <!-- <tr><td>sdasd</td></tr>
+				 <tr><td>sdasd</td></tr> -->
+			 </tbody>
+		</table>
+	</div>
 	<header id="header">
 		<div class="banner" id="banner"><img src="images/互联交换清算系统.png"></div>
 		<span><b>换乐</b><i>用交换带来快乐</i></span>
 		<nav>
 			<div class="search">
 				<form action="homepage.php" method="get">
-					<input type="search" name="user_search" placeholder="搜索想要的换物"></input>
+					<input type="search" name="user_search" id="keyword" onkeyup="getMoreContents()" onblur="keywordBlur()" onfocus="getMoreContents()" placeholder="搜索想要的换物"></input>
 					<input type="submit" value="搜索" name="type" class="right"></input>
 				</form>
 				<ul>
@@ -72,61 +151,61 @@
 			<a href="#" class="nav-goods">
 				<dl>
 					<dt name="dt"><img src="images/自行车.png" width="40px"></dt>
-					<dd>校园代步</dd>
+					<dd class="typeMes">校园代步</dd>
 				</dl>
 			</a>
 			<a href="#" class="nav-goods">
 				<dl>
 					<dt name="dt"><img src="images/手机.png" width="40px"></dt>
-					<dd>手机</dd>
+					<dd class="typeMes">手机</dd>
 				</dl>
 			</a>
 			<a href="#" class="nav-goods">
 				<dl>
 					<dt name="dt"><img src="images/电脑.png" width="40px"></dt>
-					<dd>电脑</dd>
+					<dd class="typeMes">电脑</dd>
 				</dl>
 			</a>
 			<a href="#" class="nav-goods">
 				<dl>
 					<dt name="dt"><img src="images/耳机.png" width="40px"></dt>
-					<dd>数码配件</dd>
+					<dd class="typeMes">数码配件</dd>
 				</dl>
 			</a>
 			<a href="#" class="nav-goods">
 				<dl>
 					<dt name="dt"><img src="images/相机.png" width="40px"></dt>
-					<dd>数码</dd>
+					<dd class="typeMes">数码</dd>
 				</dl>
 			</a>
 			<a href="#" class="nav-goods">
 				<dl>
 					<dt name="dt"><img src="images/微波炉.png" width="40px"></dt>
-					<dd>电器</dd>
+					<dd class="typeMes">电器</dd>
 				</dl>
 			</a>
-			<a href="#">
+			<a href="#" class="nav-goods">
 				<dl>
 					<dt name="dt"><img src="images/篮球.png" width="40px"></dt>
-					<dd>运动健身</dd>
+					<dd class="typeMes">运动健身</dd>
 				</dl>
 			</a>
-			<a href="#">
+			<a href="#" class="nav-goods">
 				<dl>
 					<dt name="dt"><img src="images/T恤.png" width="40px"></dt>
-					<dd>衣物伞帽</dd>
+					<dd class="typeMes">衣物伞帽</dd>
 				</dl>
 			</a>
-			<a href="#">
+			<a href="#" class="nav-goods">
 				<dl>
 					<dt name="dt"><img src="images/图书.png" width="40px"></dt>
-					<dd>图书教材</dd>
+					<dd class="typeMes">图书教材</dd>
 				</dl>
 			</a>
-			<a href="#">
+			<a href="#" class="nav-goods">
 				<dl>
 					<dt name="dt"><img src="images/其他.png" width="40px"></dt>
-					<dd>其他</dd>
+					<dd class="typeMes">其他</dd>
 				</dl>
 			</a>
 		</div>
@@ -136,12 +215,12 @@
 			</div>
 			<div class="main">
 				<div class="report">
-					<img src="images/report_title.png">
-					<a href="#">商品发布规则</a><a href="#" class="rule">购买二手iPhone注意的事项</a>
+					<p>置换标准查询</p>
+					<a href="#" class="rule">等值交换</a><a href="#" class="rule">可补差价</a>
 				</div>
 				<div class="center">
-					<a href="#"><span></span></a>
-					<a href="#"><span class="right"></span></a>
+					<!-- <a href="#"><span></span></a>
+					<a href="#"><span class="right"></span></a> -->
 					<div class="go">
 						<figure>
 							<div class="price"> 3500</div>
