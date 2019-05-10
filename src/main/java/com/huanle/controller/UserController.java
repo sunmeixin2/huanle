@@ -197,7 +197,11 @@ public class UserController {
             return new ResponseVO(ErrorCode.UNKNOW_ERROR,"非法参数:uid");
         }
         System.out.println("deleteUserInfo-----"+uid);
-        return new ResponseVO(ErrorCode.RESPONSE_SUCCESS,"");
+        if(userInfoService.deleteUserByUid(uid)){
+            return new ResponseVO(ErrorCode.RESPONSE_SUCCESS,"");
+        }else {
+            return new ResponseVO(ErrorCode.UNKNOW_ERROR,"");
+        }
     }
 
 

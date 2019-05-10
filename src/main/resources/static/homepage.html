@@ -51,33 +51,54 @@
      function getMoreContents(){
 		 let content=document.getElementById('keyword')
 		 let searchBox=document.querySelector('.searchBox')
+		 let content2 = document.querySelector('.go');
 		 if(content.value==''){
-			clearContent() 
-			 return
+			clearContent()
+
 		 }
 	  let xhr=new XMLHttpRequest;
 	    xhr.onreadystatechange=function(){
            if(xhr.status==200&&xhr.readyState==4){
-			   let result=JSON.parse(xhr.responseText)
+			   let goods=JSON.parse(xhr.responseText)
+           content2.innerHTML=''
 			   clearContent()
-                for(let i=0;i<result.length;i++){
-					var nextNode=result[i];
+                for(let i=0;i<goods.data.inputs.length;i++){
+					var nextNode=goods.data.inputs[i];
 					var tr=document.createElement('tr')
 					var td=document.createElement('td')
-					
+
 					var text=document.createTextNode(nextNode)
 					
 					td.appendChild(text)
 					tr.appendChild(td)
 					document.getElementById('tbodyContent').appendChild(tr)
-					td.onclick=function(){
-						content.value=nextNode
-					}
 searchBox.style.display='block'		
 				}
+			   let tbodyContent=document.getElementById('tbodyContent')
+			   let tds=tbodyContent.getElementsByTagName('td')
+			   for(let i=0;i<tds.length;i++){
+				 tds[i].onmousedown=function(){
+					 content.value=tds[i].innerHTML
+				 }
+			   }
+			   for (let j = 0; j < goods.data.productList.length; j++) {
+				   var oDiv = document.createElement('figure');
+				   content2.appendChild(oDiv);
+
+				   oDiv.innerHTML = `
+                    <a href="javascript:;" onclick='sendPid(${goods.data.productList[j].product.pid})'><img src="${goods.data.productList[j].picture[0]}" width="200px" height="200px"></a>
+                    <figcaption>
+                    <a href="javascript:;" onclick='sendPid(${goods.data.productList[j].product.pid})' class='postMes'>${goods.data.productList[j].product.title}</a>
+                    <h5>￥${goods.data.productList[j].product.price}</h5>
+								<h6 class="wantChange"><span class="fixed">想要换：${goods.data.productList[j].product.exchangeType}</span></h6>
+								`
+
+
+			   }
+
 		   }
 		}
-		xhr.open('GET',)
+		xhr.open('GET','huanle/index/search?inputStr='+content.value)
 		xhr.send(null)
 	 }
 	 function clearContent(){
@@ -107,9 +128,9 @@ searchBox.style.display='none'
 		<span><b>换乐</b><i>用交换带来快乐</i></span>
 		<nav>
 			<div class="search">
-				<form action="homepage.php" method="get">
+				<form  method="get">
 					<input type="search" name="user_search" id="keyword" onkeyup="getMoreContents()" onblur="keywordBlur()" onfocus="getMoreContents()" placeholder="搜索想要的换物"></input>
-					<input type="submit" value="搜索" name="type" class="right"></input>
+					<input type="button" value="搜索" name="type" onclick="getMoreContents()" class="right"></input>
 				</form>
 				<ul>
 					<li><a href="#" class="one">热门:</a></li>

@@ -63,23 +63,32 @@ public class ProductDaoProvider {
         return sql;
     }
 
-    public String selectByType(JSONObject param){
-        String type = param.getString("type");
-        String exchangeType = param.getString("exchangeType");
+    public String selecTypetByFilter(JSONObject params){
+
+        String type = params.getString("type");
+        String standard = params.getString("standard");
 
         String sql = new SQL(){
+
             {
-                SELECT(" * from productInfo");
-                WHERE("advice = 2 and status = 1");
+                SELECT(" * from productInfo ");
+
                 if(type != null && !type.isEmpty()){
-                    WHERE("my_type = #{type}");
+                    WHERE(" my_type = #{type} ");
                 }
-                if(exchangeType != null && !exchangeType.isEmpty()){
-                    WHERE("exchange_type = #{exchangeType}");
+                if(standard != null && !standard.isEmpty()){
+                    WHERE(" standard = #{standard} ");
                 }
-                 ORDER_BY("create_at DESC,is_new DESC,update_at DESC");
+                if(true){
+                    WHERE("advice = 2");
+                }
+                if(true){
+                    WHERE("status = 1");
+                }
+                 ORDER_BY(" create_at DESC,is_new DESC,update_at DESC");
             }
         }.toString();
+
         return sql;
     }
 }

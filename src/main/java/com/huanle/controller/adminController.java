@@ -160,6 +160,7 @@ public class adminController {
 //        }
         System.out.println("testttt");
         System.out.println("pid"+pid);
+        type = "手机";
         JSONObject param = new JSONObject();
         if(pid != null && pid < 0){
             return new ResponseVO(ErrorCode.UNKNOW_ERROR,"非法参数: pid");

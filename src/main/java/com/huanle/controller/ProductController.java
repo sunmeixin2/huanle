@@ -4,6 +4,7 @@ package com.huanle.controller;
 import com.huanle.Config.ErrorCode;
 import com.huanle.entity.*;
 import com.huanle.service.CommentService;
+import com.huanle.service.MailServiceImpl;
 import com.huanle.service.ProductInfoService;
 import com.huanle.vo.ResponseVO;
 import org.slf4j.Logger;
@@ -34,6 +35,9 @@ public class ProductController {
 
     @Autowired
     CommentService commentService;
+
+    @Autowired
+    MailServiceImpl mailService;
 
 
     /**
@@ -91,7 +95,6 @@ public class ProductController {
         }
 
         ProductInfo productInfo = new ProductInfo();
-
         productInfo.setpUid(userSession.getUid());
         productInfo.setTitle(title);
         productInfo.setMyType(myType);
@@ -251,7 +254,7 @@ public class ProductController {
 
 
     /**
-     * 删除(下架)商品信息
+     * 删除商品信息
      * @param pid
      * @return
      */
@@ -323,25 +326,44 @@ public class ProductController {
     }
 
 
-
+    /**
+     * 下架商品 email通知
+     * @param pid
+     * @param content
+     * @param request
+     * @return
+     */
     @CrossOrigin(origins = "*")
     @RequestMapping("downProduct")
     public ResponseVO downProduct(Integer pid,String content,HttpServletRequest request){
-
-        System.out.println("downProduct----pid"+pid);
-        System.out.println("downProduct----"+content);
+//
 
         UserInfo up = (UserInfo) request.getSession().getAttribute("userInfo");
         if(pid == null || pid < 0){
             return new ResponseVO(ErrorCode.UNKNOW_ERROR,"非法参数: pid");
         }
-        if(up == null){
-            return new ResponseVO(ErrorCode.UNKNOW_ERROR,"未登录!");
+        if(content == null || content.isEmpty()){
+            return new ResponseVO(ErrorCode.UNKNOW_ERROR,"非法参数: content");
         }
-        Integer upId = up.getUid();
+//        if(up == null){
+//            return new ResponseVO(ErrorCode.UNKNOW_ERROR,"未登录!");
+//        }
+//        Integer upId = up.getUid();
 
+        Map map = productInfoService.getEmailAndNickName(pid);
+        if(map == null || map.size() <= 0){
+            return new ResponseVO(ErrorCode.UNKNOW_ERROR,"send mail error");
+        }
+        String title = map.get("title").toString();
+        String name = map.get("nick_name").toString();
+        String to = map.get("email").toString();
+        String subject = "换乐商品下架通知";
 
-        return new ResponseVO(ErrorCode.RESPONSE_SUCCESS,"");
+        content = name+" 用户! 您在换乐平台发布的"+title+"物品 ,目前该商品已被下架\n \t下架原因："+content+"\n请核对信息重新发布";
+
+        mailService.sendSimpleMail(to,subject,content);
+
+        return new ResponseVO(ErrorCode.RESPONSE_SUCCESS,"ok");
 
     }
 

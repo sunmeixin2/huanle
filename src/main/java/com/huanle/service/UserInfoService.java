@@ -144,6 +144,13 @@ public class UserInfoService {
         }
         return data;
     }
+    public Boolean deleteUserByUid(Integer uid){
+        if(userInfoMapper.deleteByPrimaryKey(uid) == 1){
+            return true;
+        }else{
+            return false;
+        }
+    }
 
 
 

@@ -71,7 +71,7 @@ public class IndexController {
     public ResponseVO search(String inputStr){
         inputStr = inputStr.trim();
         if(inputStr == null || inputStr.equals("")){
-            return new ResponseVO(ErrorCode.RESPONSE_SUCCESS,"");
+            inputStr = null;
         }
         Map data = productInfoService.getProductListByTitle(inputStr);
 
@@ -85,18 +85,20 @@ public class IndexController {
      * @return
      */
     @RequestMapping("searchByType")
-    public ResponseVO searchByType(String type,String exchangeType){
+    public ResponseVO searchByType(String type,String standard){
+        System.out.println("type"+type);
+        System.out.println("standard"+standard);
         type = type.trim();
-        exchangeType = exchangeType.trim();
+        standard = standard.trim();
         JSONObject param = new JSONObject();
+        standard = null;
         param.put("type",type);
-        param.put("exchangeType",exchangeType);
+        param.put("standard",standard);
 
 //        if(type == null || type.equals("")){
 //            return new ResponseVO(ErrorCode.UNKNOW_ERROR,"非法参数:type");
 //        }
         Map data = productInfoService.getProductListType(param);
         return new ResponseVO(ErrorCode.RESPONSE_SUCCESS,data);
-
     }
 }

@@ -210,8 +210,13 @@ public class ProductInfoService {
         Map<String,Object> result = new HashMap();
 
         Set<String> inputs = new HashSet<>();
-        inputStr = "%"+inputStr+"%";
-        List<ProductInfo> productInfos = productInfoMapper.queryByTitle(inputStr);
+        List<ProductInfo> productInfos = null;
+        if(inputStr != null) {
+            inputStr = "%" + inputStr + "%";
+            productInfos = productInfoMapper.queryByTitle(inputStr);
+        }else{
+            productInfos = productInfoMapper.getList();
+        }
 
         List<Map> data = new ArrayList<>();
         if(productInfos != null){
@@ -226,7 +231,11 @@ public class ProductInfoService {
                 data.add(map);
 
             }
-            result.put("inputs",inputs);
+            if(inputStr != null){
+                result.put("inputs",inputs);
+            }else{
+                result.put("inputs","");
+            }
             result.put("productList",data);
         }
 
@@ -247,7 +256,10 @@ public class ProductInfoService {
                 data.add(map);
 
             }
+            result.put("total",data.size());
+            result.put("productList",data);
         }
+
         return result;
 
     }
@@ -350,6 +362,10 @@ public class ProductInfoService {
             }
         }
         return data;
+    }
+
+    public Map getEmailAndNickName(Integer pid){
+        return productInfoMapper.getEmailByPid(pid);
     }
 
 }

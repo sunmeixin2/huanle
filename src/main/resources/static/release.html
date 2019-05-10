@@ -161,9 +161,15 @@
     }
     let imgMes=document.getElementById('textMes');
     let submit=document.getElementById('submit');
+    let pid;
       submit.onclick=function(){
           var imgData=new FormData(imgMes)
-          let pid=window.location.search.split('=')[1];
+          if(window.location.search){
+
+              pid=window.location.search.split('=')[1];
+          }else {
+              pid=-1;
+          }
           // imgData.set('files',newImgs)
           imgData.append('pid',pid)
           console.log(imgData.get('files'))

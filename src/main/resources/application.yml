@@ -16,6 +16,15 @@ spring:
   freemarker:
     cache: false    #页面不加载缓存，修改即时生效
 
+
+#发送邮件
+  mail:
+    host: smtp.qq.com             #发送邮件服务器
+    username: 1076274231@qq.com    #QQ邮箱
+    password: rukitycxopueihie     #客户端授权码
+    protocol: smtp                 #发送邮件协议
+    default-encoding: UTF-8        #编码类型
+
 mybatis:
   mapper-locations: classpath:mapper/*.xml  #注意：一定要对应mapper映射xml文件的所在路径
   type-aliases-package: com.huanle.entity  # 注意：对应实体类的路径

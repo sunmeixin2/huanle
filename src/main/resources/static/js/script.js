@@ -99,7 +99,7 @@ function getGoodsType(type,standard){
 			}
 		}
 	}
-	xml.open('GET', `/huanle/index/productList?type=${type}&standard=${standard}`, true);
+	xml.open('GET', `/huanle/index/searchByType?type=${type}&standard=${standard}`, true);
 	xml.send(null)
 
 }

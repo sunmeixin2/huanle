@@ -3,6 +3,7 @@ package com.huanle.dao;
 import com.alibaba.fastjson.JSONObject;
 import com.huanle.dao.provider.ProductDaoProvider;
 import com.huanle.entity.ProductInfo;
+import com.huanle.entity.UserInfo;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.SelectProvider;
@@ -46,7 +47,7 @@ public interface ProductInfoMapper {
     @Select("select * from productInfo where advice = 2 and status = 1 and  my_type = #{type} order by create_at DESC,is_new DESC,update_at DESC")
     List<ProductInfo> selectByType(String type);
 
-    @SelectProvider(type = ProductDaoProvider.class ,method = "selectByType" )
+    @SelectProvider(type = ProductDaoProvider.class ,method = "selecTypetByFilter" )
     List<ProductInfo> queryByType(JSONObject param);
     //交换成功修改商品信息状态为 "已交换"
     @Select("update productInfo set status = 2 where pid = #{aPid} or pid = #{bPid}")
@@ -69,5 +70,7 @@ public interface ProductInfoMapper {
     @Select(" update productInfo set status = 3 ,advice = 1  where pid = #{pid}")
     void updateStatusAndAdvice(Integer pid);
 
+    @Select("select u.email,u.nick_name,p.title from productInfo p left join userInfo u on p.p_uid = u.uid where pid = #{pid}")
+    Map getEmailByPid(Integer pid);
 
 }
