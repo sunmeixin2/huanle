@@ -206,7 +206,14 @@ public class OrderController {
     @RequestMapping("deleteOrders")
     public ResponseVO deleteOrders(Integer oid,HttpServletRequest request){
         System.out.println("deleteOrders----oid"+oid);
-        return new ResponseVO(ErrorCode.RESPONSE_SUCCESS,"");
+        if(oid == null || oid < 0){
+            return new ResponseVO(ErrorCode.UNKNOW_ERROR,"非法参数:oid");
+        }
+        if(orderService.deleteOrders(oid)){
+            return new ResponseVO(ErrorCode.RESPONSE_SUCCESS,"ok");
+        }else{
+            return new ResponseVO(ErrorCode.UNKNOW_ERROR,"删除订单失败！");
+        }
 
     }
 }

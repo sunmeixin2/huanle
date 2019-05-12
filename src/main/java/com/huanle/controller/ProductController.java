@@ -60,7 +60,7 @@ public class ProductController {
     @RequestMapping("publish")
     public ResponseVO pubilish(@RequestParam("files")MultipartFile[] files,
                                String title, String myType, String standard,Integer inventory , String isNew,
-                               Double price, String detail, String productDate, String productExpire, String exchangeType,Integer pid, HttpServletRequest request){
+                               Double price, String detail, String productDate, String productExpire, String exchangeType,Integer pid,String[] picturePath, HttpServletRequest request){
         System.out.println("pid:"+pid);
         if(title == null || title.equals("")){
             return new ResponseVO(ErrorCode.UNKNOW_ERROR,"非法参数:title");
@@ -86,9 +86,9 @@ public class ProductController {
         if(exchangeType == null || exchangeType.equals("")){
             return new ResponseVO(ErrorCode.UNKNOW_ERROR,"非法参数:exchangeType");
         }
-        if(files == null){
-            return new ResponseVO(ErrorCode.UNKNOW_ERROR,"非法参数:files");
-        }
+//        if(files == null){
+//            return new ResponseVO(ErrorCode.UNKNOW_ERROR,"非法参数:files");
+//        }
         UserInfo userSession =(UserInfo) request.getSession().getAttribute("userInfo");
         if(userSession == null){
             return new ResponseVO(ErrorCode.UNKNOW_ERROR,"未登录不可以发布");
@@ -121,7 +121,8 @@ public class ProductController {
         if(pid != null && pid > 0){
             productInfo.setPid(pid);
             productInfo.setUpdateAt((int)(new Date().getTime()/1000));
-            if(productInfoService.updateProduct(productInfo,files)){
+
+            if(productInfoService.updateProduct(productInfo,files,picturePath)){
                 return new ResponseVO(ErrorCode.RESPONSE_SUCCESS,"编辑成功！");
             }else{
                 return new ResponseVO(ErrorCode.UNKNOW_ERROR,"编辑失败！！！");
@@ -294,7 +295,7 @@ public class ProductController {
             return new ResponseVO(ErrorCode.UNKNOW_ERROR,"非法参数:uid");
         }
 
-        Map data = productInfoService.getStatisticsRecord(uid);
+        String data = productInfoService.getStatisticsRecord(uid);
 
         if(data == null){
             return new ResponseVO(ErrorCode.UNKNOW_ERROR,"error!");

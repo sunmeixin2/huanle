@@ -27,7 +27,33 @@ function state() {
 				sendData.user=peo.data.uid
 				headImg.src = ''
 				$(".evalutIam").prepend('<span>客官，为这个给力的宝贝留下你的真心话呗！</span><form class="evalutForm" action="" method="get"><textarea class="evalutArea" id="evalutArea" name="evalutArea" maxlength="56" placeholder="请填写56字以内的评价！"></textarea><input type="button" name="evalutSubmit" id="evalutSubmit" class="evalutSubmit" value="提交"></form>');
-				uid=peo.data.uid
+				uid=peo.data.uid;
+				//生成提交评论内容
+				var submit = document.getElementById('evalutSubmit')
+				var content = document.getElementById('evalutArea')
+
+				submit.onclick = function () {
+					$.ajax({
+						url: "huanle/product/comment",
+						type: "post",
+						dataType: "json",
+						data: {
+							pid:sendData.uidd,
+							uid:sendData.user,
+							content: content.value
+
+						},
+						success: function (data) {
+							if (data.code != 0) {
+								alert('不好意思，');
+							} else if (data.code == 0) {
+								alert('提交成功，感谢您的评价');
+								location.reload([true]);
+							}
+						}
+					})
+				}
+
 			}
 		}
 	}
@@ -103,32 +129,7 @@ function ajaxContent() {
 
 			}
 
-			//生成提交评论内容
-			var submit = document.getElementById('evalutSubmit')
-			var content = document.getElementById('evalutArea')
-			
-			submit.onclick = function () {
-				$.ajax({
-					url: "huanle/product/comment",
-					type: "post",
-					dataType: "json",
-					data: {
-						pid:sendData.uidd,
-						uid:sendData.user,
-						content: content.value
 
-					},
-					success: function (data) {
-						if (data.code != 0) {
-							alert('不好意思，');
-						} else if (data.code == 0) {
-							alert('提交成功，感谢您的评价');
-							location.reload([true]);
-						}
-					}
-				})
-			}
-			
 
 			let releaseUser=document.getElementById('releaseUser')
 			releaseUser.onclick=function(){
@@ -304,6 +305,7 @@ function ajaxContent() {
                         }
 
 			}
+                    if(replyA)
                         for(let i=0;i<replyA.length;i++){
                             replyA[i].onclick=function () {
                                 replyBox.style.display='block'

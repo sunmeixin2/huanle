@@ -8,6 +8,7 @@ import com.huanle.entity.CollectionEntity;
 import com.huanle.entity.ProductInfo;
 import com.huanle.entity.UserInfo;
 import com.huanle.vo.ResponseVO;
+import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -185,12 +186,25 @@ public class ProductInfoService {
      * @param files
      * @return
      */
-    public Boolean updateProduct(ProductInfo productInfo, MultipartFile[] files){
-        String picture = FileUtil.uploadFile(files);
-        if(picture == null){
-            return false;
+    public Boolean updateProduct(ProductInfo productInfo, MultipartFile[] files,String[] picturePath){
+//        ProductInfo product = productInfoMapper.selectByPrimaryKey(productInfo.getPid());
+//        String[] pictureArr = CommonUtil.pictureToArr(product.getPicture());
+        String tmp = "";
+        if(picturePath != null || picturePath.length > 0){
+            for (int i = 0 ; i < picturePath.length;i++){
+                String[] pic = picturePath[i].split("/");
+                tmp =tmp + (tmp.isEmpty() ? pic[pic.length-1]:","+pic[pic.length-1]);
+            }
         }
-        productInfo.setPicture(picture);
+        if(files != null){
+            String picture = FileUtil.uploadFile(files);
+            if(picture != null){
+                picture = tmp.isEmpty()? picture: tmp + ',' + picture;
+                productInfo.setPicture(picture);
+            }else {
+                productInfo.setPicture(tmp);
+            }
+        }
 
         if(productInfo.getPid() != null){
             if(productInfoMapper.updateByPrimaryKeySelective(productInfo) != 0){
@@ -264,8 +278,8 @@ public class ProductInfoService {
 
     }
 
-    public Map getStatisticsRecord(Integer uid){
-        Map<String,Object> result = new HashMap<>();
+    public String getStatisticsRecord(Integer uid){
+        String result = new String();
         Integer totalProd = productInfoMapper.productCountByPuid(uid);
         Integer totalOrder = ordersMapper.getCountByUid(uid);
         Integer totalOfMy = ordersMapper.getCountByAUid(uid);
@@ -274,10 +288,11 @@ public class ProductInfoService {
         if(totalProd == null || totalProd.equals(0)){
             return null;
         }else{
-            result.put("totalProd",totalProd);
-            result.put("totalOrder",totalOrder);
-            result.put("totalOfMy",totalOfMy);
-            result.put("totalOfOther",totalOfOther);
+//            result.put("totalProd",totalProd);
+//            result.put("totalOrder",totalOrder);
+//            result.put("totalOfMy",totalOfMy);
+//            result.put("totalOfOther",totalOfOther);
+            result = "zhe kuai ni xian na dao shu ju   , gei ni kankan ";
         }
 
         return result;

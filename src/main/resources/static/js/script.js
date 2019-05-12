@@ -3,6 +3,7 @@ function state() {
 	var headImg = document.getElementById('touxiang');
 	var haveLogin = document.getElementById('haveLogin');
 	var noneLogin = document.getElementById('noneLogin');
+	var fabu = document.getElementById('fabu');
 	var uid;
 	var mes = new XMLHttpRequest
 	mes.onreadystatechange = function () {
@@ -12,7 +13,13 @@ function state() {
 
 			if (peo.code != 0) {
 				noneLogin.style.display = 'block';
-				haveLogin.style.display = 'none'
+				haveLogin.style.display = 'none';
+
+				fabu.onclick=function () {
+					alert('qingxiandenglu');
+					return false
+
+				}
 			} else if (peo.code === 0) {
 				haveLogin.style.display = 'block';
 				noneLogin.style.display = 'none';

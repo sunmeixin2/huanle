@@ -262,26 +262,6 @@ public class adminController {
 
 
 
-//
-//    @RequestMapping("adminList")
-//    public ResponseVO adminList(HttpServletRequest request){
-//        Map data = userInfoService.getAdminList();
-//        if(data == null){
-//            return new ResponseVO(ErrorCode.UNKNOW_ERROR,"null !");
-//        }else{
-//            return new ResponseVO(ErrorCode.RESPONSE_SUCCESS, data);
-//        }
-//    }
-//
-//    @RequestMapping("addAdmin")
-//    public ResponseVO addAdmin(@RequestParam("files") MultipartFile[] files, String nickName, String email,
-//                               String gender, String contact, HttpServletRequest request){
-//
-//        return new ResponseVO(ErrorCode.RESPONSE_SUCCESS, "");
-//    }
-
-
-
 
 
 }

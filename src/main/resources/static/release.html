@@ -16,7 +16,7 @@
 <body>
     <div class="header">
         <span class="tag"><img src="images/互联交换清算系统.png" width="100px" alt=""> <a href="homepage.html">换乐</a></span> </span>
-        <div class="user">
+        <div class="user" id="haveLogin">
             <p id="center">个人信息<img src="img/users.png" width="30px"></p>
         </div>
         <div class="sanjiao" id="sanjiao"></div>
@@ -165,9 +165,13 @@
           }else {
               pid=-1;
           }
-          imgData.set('files',newImgs)
+          // if(newImgs.length!=0){
+          //     imgData.set('files',newImgs)
+          // }else
+          //     imgData.set('files',null)
+
           imgData.append('pid',pid)
-          imgData.append('arr',picArr)
+          imgData.append('picturePath',picArr)
           console.log(imgData.get('files'))
             var xhr=new XMLHttpRequest;
             xhr.onreadystatechange=function(){
@@ -193,7 +197,7 @@
 	var userNick = document.getElementById('userNick');
 	var headImg = document.getElementById('touxiang');
 	var haveLogin = document.getElementById('haveLogin');
-	var noneLogin = document.getElementById('noneLogin');
+	// var noneLogin = document.getElementById('noneLogin');
 	var uid;
 	var mes = new XMLHttpRequest
 	mes.onreadystatechange = function () {
@@ -206,7 +210,7 @@
 				haveLogin.style.display = 'none'
 			} else if (peo.code === 0) {
 				haveLogin.style.display = 'block';
-				noneLogin.style.display = 'none';
+				// noneLogin.style.display = 'none';
 				userNick.innerHTML = peo.data.nickName;
 				headImg.src = ''
               uid=peo.data.uid
@@ -247,21 +251,28 @@ function ajaxContent() {
         goodsImg.style.width=`150px`
         goodsImg.style.height=150+'px'
         goodsImg.src=data.data.picture[i];
+        goodsImg.className='preImg'
         newDiv.appendChild(goodsImg)
         newDiv.appendChild(twoDiv)
         mes.appendChild(newDiv);
 
-         twoDiv.onclick=function(){
-             mes.removeChild(this.parentNode)
-             for(let i=0;i<picArr.length;i++){
-                 if( goodsImg.src==picArr[i]){
-                     picArr.splice(i,1)
-                 }
-             }
-             console.log(picArr)
 
-         }
        }
+            let preImg=document.querySelectorAll('.preImg')
+            let deletes=document.querySelectorAll('.delete')
+            for(let k=0;k<deletes.length;k++){
+                deletes[k].onclick=function(){
+                    mes.removeChild(this.parentNode)
+                    for(let i=0;i<picArr.length;i++){
+                       let zhi=window.location.protocol+'//'+ window.location.host+picArr[i]
+                        if( preImg[k].src==zhi){
+                            picArr= picArr.splice(i,1);break;
+                        }
+                    }
+                    console.log(picArr)
+
+                }
+            }
        let releaseTitle=document.getElementsByName('title')[0];
        let releaseDetail=document.getElementsByName('detail')[0];
        let releaseType=document.getElementsByName('myType')[0];
@@ -312,7 +323,9 @@ function ajaxContent() {
        }
     }
 })
+
 }
+
 
 window.onload=function(){
     state()

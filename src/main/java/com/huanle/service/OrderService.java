@@ -227,4 +227,11 @@ public class OrderService {
 
     }
 
+    public Boolean deleteOrders(Integer oid){
+        if(ordersMapper.deleteByPrimaryKey(oid) == 1){
+            return true;
+        }
+        return false;
+    }
+
 }
