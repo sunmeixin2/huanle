@@ -132,13 +132,7 @@ searchBox.style.display='none'
 					<input type="search" name="user_search" id="keyword" onkeyup="getMoreContents()" onblur="keywordBlur()" onfocus="getMoreContents()" placeholder="搜索想要的换物"></input>
 					<input type="button" value="搜索" name="type" onclick="getMoreContents()" class="right"></input>
 				</form>
-				<ul>
-					<li><a href="#" class="one">热门:</a></li>
-					<li><a href="#">自行车</a></li>
-					<li><a href="#">电动车</a></li>
-					<li><a href="#">笔记本</a></li>
-					<li><a href="#">教材</a></li>
-				</ul>
+			
 			</div>
 
 
@@ -150,7 +144,7 @@ searchBox.style.display='none'
 		</nav>
 	</header>
 	<div class="sanjiao"></div>
-			<div class="tips">
+			<div class="tips" id="tips">
 				<div class="tipsHeader">
 					<img src="img/back.jpeg" alt="" width="60px" height="60px" id="touxiang">
 					<p id="hello">你好！<span id="userNick"></span></p>
@@ -236,7 +230,7 @@ searchBox.style.display='none'
 			</div>
 			<div class="main">
 				<div class="report">
-					<p>置换标准查询</p>
+					<p></p>
 					<a href="#" class="rule">等值交换</a><a href="#" class="rule">可补差价</a>
 				</div>
 				<div class="center">
@@ -386,7 +380,7 @@ searchBox.style.display='none'
 			</footer>
 		</div>
 	</section>
-	<div class="top" id="top"></div>
+	<div class="top" id="top"><img src="images/heliscoper" alt=""></div>
 	<script>
 		let users = document.querySelector('.user');
 		let tips = document.querySelector('.tips');

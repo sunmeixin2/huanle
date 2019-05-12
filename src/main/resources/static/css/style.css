@@ -320,6 +320,7 @@ section .right .release  .code h5{
 	height: 100px;
 	background: white;
 	border:1px solid white;
+	line-height: 30px;
 }
 .main .report img{
 	margin: 20px;
@@ -331,16 +332,19 @@ section .right .release  .code h5{
   font-size: 15px;
   font-weight: normal;
 }
+.ruleActive{
+	color: rgb(40, 141, 124) !important;
+	font-weight: bolder !important
+	
+}
 .main .report a.rule{
-	margin-left: 180px;
+	margin-left: 10px;
 	width: 100px;
 	height: 50px;
 	border: 1px solid green;
 	padding: 5px;
 }
-.ruleActive{
-	background: #3B8CFF
-}
+
 .main .report a:hover{
 	color: #00AC90;
 }

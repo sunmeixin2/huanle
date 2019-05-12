@@ -45,7 +45,7 @@
 			color: white;
 			border: none;
 			border-radius: 30px;
-			background: rgb(23, 119, 228);
+			background: rgb(4, 56, 119);
 			margin-top: 79px;
 			outline: none;
 			cursor: pointer;
@@ -58,7 +58,7 @@
 			color: white;
 			border: none;
 			border-radius: 30px;
-			background: rgb(47, 231, 41);
+			background: rgb(45, 48, 45);
 			margin-top: 79px;
 			outline: none;
 			cursor: pointer;
@@ -274,7 +274,33 @@
 		<div class="art-hot-evaluation">
 			<div class="evaluation">
 				<div class="evalu-title"><span>热门评论</span></div>
-				<ul class="evalu-title-ul"></ul>
+				<ul class="evalu-title-ul">
+						<li>
+								<div class="evalutInfo">
+									<div class="evalutPhoto"><a class="evalutA" href=""><img class="evalutImg"
+										src="img/back.jpeg" alt="">
+											<p>123</p >：
+										</a ></div>
+									<div class="evalutCont">${data.data.commentList[i].comment.content}</div>
+									<div class="evalutTime">(${times})&nbsp;&nbsp;<a href="javascript:;" class="replyBox2">回复</a ></div>
+								   
+									<ul class="replay">
+											<li><div class="evalutPhoto"><a class="evalutA" href=""><img class="profile_img"
+												src="img/back.jpeg" alt="">
+											<p>123</p >：
+										</a ></div>
+									<div class="evalutCont">${data.data.commentList[i].reply[j].message}</div>
+									<div class="evalutTime">${times2}&nbsp;&nbsp;</div></li>
+									<li><div class="evalutPhoto"><a class="evalutA" href=""><img class="profile_img"
+										src="img/back.jpeg" alt="">
+									<p>22222</p >：
+								</a ></div>
+							<div class="evalutCont">${data.data.commentList[i].reply[j].message}</div>
+							<div class="evalutTime">${times2}&nbsp;&nbsp;</div></li>
+								</ul>
+								</div>    
+							</li>
+				</ul>
 			</div>
 		</div>
 

@@ -37,6 +37,8 @@ function state() {
 }
 let nav = document.querySelectorAll('.nav-goods');
 let content = document.querySelector('.go');
+let rule=document.querySelectorAll('.rule')
+
 function sendPid(id) {
 				
 	var xhr = new XMLHttpRequest;
@@ -106,25 +108,24 @@ function getGoodsType(type,standard){
 let typeMes=document.querySelectorAll('.typeMes')
 for (let i = 0; i < nav.length; i++) {
 	nav[i].onclick = function () {
+		for(let j=0;j<rule.length;j++){
+			rule[j].className='rule'
+		}
 		 getGoodsType(typeMes[i].innerHTML)
 	}
 }
-let rule=document.querySelectorAll('.rule')
 for(let i=0;i<rule.length;i++){
 	rule[i].onclick=function(){
 		for(let j=0;j<rule.length;j++){
-			rule[j].className=''
+			rule[j].className='rule'
 		}
-		rule[i].className='ruleActive'
+		rule[i].className='ruleActive rule'
 		getGoodsType('',rule[i].innerHTML)
 	}
 }
 window.onload = function () {
 	state()
 	getGoods()
-
-}
-
 var header = document.getElementById('header');
 var banner = document.getElementById("banner");
 var left = document.getElementById("left");
@@ -183,4 +184,5 @@ top.onclick = function () {
 	}
 
 
+}
 }

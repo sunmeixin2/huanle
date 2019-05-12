@@ -222,7 +222,6 @@ article .evaluation{/*热门评价*/
 	width: 1050px;
 	min-height: 760px;
 	height:900px;
-
 	overflow: auto;
 	margin-left: 48px;
 	border-left: 1px dashed #1C826C;
@@ -246,7 +245,7 @@ article .evaluation .evalutInfo{/*热评总包裹*/
 	margin: 0 auto;
 	margin-top: 22px;
 	overflow: auto;
-	/*border: 1px solid*/
+	border-bottom: 1px solid
 
 }
 .closeRep{
@@ -299,10 +298,10 @@ article .evaluation .evalutTime{
 	font-size: 15px
 }
 .replay{
-	/*border: 1px solid*/
 	height: 100px;
 	overflow: auto;
 	margin-top: 80px;
+	margin-left: 5%;
 }
 .replay li .evalutCont,
 .replay li,
@@ -311,6 +310,7 @@ article .evaluation .evalutTime{
 }
 .replay li{
 	height: 85px;
+	border-bottom: 1px solid #ccc;
 }
 
 .replay li .evalutPhoto img{
@@ -403,7 +403,7 @@ article .evalutIam #evalutSubmit{/*提交评价submit*/
 	background: rgb(115, 191, 241)	
 }
 .activeNav{
-	background: rgb(42, 147, 218)	
+	background: rgb(107, 183, 233)	
 }
 #replyBox{
 	width: 500px;

@@ -10,12 +10,6 @@
     <link rel="stylesheet" href="css/common.css">
     <link rel="stylesheet" href="css/release.css">
     <style>
-        #sanjiao{
-            margin-left: 310px;
-        }
-        #tips{
-            margin-left: 300px;
-        }
     </style>
 </head>
 
@@ -32,7 +26,7 @@
 					<p id="hello">你好！<span id="userNick">Yufengxxx</span></p>
 				</div>
 				<p>
-					<a href="personal.html">个人主页</a>
+					<a href="javascript:;" id="gerenzhuye">个人主页</a>
 				</p>
 				<p>
 					<a href="javascript:;" id="out">退出</a>
@@ -161,6 +155,7 @@
     }
     let imgMes=document.getElementById('textMes');
     let submit=document.getElementById('submit');
+    let picArr=[]
     let pid;
       submit.onclick=function(){
           var imgData=new FormData(imgMes)
@@ -170,8 +165,9 @@
           }else {
               pid=-1;
           }
-          // imgData.set('files',newImgs)
+          imgData.set('files',newImgs)
           imgData.append('pid',pid)
+          imgData.append('arr',picArr)
           console.log(imgData.get('files'))
             var xhr=new XMLHttpRequest;
             xhr.onreadystatechange=function(){
@@ -196,31 +192,41 @@
       function state() {
 	var userNick = document.getElementById('userNick');
 	var headImg = document.getElementById('touxiang');
-
+	var haveLogin = document.getElementById('haveLogin');
+	var noneLogin = document.getElementById('noneLogin');
+	var uid;
 	var mes = new XMLHttpRequest
 	mes.onreadystatechange = function () {
 		if (mes.status == 200 && mes.readyState == 4) {
 			var peo = JSON.parse(mes.responseText);
-			console.log(peo)
-			if (peo.code != 0) {
-				alert('网络错误')
-			} else if (peo.code == 0) {
+			console.log(peo.code)
 
+			if (peo.code != 0) {
+				noneLogin.style.display = 'block';
+				haveLogin.style.display = 'none'
+			} else if (peo.code === 0) {
+				haveLogin.style.display = 'block';
+				noneLogin.style.display = 'none';
 				userNick.innerHTML = peo.data.nickName;
 				headImg.src = ''
-
+              uid=peo.data.uid
 			}
 		}
 	}
-	mes.open('GET', '/huanle/index/upInfo', true)
+	mes.open('GET', 'huanle/index/upInfo', true)
 	mes.send(null)
 	var out = document.getElementById('out')
+	var entry = document.getElementById('gerenzhuye')
 	out.onclick = function () {
-		window.localStorage.clear()
+		
 		location.reload([true]);
+	}
+	entry.onclick=function () {
+		window.location.href=`personal.html?uid=${uid}`
 	}
 
 }
+
 function ajaxContent() {
 
 	$.ajax({
@@ -232,6 +238,7 @@ function ajaxContent() {
             for(let i=0;i<data.data.picture.length;i++){
             let newDiv=document.createElement('div');
             let twoDiv=document.createElement('div');
+             picArr.push(data.data.picture[i])
             twoDiv.innerText='X';
             twoDiv.className='delete'
                 // newImgs.push(data.data.picture[i])
@@ -246,6 +253,12 @@ function ajaxContent() {
 
          twoDiv.onclick=function(){
              mes.removeChild(this.parentNode)
+             for(let i=0;i<picArr.length;i++){
+                 if( goodsImg.src==picArr[i]){
+                     picArr.splice(i,1)
+                 }
+             }
+             console.log(picArr)
 
          }
        }

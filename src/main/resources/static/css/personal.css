@@ -789,19 +789,21 @@ article {
 	padding: 5px;
 	width: auto;
 	height: 40px;
-	background: rgb(50, 178, 252);
-	border: none;
+	border: 1px rgb(19, 108, 224) solid;
 	border-radius: 10px;
-	color: white;
+	color: rgb(10, 10, 10);
 	margin:20px 10px;
 	cursor: pointer;
-	outline: none
+	outline: none;
+	background: none !important
 }
 .btns:nth-of-type(1){
 	margin-left: 100px;
 }
 .btnsActive{
-	background: rgb(72, 75, 69)
+	font-weight: bold;
+	border: 1px solid darkcyan;
+	box-shadow: 1px 1px 8px rgb(184, 182, 182)
 }
 .histInfoTime{
 	width: auto;
