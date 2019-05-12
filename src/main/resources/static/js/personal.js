@@ -352,31 +352,52 @@ console.log(data)
                                 Date.prototype.toLocaleString = function () {
                                     return this.getFullYear() + "年" + (this.getMonth() + 1) + "月" + this.getDate() + "日 ";
                                 };
-                                orderContent.innerHTML = `<h2>订单详情</h2><span class="deleteX">X</span>
-<div class="orderTitleBox"> <p class="orderTitle">订单编号：<span>${data.data.nums}</span></p> <p class="orderTitle">创建时间：<span>${timesData[0]}</span></p></div>
-		   <div class="contrast">
-			   <h3>你的物品</h3>
-			  <a href="javascript:;" onclick="sendPid(${data.data.myself.pid})"><img src="${data.data.myself.picture[0]}" alt="" width="150px" height="150px"></a>
-			   <p>名称：<span>${data.data.myself.title}</span></p>
-			   <p>status：<span>${data.data.myself.status}</span></p>
-			   <p>类型：<span>${data.data.myself.my_type}</span></p>
-			   <p>yonghuming：<span>${data.data.myself.nick_name}</span></p>
-			   <p>价格：<span>${data.data.myself.price}</span></p>
-			   <p>新旧程度：<span>${data.data.myself.is_new}xin</span></p>
-			   <p>联系方式：<span>${data.data.myself.contact}</span></p>
-		   </div>
-		   <div class="contrast">
-			   <h3>对方物品</h3>
-			  <a href="javascript:;" onclick="sendPid(${data.data.other.pid})"><img src="${data.data.other.picture[0]}" alt=""  width="150px" height="150px"></a>
-			   <p>名称：<span>${data.data.other.title}</span></p>
-			    <p>status：<span>${data.data.other.status}</span></p>
-			   <p>类型：<span>${data.data.other.my_type}</span></p>
-			   <p>yonghuming：<span>${data.data.other.nick_name}</span></p>
-			   <p>价格：<span>${data.data.other.price}</span></p>
-			   <p>新旧程度：<span>${data.data.other.is_new}</span></p>
-			   <p>联系方式：<span>${data.data.other.contact}</span></p>
-		   </div>
-		   <button class="agreeOrder orderdoWell">agree</button><button class="cancelOrder2 orderdoWell">cancel</button>`
+                                if(data.data.other.length==0){
+                                    orderContent.innerHTML = `<h2>订单详情</h2><span class="deleteX">X</span>
+                                    <div class="orderTitleBox"> <p class="orderTitle">订单编号：<span>${data.data.nums}</span></p> <p class="orderTitle">创建时间：<span>${timesData[0]}</span></p></div>
+                                               <div class="contrast">
+                                                   <h3>你的物品</h3>
+                                                  <a href="javascript:;" onclick="sendPid(${data.data.myself.pid})"><img src="${data.data.myself.picture[0]}" alt="" width="150px" height="150px"></a>
+                                                   <p>名称：<span>${data.data.myself.title}</span></p>
+                                                   <p>status：<span>${data.data.myself.status}</span></p>
+                                                   <p>类型：<span>${data.data.myself.my_type}</span></p>
+                                                   <p>yonghuming：<span>${data.data.myself.nick_name}</span></p>
+                                                   <p>价格：<span>${data.data.myself.price}</span></p>
+                                                   <p>新旧程度：<span>${data.data.myself.is_new}xin</span></p>
+                                                   <p>联系方式：<span>${data.data.myself.contact}</span></p>
+                                               </div>
+                                               <div class="contrast">
+                                                   <p>该物品已下架!!!</p>
+                                               </div>
+                                               <button class="agreeOrder orderdoWell">agree</button><button class="cancelOrder2 orderdoWell">cancel</button>`
+                                }else{
+                                    orderContent.innerHTML = `<h2>订单详情</h2><span class="deleteX">X</span>
+                                    <div class="orderTitleBox"> <p class="orderTitle">订单编号：<span>${data.data.nums}</span></p> <p class="orderTitle">创建时间：<span>${timesData[0]}</span></p></div>
+                                               <div class="contrast">
+                                                   <h3>你的物品</h3>
+                                                  <a href="javascript:;" onclick="sendPid(${data.data.myself.pid})"><img src="${data.data.myself.picture[0]}" alt="" width="150px" height="150px"></a>
+                                                   <p>名称：<span>${data.data.myself.title}</span></p>
+                                                   <p>status：<span>${data.data.myself.status}</span></p>
+                                                   <p>类型：<span>${data.data.myself.my_type}</span></p>
+                                                   <p>yonghuming：<span>${data.data.myself.nick_name}</span></p>
+                                                   <p>价格：<span>${data.data.myself.price}</span></p>
+                                                   <p>新旧程度：<span>${data.data.myself.is_new}xin</span></p>
+                                                   <p>联系方式：<span>${data.data.myself.contact}</span></p>
+                                               </div>
+                                               <div class="contrast">
+                                                   <h3>对方物品</h3>
+                                                  <a href="javascript:;" onclick="sendPid(${data.data.other.pid})"><img src="${data.data.other.picture[0]}" alt=""  width="150px" height="150px"></a>
+                                                   <p>名称：<span>${data.data.other.title}</span></p>
+                                                    <p>status：<span>${data.data.other.status}</span></p>
+                                                   <p>类型：<span>${data.data.other.my_type}</span></p>
+                                                   <p>yonghuming：<span>${data.data.other.nick_name}</span></p>
+                                                   <p>价格：<span>${data.data.other.price}</span></p>
+                                                   <p>新旧程度：<span>${data.data.other.is_new}</span></p>
+                                                   <p>联系方式：<span>${data.data.other.contact}</span></p>
+                                               </div>
+                                               <button class="agreeOrder orderdoWell">agree</button><button class="cancelOrder2 orderdoWell">cancel</button>`
+                                }
+                               
                                 var deleteX = document.querySelector('.deleteX')
                                 deleteX.onclick = function () {
                                     orderContent.style.display = 'none'
@@ -611,11 +632,28 @@ console.log(data)
 
                 }
 
-
+         
 
             }
         }
     })
+    let corrent=document.getElementById('corrent')
+    let correntPass=document.getElementById('correntPass')
+    corrent.onclick=function(){
+        let formContent=new FormData(correntPass)
+        let xhr=new XMLHttpRequest;
+        xhr.onreadystatechange=function(){
+            if(xhr.status==200&&xhr.readyState==4){
+                let data=JSON.parse(xhr.responseText)
+                if(data.code==0){
+                    alert(data.data);
+                    location.reload([true])
+                }
+            }
+        }
+        xhr.open('POST','huanle/personal/updatePasswd')
+        xhr.send(formContent)
+    }
 }
 
 

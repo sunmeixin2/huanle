@@ -216,7 +216,18 @@ function ajaxContent() {
 				$(".jqzoom").attr('src', $(this).find("img").attr("src"));
 				$(".jqzoom").attr('rel', $(this).find("img").attr("src"));
 			});
-
+		
+			$.ajax({
+				url: `huanle/product/statistics`,
+				type: "get",
+				success: function (data) {
+				   if(data.code==0){
+					   for(let i=0;i<data.data.length;i++)
+					infodetail[1].innerHTML+=data.data[i]
+				   }
+				}
+                       
+                            })
 			// 6.填充评论信息
 			var aevalutCont = document.getElementsByClassName('evalutCont');
 			var aevalutA = document.getElementsByClassName('evalutA');
@@ -224,7 +235,7 @@ function ajaxContent() {
 			var evaluUl=document.querySelector('.evalu-title-ul')
 			var replyBtn = document.getElementById('replyBtn')
 			var replyBox = document.getElementById('replyBox')
-
+             
 			$.ajax({
 				url: `/huanle/product/productComment?pid=${sendData.uidd}`,
 				type: "get",
@@ -283,6 +294,15 @@ function ajaxContent() {
                             </div>    
 						</li>`
 						var replayUl=document.querySelectorAll('.replay')
+						var openIn=document.querySelectorAll('.replay')
+						if(data.data.commentList[i].reply.length>0){
+							openIn[i].style.display='block';
+							
+						}
+						openIn[i].onclick=function(){
+							replayUl.style.display='block'
+							openIn[i].innerHTML='合上'
+						}
 						for(let j=0;j<data.data.commentList[i].reply.length;j++){
 							var times2=new Date(( data.data.commentList[i].reply[j].create_at)*1000).toLocaleDateString()
 

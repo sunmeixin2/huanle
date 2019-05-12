@@ -215,13 +215,15 @@ article .art-bot-describe .descCont p{/*双引号内容*/
 /*热门推荐——热门评论*/
 article .art-hot-evaluation{
 	width: 1100px;
-	height:900px;
+	height:auto;
+	max-height: 900px;
 	margin: 0 auto;
 }
 article .evaluation{/*热门评价*/
 	width: 1050px;
-	min-height: 760px;
-	height:900px;
+	/* min-height: 760px; */
+	height:auto;
+	max-height: 900px;
 	overflow: auto;
 	margin-left: 48px;
 	border-left: 1px dashed #1C826C;
@@ -240,12 +242,12 @@ article .evaluation .evalu-title{/*热门评价标题*/
 	background: #1C826C;
 }
 article .evaluation .evalutInfo{/*热评总包裹*/
-	width: 1000px;
+	width: 1050px;
 	min-height: 80px;
 	margin: 0 auto;
 	margin-top: 22px;
 	overflow: auto;
-	border-bottom: 1px solid
+	border-bottom: 1px solid #ccc
 
 }
 .closeRep{
@@ -291,15 +293,15 @@ article .evaluation .evalutCont{/*热评具体内容，字数56*/
 	font-size: 20px;
 }
 article .evaluation .evalutTime{
-	width: 120px;
+	width: 150px;
 	float: right;
 	margin: 30px 40px;
 	color: rgb(122, 120, 120);
 	font-size: 15px
 }
 .replay{
-	height: 100px;
-	overflow: auto;
+	height: auto;
+	/* display: none; */
 	margin-top: 80px;
 	margin-left: 5%;
 }
@@ -310,7 +312,7 @@ article .evaluation .evalutTime{
 }
 .replay li{
 	height: 85px;
-	border-bottom: 1px solid #ccc;
+	border-top: 1px solid #ccc;
 }
 
 .replay li .evalutPhoto img{
@@ -319,7 +321,9 @@ article .evaluation .evalutTime{
 	margin-top: 10px;
 	margin-left: 10px;
 }
-
+.openIn{
+	display: none
+}
 /*发表评论*/
 article .evalutIam{/*评价盒子*/
 	clear: both;
