@@ -165,7 +165,12 @@ function ajaxContent() {
 			infostandard.innerHTML = data.data.productInfo.standard;
 			infoPrice[0].innerHTML = "￥"+data.data.productInfo.price;
 			infoBargain[0].innerHTML = data.data.productInfo.myType;
-			infoSeller[0].innerHTML = data.data.productInfo.isNew+'成新';
+			if(data.data.productInfo.isNew== 0){
+				infoSeller[0].innerHTML = '全新';
+			}else {
+				infoSeller[0].innerHTML = data.data.productInfo.isNew + '成新';
+			}
+			// infoSeller[0].innerHTML = data.data.productInfo.isNew + '成新';
 			if(data.data.productInfo.productDate){
 				var aaa=data.data.productInfo.productDate.split('T');
 				infoCertification[0].innerHTML =  aaa[0];

@@ -143,30 +143,39 @@ public class OrderService {
             result.put("oid",oid);
             result.put("createAt",orders.getCreateAt());
 
-            Map dataOfMy = ordersMapper.myself(oid);
-            if(dataOfMy != null){
-                Integer uid = (Integer)dataOfMy.get("uid");
-                String[] picture = CommonUtil.pictureToArr((String) dataOfMy.get("picture"));
-                dataOfMy.put("picture",picture);
-                if(uid.equals(upId) || orders.getStatus().equals(2)){
-                    dataOfMy.put("status","同意");
+            Map dataOfA = ordersMapper.dataOfA(oid);
+            if(dataOfA != null ){
+                Integer uid = (Integer)dataOfA.get("uid");
+                String[] picture = CommonUtil.pictureToArr((String) dataOfA.get("picture"));
+                dataOfA.put("picture",picture);
+                if( orders.getStatus().equals(2) || uid.equals(upId) ){
+                    dataOfA.put("status","同意");
                 }else{
-                    dataOfMy.put("status","等待同意");
+                    dataOfA.put("status","等待同意");
                 }
-                result.put("myself",dataOfMy);
+
+//                result.put("myself",dataOfA);
             }
 
-            Map dataOfOther = ordersMapper.other(oid);
-            if(dataOfOther != null){
-                Integer uid = (Integer)dataOfOther.get("uid");
-                String[] picture = CommonUtil.pictureToArr((String) dataOfOther.get("picture"));
-                dataOfOther.put("picture",picture);
-                if(uid.equals(upId) || orders.getStatus().equals(2)){
-                    dataOfOther.put("status","同意");
+            Map dataOfB = ordersMapper.dataOfB(oid);
+            if(dataOfB != null ){
+                Integer uid = (Integer)dataOfB.get("uid");
+                String[] picture = CommonUtil.pictureToArr((String) dataOfB.get("picture"));
+                dataOfB.put("picture",picture);
+                if( orders.getStatus().equals(2) || uid.equals(upId)){
+                    dataOfB.put("status","同意");
                 }else{
-                    dataOfOther.put("status","等待同意");
+                    dataOfB.put("status","等待同意");
                 }
-                result.put("other",dataOfOther);
+//                result.put("other",dataOfB);
+            }
+
+            if(dataOfA.get("uid").equals(upId)){
+                result.put("myself",dataOfA);
+                result.put("other",dataOfB);
+            }else if(dataOfB.get("uid").equals(upId)){
+                result.put("myself",dataOfB);
+                result.put("other",dataOfA);
             }
 
         }

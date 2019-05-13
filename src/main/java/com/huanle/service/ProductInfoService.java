@@ -292,7 +292,17 @@ public class ProductInfoService {
 //            result.put("totalOrder",totalOrder);
 //            result.put("totalOfMy",totalOfMy);
 //            result.put("totalOfOther",totalOfOther);
-            result = "zhe kuai ni xian na dao shu ju   , gei ni kankan ";
+            if(totalProd != null && !totalProd.equals(0)){
+                result = "该用户在换乐平台发布"+ totalProd + " 件物品";
+                if(totalOrder != null && !totalOrder.equals(0) ){
+                    result = result + "," + "已交换"+ totalOrder +"件商品,";
+                    if(totalOfMy != null && !totalOfMy.equals(0)){
+                        result = result + "," + totalOfMy+"件正在交换中 <(￣3￣)> !";
+                    }
+                }
+            }else{
+                result = "该用户还未发布过任何物品  <(￣3￣)> !";
+            }
         }
 
         return result;
