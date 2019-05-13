@@ -221,10 +221,21 @@
 	mes.send(null)
 	var out = document.getElementById('out')
 	var entry = document.getElementById('gerenzhuye')
-	out.onclick = function () {
-		
-		location.reload([true]);
-	}
+          out.onclick = function () {
+              $.ajax({
+                  url: "huanle/user/logout",
+                  type: "get",
+                  success: function (data) {
+                      console.log(data)
+                      if (data.code != 0) {
+                          alert('很抱歉，error');
+                      } else if (data.code == 0) {
+
+                          window.location.href='homepage.html'
+                      }
+                  }
+              })
+          }
 	entry.onclick=function () {
 		window.location.href=`personal.html?uid=${uid}`
 	}

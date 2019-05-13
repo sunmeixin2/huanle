@@ -145,29 +145,22 @@ public class OrderService {
 
             Map dataOfA = ordersMapper.dataOfA(oid);
             if(dataOfA != null ){
-                Integer uid = (Integer)dataOfA.get("uid");
                 String[] picture = CommonUtil.pictureToArr((String) dataOfA.get("picture"));
                 dataOfA.put("picture",picture);
-                if( orders.getStatus().equals(2) || uid.equals(upId) ){
-                    dataOfA.put("status","同意");
-                }else{
-                    dataOfA.put("status","等待同意");
-                }
-
-//                result.put("myself",dataOfA);
             }
 
             Map dataOfB = ordersMapper.dataOfB(oid);
             if(dataOfB != null ){
-                Integer uid = (Integer)dataOfB.get("uid");
                 String[] picture = CommonUtil.pictureToArr((String) dataOfB.get("picture"));
                 dataOfB.put("picture",picture);
-                if( orders.getStatus().equals(2) || uid.equals(upId)){
-                    dataOfB.put("status","同意");
-                }else{
+            }
+
+            if(orders.getStatus().equals(2)){
+                dataOfA.put("status","同意");
+                dataOfB.put("status","同意");
+            }else{
+                    dataOfA.put("status","同意");
                     dataOfB.put("status","等待同意");
-                }
-//                result.put("other",dataOfB);
             }
 
             if(dataOfA.get("uid").equals(upId)){

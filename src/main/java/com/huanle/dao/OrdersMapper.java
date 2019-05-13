@@ -34,7 +34,7 @@ public interface OrdersMapper {
     List<Map> getListByAuid(Integer uid);
 
     @Select("select o.oid,o.status,p.title,p.picture  " +
-            "from orders o left join productInfo p on p.pid = o.B_pid  " +
+            "from orders o left join productInfo p on p.pid = o.A_pid  " +
             "where o.B_uid = #{uid} and o.status = 1")
     List<Map> getListByBuid(Integer uid);
 

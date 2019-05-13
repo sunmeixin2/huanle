@@ -151,7 +151,7 @@ public class ProductInfoService {
                 data.put("collection",ccId);
                 data.put("uid",userInfor.getUid());
                 data.put("nickName",userInfor.getNickName());
-                data.put("email",userInfor.getEmail());
+                data.put("contact",userInfor.getContact());
                 data.put("message","查找成功");
             }
         }

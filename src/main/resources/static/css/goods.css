@@ -220,7 +220,7 @@ article .art-hot-evaluation{
 	margin: 0 auto;
 }
 article .evaluation{/*热门评价*/
-	width: 1050px;
+	width: 1100px;
 	/* min-height: 760px; */
 	height:auto;
 	max-height: 900px;
@@ -242,7 +242,7 @@ article .evaluation .evalu-title{/*热门评价标题*/
 	background: #1C826C;
 }
 article .evaluation .evalutInfo{/*热评总包裹*/
-	width: 1050px;
+	width: 1100px;
 	min-height: 80px;
 	margin: 0 auto;
 	margin-top: 22px;
@@ -264,7 +264,7 @@ article .evaluation .evalutPhoto{/*热评头像*/
 }
 article .evaluation .evalutPhoto a{/*热评头像链接及居中*/
 	display: table-cell;
-	width: 160px;
+	width: 200px;
 	height: 60px;
 	text-align: center;
 	vertical-align: middle;
@@ -293,7 +293,7 @@ article .evaluation .evalutCont{/*热评具体内容，字数56*/
 	font-size: 20px;
 }
 article .evaluation .evalutTime{
-	width: 150px;
+	width: 200px;
 	float: right;
 	margin: 30px 40px;
 	color: rgb(122, 120, 120);
@@ -301,7 +301,7 @@ article .evaluation .evalutTime{
 }
 .replay{
 	height: auto;
-	/* display: none; */
+	 display: none;
 	margin-top: 80px;
 	margin-left: 5%;
 }
@@ -392,7 +392,7 @@ article .evalutIam #evalutSubmit{/*提交评价submit*/
 .art-bot-nav{
 	position: absolute;
 	top: 650px;
-	left: 300px;
+	left: 43%;
 }
 .art-bot-nav span{
 	cursor: pointer;

@@ -23,8 +23,19 @@ function state() {
     mes.send(null)
     var out = document.getElementById('out')
     out.onclick = function () {
-        window.localStorage.clear()
-        location.reload([true]);
+        $.ajax({
+            url: "huanle/user/logout",
+            type: "get",
+            success: function (data) {
+                console.log(data)
+                if (data.code != 0) {
+                    alert('很抱歉，error');
+                } else if (data.code == 0) {
+
+                    window.location.href='homepage.html'
+                }
+            }
+        })
     }
 
 }
@@ -179,10 +190,11 @@ console.log(data)
                             //设置收藏信息
                             if (data.data.collectList.length == 0) {
                                 $('.boxThreeUl').prepend('<p class="NoColHis">客官，您还没有收藏任何东西呦！</p>');
+                                aCollect[0].innerHTML = 0
                             } else {
                                 aCollect[0].innerHTML = data.data.collectList.length;
                                 for (var i = 0; i < data.data.collectList.length; i++) {
-                                    $('.boxThreeUl').prepend('<li><div class="collect"><div class="clctImg"><a href="" class="clctImgA"><img src="images/01_mid.jpg" alt="" class="clctImgCont"></a></div><div class="clctInfo"><span class="clctInfo-name">goods</span><span class="clctInfo-cont"><a href="#" class="clctInfoSell"></a></span><span class="clctInfo-name">time</span><span class="clctInfo-cont clctInfoGoods"></span></div><div class="clctCancle"><span>取消收藏</span></div></div></li>');
+                                    $('.boxThreeUl').prepend('<li><div class="collect"><div class="clctImg"><a href="" class="clctImgA"><img src="" alt="" class="clctImgCont"></a></div><div class="clctInfo"><span class="clctInfo-name">goods</span><span class="clctInfo-cont"><a href="#" class="clctInfoSell"></a></span><span class="clctInfo-name">time</span><span class="clctInfo-cont clctInfoGoods"></span></div><div class="clctCancle"><span>取消收藏</span></div></div></li>');
                                 }
                                 var aclctCancle = document.getElementsByClassName('clctCancle');
                                 for (var i = 0; i < data.data.collectList.length; i++) {
@@ -222,7 +234,7 @@ console.log(data)
                                         return this.getFullYear() + "年" + (this.getMonth() + 1) + "月" + this.getDate() + "日 ";
                                     };
                                     aclctInfoGoods[i].innerHTML = timesData[0]
-
+                                    aclctImgCont[i].src=data.data.collectList[i].picture
                                     aclctInfoSell[i].innerHTML =data.data.collectList[i].productTile;
 
                                 }
@@ -240,6 +252,7 @@ console.log(data)
                             //设置历史发布信息
                             if (data.data.productList.length == 0) {
                                 $('.boxFourUl').prepend('<p class="NoColHis">赶快去发布自己的物品吧！</p>');
+                                aRelease[0].innerHTML = 0
                             } else {
                                 aRelease[0].innerHTML = data.data.productList.length;
                                 for (var i = 0; i < data.data.productList.length; i++) {
@@ -615,6 +628,7 @@ console.log(data)
 
                 for(let i=0;i<btns.length;i++){
                     btns[i].onclick=function(){
+
                         for(let j=0;j<btns.length;j++){
                             btns[j].className='btns';
                             dingdan[j].style.display='none'

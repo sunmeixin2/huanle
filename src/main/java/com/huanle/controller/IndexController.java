@@ -91,7 +91,6 @@ public class IndexController {
         type = type.trim();
         standard = standard.trim();
         JSONObject param = new JSONObject();
-        standard = null;
         param.put("type",type);
         param.put("standard",standard);
 

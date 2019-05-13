@@ -47,7 +47,7 @@ public interface ProductInfoMapper {
     @Select("select * from productInfo where advice = 2 and status = 1 and  my_type = #{type} order by create_at DESC,is_new DESC,update_at DESC")
     List<ProductInfo> selectByType(String type);
 
-    @SelectProvider(type = ProductDaoProvider.class ,method = "selecTypetByFilter" )
+    @SelectProvider(type = ProductDaoProvider.class ,method = "selectTypeByFilter" )
     List<ProductInfo> queryByType(JSONObject param);
     //交换成功修改商品信息状态为 "已交换"
     @Select("update productInfo set status = 2 where pid = #{aPid} or pid = #{bPid}")

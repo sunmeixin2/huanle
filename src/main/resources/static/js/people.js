@@ -16,23 +16,21 @@ function ajax(){
 				aCollect[0].innerHTML=arr.personal.meili;
 				aRelease[0].innerHTML=arr.history.length;
 				loginOut[0].onclick=function(){
-					$.ajax({
-						url:"signOut.php",
-						type:"post",
-						success:function(data){
-							var signOut=eval(data);
-							if(signOut.ok==1){
-								alert('退出成功！');
-								location.reload([true]);
+					out.onclick = function () {
+						$.ajax({
+							url: "/huanle/user/logout",
+							type: "get",
+							success: function (data) {
+								console.log(data)
+								if (data.code != 0) {
+									alert('很抱歉，error');
+								} else if (data.code == 0) {
+
+									window.location.href='homepage.html'
+								}
 							}
-							else{
-								alert('很遗憾，退出失败');
-							}
-						},
-						error:function(){
-							alert('抱歉，操作失败，请检查网络连接！');
-						}
-					})
+						})
+					}
 				}
 
 				//设置个人信息

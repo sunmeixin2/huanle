@@ -34,8 +34,19 @@ function state() {
 	var out = document.getElementById('out')
 	var entry = document.getElementById('gerenzhuye')
 	out.onclick = function () {
-		window.localStorage.clear()
-		location.reload([true]);
+		$.ajax({
+			url: "huanle/user/logout",
+			type: "get",
+			success: function (data) {
+				console.log(data)
+				if (data.code != 0) {
+					alert('很抱歉，error');
+				} else if (data.code == 0) {
+
+					window.location.href='homepage.html'
+				}
+			}
+		})
 	}
 	entry.onclick=function () {
 		window.location.href=`personal.html?uid=${uid}`
@@ -108,7 +119,7 @@ function getGoodsType(type,standard){
 			}
 		}
 	}
-	xml.open('GET', `/huanle/index/searchByType?type=${type}&standard=${standard}`, true);
+	xml.open('GET', `/huanle/index/searchByType?type=${type}&standard=${standard === undefined ? '': standard}`, true);
 	xml.send(null)
 
 }

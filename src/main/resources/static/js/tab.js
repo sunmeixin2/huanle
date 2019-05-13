@@ -12,6 +12,7 @@ function getByClass(oParent, sClassName)
     return aArr;
 };
 function tab(){
+    var orderContent=document.getElementById('orderContent')
 	var oTab=document.getElementById('tab');
     var aLi=getByClass(oTab, 'nav')[0].getElementsByTagName('li');
     var aA=oTab.getElementsByTagName('ul')[0].getElementsByTagName('a');
@@ -24,6 +25,7 @@ function tab(){
      
         aLi[i].onclick=function()
         {
+            orderContent.style.display = 'none';
             for( let i=0; i<aLi.length; i++)
             {
                 aLi[i].className='';

@@ -62,8 +62,19 @@ function state() {
 	var out = document.getElementById('out')
 	var entry = document.getElementById('gerenzhuye')
 	out.onclick = function () {
-		window.localStorage.clear()
-		location.reload([true]);
+		$.ajax({
+			url: "huanle/user/logout",
+			type: "get",
+			success: function (data) {
+				console.log(data)
+				if (data.code != 0) {
+					alert('很抱歉，error');
+				} else if (data.code == 0) {
+
+					window.location.href='homepage.html'
+				}
+			}
+		})
 	}
 	entry.onclick=function () {
 		window.location.href=`personal.html?uid=${uid}`
@@ -165,6 +176,7 @@ function ajaxContent() {
 			infostandard.innerHTML = data.data.productInfo.standard;
 			infoPrice[0].innerHTML = "￥"+data.data.productInfo.price;
 			infoBargain[0].innerHTML = data.data.productInfo.myType;
+			infocontract.innerHTML = data.data.contact;
 			if(data.data.productInfo.isNew== 0){
 				infoSeller[0].innerHTML = '全新';
 			}else {
@@ -224,8 +236,12 @@ function ajaxContent() {
 		
 			$.ajax({
 				url: `huanle/product/statistics`,
-				type: "get",
+				type: "post",
+				data:{
+					uid:sendData.user
+				},
 				success: function (data) {
+					console.log(data)
 				   if(data.code==0){
 					   for(let i=0;i<data.data.length;i++)
 					infodetail[1].innerHTML+=data.data[i]
@@ -291,7 +307,7 @@ function ajaxContent() {
                                         <p>${data.data.commentList[i].comment.nick_name}</p >：
                                     </a ></div>
                                 <div class="evalutCont">${data.data.commentList[i].comment.content}</div>
-                                <div class="evalutTime">(${times})&nbsp;&nbsp;<a href="javascript:;" class="replyBox2">回复</a ></div>
+                                <div class="evalutTime">(${times})&nbsp;&nbsp;<a href="javascript:;" class="replyBox2">回复</a >&nbsp;<a href="javascript:;" class="openIn">zhankai</a></div>
                                
                                 <ul class="replay">
                                
@@ -299,15 +315,6 @@ function ajaxContent() {
                             </div>    
 						</li>`
 						var replayUl=document.querySelectorAll('.replay')
-						var openIn=document.querySelectorAll('.replay')
-						if(data.data.commentList[i].reply.length>0){
-							openIn[i].style.display='block';
-							
-						}
-						openIn[i].onclick=function(){
-							replayUl.style.display='block'
-							openIn[i].innerHTML='合上'
-						}
 						for(let j=0;j<data.data.commentList[i].reply.length;j++){
 							var times2=new Date(( data.data.commentList[i].reply[j].create_at)*1000).toLocaleDateString()
 
@@ -321,6 +328,27 @@ function ajaxContent() {
 
 						var replyA=document.querySelectorAll('.replyBox2')
                         var replyContent=document.getElementById('replyContent')
+
+						var openIn=document.querySelectorAll('.openIn')
+						if(data.data.commentList[i].reply.length>0){
+							openIn[i].style.display='inline';
+
+						}
+                    let t=1;
+                    for(let q=0;q<openIn.length;q++){
+						openIn[q].onclick=function(){
+                                if(t==1){
+									replayUl[q].style.display='block'
+									openIn[q].innerHTML='合上'
+									t=0;
+								}else{
+									replayUl[q].style.display='none'
+									openIn[q].innerHTML='zhankai'
+									t=1;
+								}
+
+						}
+					}
 
 
 

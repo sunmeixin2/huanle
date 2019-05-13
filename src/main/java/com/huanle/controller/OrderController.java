@@ -110,9 +110,6 @@ public class OrderController {
             return new ResponseVO(ErrorCode.UNKNOW_ERROR,"请先登录！");
         }
         Integer upId = up.getUid();
-        if(upId == null){
-            return new ResponseVO(ErrorCode.UNKNOW_ERROR,"请先登录！");
-        }
         Map data = orderService.getExchangeOtherList(upId);
 
         if(data != null){

@@ -63,7 +63,7 @@ public class ProductDaoProvider {
         return sql;
     }
 
-    public String selecTypetByFilter(JSONObject params){
+    public String selectTypeByFilter(JSONObject params){
 
         String type = params.getString("type");
         String standard = params.getString("standard");
