@@ -304,10 +304,10 @@ console.log(data)
                                 for (var i = 0; i < data.data.productList.length; i++) {
                                         ahistCancle[i].onclick = function () {
                                             $.ajax({
-                                                url: "",
+                                                url: "huanle/product/deleteProductInfo",
                                                 type: "post",
                                                 data: {
-                                                   
+                                                   pid:data.data.productList[i].pid
                                                 },
                                                 success: function (data) {
                                                  

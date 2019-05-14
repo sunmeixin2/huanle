@@ -119,7 +119,7 @@ function getGoodsType(type,standard){
 			}
 		}
 	}
-	xml.open('GET', `/huanle/index/searchByType?type=${type}&standard=${standard === undefined ? '': standard}`, true);
+	xml.open('GET', `/huanle/index/searchByType?type=${type}&standard=${standard === null ? '': standard}`, true);
 	xml.send(null)
 
 }
@@ -129,7 +129,7 @@ for (let i = 0; i < nav.length; i++) {
 		for(let j=0;j<rule.length;j++){
 			rule[j].className='rule'
 		}
-		 getGoodsType(typeMes[i].innerHTML)
+		 getGoodsType(typeMes[i].innerHTML,'')
 	}
 }
 for(let i=0;i<rule.length;i++){
