@@ -329,6 +329,8 @@ function tableMes3() {
             }
         }
     }
+    xhr.open('GET', 'http://192.168.2.54:8080/huanle/admin/allOrderList', true)
+    xhr.send(null)
 }
 
 function tableMes4() {
